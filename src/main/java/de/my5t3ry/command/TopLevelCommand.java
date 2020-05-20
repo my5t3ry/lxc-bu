@@ -13,7 +13,7 @@ import java.util.List;
 /** User: my5t3ry Date: 5/4/20 9:52 PM */
 @Component
 public class TopLevelCommand {
-  @Autowired public BackupCommand backupCommand;
+  @Autowired(required = true) public BackupCommand backupCommand;
   @Autowired public HelpCommand helpCommand;
   @Autowired private PrintService printService;
   private List<AbstractCommand> commands = new ArrayList<>();
