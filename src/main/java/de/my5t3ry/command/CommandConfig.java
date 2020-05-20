@@ -15,9 +15,15 @@ import java.util.List;
 public class CommandConfig {
   @Autowired public ListCommand listCommand;
   @Autowired public BackupCommand backupCommand;
+  @Autowired public HelpCommand helpCommand;
 
   @Bean
   public List<AbstractBackupCommand> abstractBackupCommands() {
     return Arrays.asList(listCommand);
+  }
+
+  @Bean
+  public List<AbstractCommand> abstractCommands() {
+    return Arrays.asList(helpCommand);
   }
 }
