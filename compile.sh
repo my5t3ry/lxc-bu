@@ -36,7 +36,7 @@ echo "Compiling $ARTIFACT with $GRAALVM_VERSION"
   -H:+ReportExceptionStackTraces \
   -H:ResourceConfigurationFiles=resources.conf \
   -Dspring.native.remove-unused-autoconfig=true \
-  -cp $CP $MAINCLASS >> output.txt ; } 2>> output.txt
+  -cp $CP $MAINCLASS  ; }
 
 if [[ -f $ARTIFACT ]]
 then
