@@ -65,6 +65,7 @@ public class CliController implements CommandLineRunner {
           if (line.equals(exitCommand)) {
             return;
           }
+          printService.print("toplevelsize:" + topLevelCommand.getCommands().size());
           printService.print(line);
           topLevelCommand.execute(line);
         } catch (UserInterruptException | EndOfFileException e) {
