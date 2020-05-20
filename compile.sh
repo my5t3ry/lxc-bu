@@ -17,6 +17,7 @@ mvn -ntp package -T 8 > target/native-image/output.txt
 JAR="$ARTIFACT-$VERSION-exec.jar"
 rm -f $ARTIFACT
 echo "Unpacking $JAR"
+cp target/classes/resources.conf target/native-image
 cd target/native-image
 jar -xvf ../$JAR
 cp -R META-INF BOOT-INF/classes
