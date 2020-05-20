@@ -1,9 +1,7 @@
 package de.my5t3ry.print;
 
 import de.my5t3ry.command.CommandInteface;
-import de.my5t3ry.command.TopLevelCommand;
 import de.my5t3ry.shell.ShellHelper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -37,8 +35,7 @@ public class PrintService {
   }
 
   public void printCommands(final List<? extends CommandInteface> commands, final String context) {
-    clearScreen();
-    String format = "%-15s %s";
+   String format = "%-15s %s";
     IOProvider.println("['" + context + "'] commands");
     commands.forEach(
         curCommand ->

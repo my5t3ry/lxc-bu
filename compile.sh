@@ -30,6 +30,7 @@ echo "Compiling $ARTIFACT with $GRAALVM_VERSION"
 { time native-image \
   --verbose \
   --no-server \
+
   --no-fallback \
   -H:Name=$ARTIFACT \
   --initialize-at-build-time=java.sql.DriverManager,org.hibernate.internal.util.ReflectHelper \
