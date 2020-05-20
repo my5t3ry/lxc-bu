@@ -19,6 +19,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication(proxyBeanMethods = false)
+// @EnableJpaRepositories("de.my53ry")
 @Import({
   BackupService.class,
   BackupJobService.class,
