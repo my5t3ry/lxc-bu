@@ -22,5 +22,4 @@ public class Config {
     return propertySourcesPlaceholderConfigurer;
   }
 
-  @Autowired public ListCommand listCommand;
 }
