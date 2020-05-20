@@ -31,7 +31,6 @@ public class PrintService {
   @Value("${command.help}")
   private String command;
 
-
   public void printCommands(final List<? extends CommandInteface> commands, final String context) {
     String format = "%-15s %s";
     terminalService.getTerminal().writer().println("['" + context + "'] commands");

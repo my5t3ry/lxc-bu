@@ -40,6 +40,7 @@ public class CliController implements CommandLineRunner {
   @Override
   public void run(String... args) {
     try {
+      terminalService.init();
       lxcService.validateLxc();
       initContainers();
       if (args.length == 1 && args[0].equals("e")) {
@@ -63,7 +64,6 @@ public class CliController implements CommandLineRunner {
     try {
       consoleProgressBar = new ConsoleProgressBar();
       consoleProgressBar.start();
-      terminalService.init();
       LineReader lineReader =
           LineReaderBuilder.builder()
               .terminal(terminalService.getTerminal())
