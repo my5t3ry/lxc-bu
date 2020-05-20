@@ -4,7 +4,7 @@ import de.my53ry.backup.BackupJobService;
 import de.my53ry.backup.BackupService;
 import de.my53ry.command.TopLevelCommand;
 import de.my53ry.command.HelpCommand;
-import de.my53ry.command.ListCommand;
+import de.my53ry.command.backup.ListCommand;
 import de.my53ry.command.backup.AddCommand;
 import de.my53ry.command.backup.BackupCommand;
 import de.my53ry.config.Config;

@@ -1,4 +1,4 @@
-package de.my53ry.command;
+package de.my53ry.command.backup;
 
 import com.jakewharton.fliptables.FlipTableConverters;
 import de.my53ry.backup.Backup;
@@ -13,7 +13,7 @@ import java.util.List;
 
 /** User: my5t3ry Date: 5/4/20 9:58 PM */
 @Component
-public class ListCommand extends AbstractCommand {
+public class ListCommand extends AbstractBackupCommand {
   @Autowired private PrintService printService;
 
   @Autowired private BackupRepository backupRepository;
@@ -27,7 +27,7 @@ public class ListCommand extends AbstractCommand {
 
   @PostConstruct
   public void init() {
-    setInfo(command, "show help");
+    setInfo(command, "list backups");
   }
 
   @Override
@@ -35,7 +35,7 @@ public class ListCommand extends AbstractCommand {
     final List<Backup> backups = backupRepository.findAll();
     if (backups.isEmpty()) {
       printService.print(
-          "no backup jobs found. add job with ['backup add [<remote>:]<source>[/<snapshot>] <interval(DAILY,WEEKLY)> <keep-snapshots(int)']");
+          "no backup found. add job with ['backup add [<remote>:]<source>[/<snapshot>] <interval(DAILY,WEEKLY)> <keep-snapshots(int)']");
     } else {
       System.out.println(FlipTableConverters.fromIterable(backups, Backup.class));
     }
