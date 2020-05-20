@@ -36,12 +36,18 @@ public class CliController implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
+    initContainers();
     if (args.length == 1 && args[0].equals("e")) {
       backupService.execute();
     } else {
+
       startCli();
       System.exit(SpringApplication.exit(context));
     }
+  }
+
+  private void initContainers() {
+    topLevelCommand.init();
   }
 
   private void startCli() {

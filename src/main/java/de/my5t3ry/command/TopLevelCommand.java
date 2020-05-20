@@ -18,7 +18,6 @@ public class TopLevelCommand {
   @Autowired private PrintService printService;
   private List<AbstractCommand> commands = new ArrayList<>();
 
-  @PostConstruct
   public void init() {
     printService.print("test");
     helpCommand.execute("h");
