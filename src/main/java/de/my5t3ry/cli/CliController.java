@@ -19,7 +19,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 /** User: my5t3ry Date: 5/19/20 10:49 PM */
@@ -61,33 +60,28 @@ public class CliController implements CommandLineRunner {
   }
 
   private void startCli() {
-    try {
-      consoleProgressBar = new ConsoleProgressBar();
-      consoleProgressBar.start();
-      LineReader lineReader =
-          LineReaderBuilder.builder()
-              .terminal(terminalService.getTerminal())
-              .history(new LxcBuHistory(topLevelCommand))
-              .build();
-      consoleProgressBar.stop();
-      printService.printStartMessage();
-      while (true) {
-        String line = null;
-        try {
-          line = lineReader.readLine("> ");
-          if (Arrays.asList(exitCommand.split(",")).contains(line)) {
-            return;
-          }
-          if (StringUtils.isNotBlank(line)) {
-            topLevelCommand.execute(line);
-          }
-        } catch (UserInterruptException | EndOfFileException e) {
+    consoleProgressBar = new ConsoleProgressBar();
+    consoleProgressBar.start();
+    LineReader lineReader =
+        LineReaderBuilder.builder()
+            .terminal(terminalService.getTerminal())
+            .history(new LxcBuHistory(topLevelCommand))
+            .build();
+    consoleProgressBar.stop();
+    printService.printStartMessage();
+    while (true) {
+      String line = null;
+      try {
+        line = lineReader.readLine("> ");
+        if (Arrays.asList(exitCommand.split(",")).contains(line)) {
           return;
         }
+        if (StringUtils.isNotBlank(line)) {
+          topLevelCommand.execute(line);
+        }
+      } catch (UserInterruptException | EndOfFileException e) {
+        return;
       }
-    } catch (IOException e) {
-      e.printStackTrace();
-      return;
     }
   }
 }
