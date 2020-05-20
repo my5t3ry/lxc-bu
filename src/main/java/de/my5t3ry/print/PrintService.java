@@ -35,7 +35,7 @@ public class PrintService {
   }
 
   public void printCommands(final List<? extends CommandInteface> commands, final String context) {
-   String format = "%-15s %s";
+    String format = "%-15s %s";
     IOProvider.println("['" + context + "'] commands");
     commands.forEach(
         curCommand ->
@@ -64,5 +64,4 @@ public class PrintService {
       e.printStackTrace();
     }
   }
-
 }
