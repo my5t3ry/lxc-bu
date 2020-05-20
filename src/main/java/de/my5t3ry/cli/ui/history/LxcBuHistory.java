@@ -1,4 +1,4 @@
-package de.my5t3ry.cli.history;
+package de.my5t3ry.cli.ui.history;
 
 import de.my5t3ry.cli.command.TopLevelCommand;
 import org.apache.commons.lang3.StringUtils;
