@@ -11,7 +11,6 @@ public class HelpCommand extends AbstractCommand {
   @Autowired private PrintService printService;
   @Autowired private Environment env;
 
-
   public void init() {
     setInfo(env.getProperty("command.help"), "show help");
   }

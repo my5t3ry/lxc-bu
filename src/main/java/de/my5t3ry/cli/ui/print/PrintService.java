@@ -17,7 +17,6 @@ import java.util.List;
 /** User: my5t3ry Date: 5/4/20 1:57 PM */
 @Service
 public class PrintService {
-  @Autowired private TerminalService terminalService;
   public static int green = 2;
   public static int white = 7;
   public static int yellow = 3;
@@ -27,7 +26,7 @@ public class PrintService {
   public static int magenta = 5;
   public static int blue = 4;
   public static int black = 0;
-
+  @Autowired private TerminalService terminalService;
   @Value("${command.help}")
   private String command;
 

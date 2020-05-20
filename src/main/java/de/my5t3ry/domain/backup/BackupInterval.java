@@ -15,6 +15,6 @@ public class BackupInterval {
           .collect(Collectors.toMap(data -> (String) data[0], data -> (Integer) data[1]));
 
   public static boolean isValide(String toUpperCase) {
-    return values.keySet().contains(toUpperCase);
+    return values.containsKey(toUpperCase);
   }
 }

@@ -14,7 +14,7 @@ import java.util.List;
 public class LxcBuHistory extends DefaultHistory implements History {
   private final List<String> controlCommands = new ArrayList<>();
 
-  @Autowired private TopLevelCommand topLevelCommand;
+  @Autowired private final TopLevelCommand topLevelCommand;
 
   public LxcBuHistory(TopLevelCommand topLevelCommand) {
     this.topLevelCommand = topLevelCommand;
