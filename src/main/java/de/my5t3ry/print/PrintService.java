@@ -2,12 +2,17 @@ package de.my5t3ry.print;
 
 import de.my5t3ry.command.CommandInteface;
 import de.my5t3ry.command.TopLevelCommand;
+import de.my5t3ry.shell.ShellHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StreamUtils;
 import picocli.CommandLine;
 
+import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.charset.Charset;
 import java.util.List;
 
 /** User: my5t3ry Date: 5/4/20 1:57 PM */
@@ -49,8 +54,19 @@ public class PrintService {
   }
 
   public void printStartMessage() {
-    clearScreen();
+    clearBannern();
     IOProvider.println("enter ['" + command + "'] for help");
+  }
+
+  private void clearBannern() {
+    try {
+      final String banner =
+          StreamUtils.copyToString(
+              new ClassPathResource("banner.txt").getInputStream(), Charset.defaultCharset());
+      printWithColor(banner, ShellHelper.cyan);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   public void printTopLevelCommands() {

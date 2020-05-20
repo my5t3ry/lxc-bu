@@ -9,25 +9,16 @@ import javax.annotation.PostConstruct;
 /** User: my5t3ry Date: 5/19/20 6:31 AM */
 public class ShellHelper {
   private final Terminal terminal;
-  public String infoColor;
-  public String successColor;
-  public String warningColor;
-  public String errorColor;
+  public static String infoColor = "green";
+  public static String successColor = "white";
+  public static String warningColor = "yellow";
+  public static String errorColor = "red";
+  public static String cyan = "cyan";
 
   public ShellHelper(Terminal terminal) {
     this.terminal = terminal;
   }
 
-  @PostConstruct
-  public void init() {
-    infoColor = "RED";
-
-    successColor = "WHITE";
-
-    warningColor = "YELLOW";
-
-    errorColor = "RED";
-  }
 
   public String getColored(String message, PromptColor color) {
     return (new AttributedStringBuilder())
