@@ -1,12 +1,14 @@
 package de.my53ry;
 
+import de.my53ry.backup.Backup;
+import de.my53ry.backup.BackupJob;
 import de.my53ry.backup.BackupJobService;
 import de.my53ry.backup.BackupService;
-import de.my53ry.command.TopLevelCommand;
 import de.my53ry.command.HelpCommand;
-import de.my53ry.command.backup.ListCommand;
+import de.my53ry.command.TopLevelCommand;
 import de.my53ry.command.backup.AddCommand;
 import de.my53ry.command.backup.BackupCommand;
+import de.my53ry.command.backup.ListCommand;
 import de.my53ry.config.Config;
 import de.my53ry.lxc.LxcService;
 import de.my53ry.print.PrintService;
@@ -29,6 +31,8 @@ import org.springframework.context.annotation.Import;
   ListCommand.class,
   HelpCommand.class,
   Config.class,
+  Backup.class,
+  BackupJob.class,
   TerminalService.class
 })
 public class LcxBu {
