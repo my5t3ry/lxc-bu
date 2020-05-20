@@ -22,8 +22,13 @@ public class BackupJob {
   private Long id;
 
   private Long backupId;
+
+  @Temporal(TemporalType.TIMESTAMP)
   private Date scheduledTime;
+
+  @Temporal(TemporalType.TIMESTAMP)
   private Date finishedTime;
+
   @Lob private String log;
 
   public BackupJob() {}
