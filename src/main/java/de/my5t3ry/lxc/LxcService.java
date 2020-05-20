@@ -1,6 +1,5 @@
 package de.my5t3ry.lxc;
 
-import de.my5t3ry.cli.ui.print.PrintService;
 import de.my5t3ry.os.ProcessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,6 @@ import java.util.List;
 @Service
 public class LxcService {
   @Autowired private ProcessService processService;
-  @Autowired private PrintService printService;
 
   public void validateLxc() {
     try {
@@ -23,7 +21,8 @@ public class LxcService {
         throw new IllegalStateException("lxc validation failed with message \\n['" + result + "']");
       }
     } catch (IOException | InterruptedException e) {
-      e.printStackTrace();
+      throw new IllegalStateException(
+          "lxc validation failed with message \\n['" + e.getMessage() + "']");
     }
   }
 
