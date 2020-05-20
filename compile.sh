@@ -29,6 +29,7 @@ GRAALVM_VERSION=`native-image --version`
 echo "Compiling $ARTIFACT with $GRAALVM_VERSION"
 { time native-image \
   --verbose \
+  -Dspring.native.verbose=true \
   --no-server \
   --no-fallback \
   -H:Name=$ARTIFACT \
