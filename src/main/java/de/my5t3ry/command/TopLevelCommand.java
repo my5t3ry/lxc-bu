@@ -20,6 +20,7 @@ public class TopLevelCommand {
 
   @PostConstruct
   public void init() {
+    helpCommand.execute("h");
     commands = Arrays.asList(helpCommand, backupCommand);
   }
 
