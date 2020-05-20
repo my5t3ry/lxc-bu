@@ -3,7 +3,7 @@ package de.my5t3ry.command;
 import de.my5t3ry.command.backup.BackupCommand;
 import de.my5t3ry.print.PrintService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /** User: my5t3ry Date: 5/4/20 9:52 PM */
-@Service
+@Component
 public class TopLevelCommand {
   @Autowired public BackupCommand backupCommand;
   @Autowired public HelpCommand helpCommand;
@@ -19,7 +19,7 @@ public class TopLevelCommand {
   private List<AbstractCommand> commands = new ArrayList<>();
 
   @PostConstruct
-  public void ihit() {
+  public void init() {
     commands = Arrays.asList(helpCommand, backupCommand);
   }
 
