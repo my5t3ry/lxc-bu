@@ -17,6 +17,7 @@ import de.my5t3ry.term.TerminalService;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
@@ -26,6 +27,7 @@ import java.util.Properties;
 
 @SpringBootApplication(proxyBeanMethods = false)
 // @EnableJpaRepositories("de.my53ry")
+@ImportResource({"classpath*:application.properties", "classpath*:banner.txt"})
 @Import({
   BackupService.class,
   BackupJobService.class,
