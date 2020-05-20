@@ -68,7 +68,7 @@ public class CliController implements CommandLineRunner {
         String line = null;
         try {
           line = lineReader.readLine("> ");
-          if (Arrays.asList(exitCommand.split(",")).contains(exitCommand)) {
+          if (Arrays.asList(exitCommand.split(",")).contains(line)) {
             return;
           }
           if (StringUtils.isNotBlank(line)) {
