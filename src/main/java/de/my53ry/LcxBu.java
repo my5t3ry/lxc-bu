@@ -5,6 +5,7 @@ import de.my53ry.backup.BackupService;
 import de.my53ry.command.CommandService;
 import de.my53ry.lxc.LxcService;
 import de.my53ry.print.PrintService;
+import de.my53ry.shell.CmdService;
 import de.my53ry.term.TerminalService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.Import;
   BackupJobService.class,
   CommandService.class,
   LxcService.class,
+  CmdService.class,
   PrintService.class,
   TerminalService.class
 })
