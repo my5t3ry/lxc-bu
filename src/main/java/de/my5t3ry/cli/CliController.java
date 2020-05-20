@@ -54,7 +54,7 @@ public class CliController implements CommandLineRunner {
     try {
       lxcService.validateLxc();
     } catch (VerifyError e) {
-      printService.printError("lxc not reachable");
+      printService.printError("lxc not reachable with message ['" + e.getMessage() + "'].");
       e.printStackTrace();
       System.exit(SpringApplication.exit(context));
     }

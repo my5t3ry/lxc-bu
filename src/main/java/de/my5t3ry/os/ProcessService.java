@@ -1,10 +1,12 @@
 package de.my5t3ry.os;
 
 import org.springframework.stereotype.Service;
+import picocli.CommandLine;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
@@ -23,7 +25,7 @@ public class ProcessService {
     }
   }
 
-  public String runCmd(final String... cmd) throws IOException, InterruptedException {
+  public String runCmd(final String... cmd) throws IOException, InterruptedException , RuntimeException {
     final StringBuilder stringBuilder = new StringBuilder();
     ProcessBuilder builder = new ProcessBuilder();
     builder.command(cmd);
@@ -39,7 +41,7 @@ public class ProcessService {
       while ((c = errorStream.read()) != -1) {
         sb.append((char) c);
       }
-      throw new IllegalStateException(
+      throw new RuntimeException(
           "failed to run cmd ['"
               + Arrays.asList(cmd).stream().collect(Collectors.joining(" "))
               + "'] with msg ['"

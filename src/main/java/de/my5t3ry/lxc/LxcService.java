@@ -20,9 +20,8 @@ public class LxcService {
       if (result.toLowerCase().contains("error")) {
         throw new VerifyError("lxc validation failed with message \\n['" + result + "']");
       }
-    } catch (IOException | InterruptedException e) {
-      throw new VerifyError(
-          "lxc validation failed with message \\n['" + e.getMessage() + "']");
+    } catch (IOException | RuntimeException | InterruptedException e) {
+      throw new VerifyError("lxc validation failed with message \\n['" + e.getMessage() + "']");
     }
   }
 
