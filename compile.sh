@@ -12,7 +12,7 @@ rm -rf target
 mkdir -p target/native-image
 
 echo "Packaging $ARTIFACT with Maven"
-mvn -ntp package > target/native-image/output.txt
+mvn -ntp package -T 8 > target/native-image/output.txt
 
 JAR="$ARTIFACT-$VERSION-exec.jar"
 rm -f $ARTIFACT
@@ -33,6 +33,7 @@ echo "Compiling $ARTIFACT with $GRAALVM_VERSION"
   -H:Name=$ARTIFACT \
   --initialize-at-build-time=java.sql.DriverManager,org.hibernate.internal.util.ReflectHelper \
   -H:+ReportExceptionStackTraces \
+  -H:ResourceConfigurationFiles=resources.conf
   -Dspring.native.remove-unused-autoconfig=true \
   -cp $CP $MAINCLASS >> output.txt ; } 2>> output.txt
 
