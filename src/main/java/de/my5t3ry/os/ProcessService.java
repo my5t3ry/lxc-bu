@@ -11,7 +11,8 @@ import java.util.stream.Collectors;
 /** User: my5t3ry Date: 5/19/20 7:09 AM */
 @Service
 public class ProcessService {
-  public void runCmdSilent(final String... cmd) {
+  public void runCmdSilent(final String... cmd)
+      throws IOException, InterruptedException, RuntimeException {
     try {
       ProcessBuilder builder = new ProcessBuilder();
       builder.command(cmd);
@@ -19,7 +20,7 @@ public class ProcessService {
       int exitCode = process.waitFor();
       assert exitCode == 0;
     } catch (IOException | InterruptedException e) {
-      throw new IllegalStateException("command failed with message ['" + e.getMessage() + "']");
+      throw new RuntimeException("command failed with message ['" + e.getMessage() + "']");
     }
   }
 
