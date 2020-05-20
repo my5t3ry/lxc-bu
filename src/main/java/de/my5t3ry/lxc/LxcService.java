@@ -18,10 +18,10 @@ public class LxcService {
     processService.runCmdSilent("lxc", "info");
   }
 
-  public void executeCmd(String... cmd) throws IOException, InterruptedException {
+  public String executeCmd(String... cmd) throws IOException, InterruptedException {
     final List<String> lxcCmd = new ArrayList<>();
     lxcCmd.add("lxc");
     lxcCmd.addAll(Arrays.asList(cmd));
-    processService.runCmd(lxcCmd.toArray(new String[lxcCmd.size()]));
+   return processService.runCmd(lxcCmd.toArray(new String[lxcCmd.size()]));
   }
 }

@@ -1,6 +1,7 @@
 package de.my5t3ry.cli.command.backup;
 
 import com.jakewharton.fliptables.FlipTableConverters;
+import de.my5t3ry.cli.command.AbstractCommand;
 import de.my5t3ry.domain.backup.Backup;
 import de.my5t3ry.domain.backup.BackupRepository;
 import de.my5t3ry.cli.ui.print.PrintService;
@@ -12,7 +13,7 @@ import java.util.List;
 
 /** User: my5t3ry Date: 5/4/20 9:58 PM */
 @Component
-public class ListCommand extends AbstractBackupCommand {
+public class BackupListCommand extends AbstractCommand {
   @Autowired private PrintService printService;
 
   @Autowired private BackupRepository backupRepository;

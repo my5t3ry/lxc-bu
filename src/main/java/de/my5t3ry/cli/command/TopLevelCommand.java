@@ -1,6 +1,7 @@
 package de.my5t3ry.cli.command;
 
 import de.my5t3ry.cli.command.backup.BackupCommand;
+import de.my5t3ry.cli.command.container.ContainerCommand;
 import de.my5t3ry.cli.ui.print.PrintService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,11 +15,12 @@ import java.util.List;
 public class TopLevelCommand {
   @Autowired public BackupCommand backupCommand;
   @Autowired public HelpCommand helpCommand;
+  @Autowired public ContainerCommand containerCommand;
   @Autowired private PrintService printService;
   private List<AbstractCommand> commands = new ArrayList<>();
 
   public void init() {
-    commands = Arrays.asList(helpCommand, backupCommand);
+    commands = Arrays.asList(helpCommand, backupCommand, containerCommand);
     commands.forEach(curCommand -> curCommand.init());
   }
 
@@ -34,6 +36,7 @@ public class TopLevelCommand {
     }
     printService.printCommands(commands, "top-level");
   }
+
   public List<AbstractCommand> getCommands() {
     return commands;
   }

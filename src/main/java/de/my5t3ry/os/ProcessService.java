@@ -23,11 +23,13 @@ public class ProcessService {
     }
   }
 
-  public void runCmd(final String... cmd) throws IOException, InterruptedException {
+  public String runCmd(final String... cmd) throws IOException, InterruptedException {
+    final StringBuilder stringBuilder = new StringBuilder();
     ProcessBuilder builder = new ProcessBuilder();
     builder.command(cmd);
     Process process = builder.start();
-    StreamGobbler streamGobbler = new StreamGobbler(process.getInputStream(), System.out::println);
+    StreamGobbler streamGobbler =
+        new StreamGobbler(process.getInputStream(), s -> stringBuilder.append(s).append("\n"));
     Executors.newSingleThreadExecutor().submit(streamGobbler);
     int exitCode = process.waitFor();
     if (exitCode != 0) {
@@ -43,6 +45,8 @@ public class ProcessService {
               + "'] with msg ['"
               + sb.toString().replaceAll("\n", "")
               + "']");
+    } else {
+      return stringBuilder.toString();
     }
   }
 }

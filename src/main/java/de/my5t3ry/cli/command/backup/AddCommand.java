@@ -1,8 +1,9 @@
 package de.my5t3ry.cli.command.backup;
 
+import de.my5t3ry.cli.command.AbstractCommand;
+import de.my5t3ry.cli.ui.print.PrintService;
 import de.my5t3ry.domain.backup.*;
 import de.my5t3ry.lxc.LxcService;
-import de.my5t3ry.cli.ui.print.PrintService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 
 /** User: my5t3ry Date: 5/4/20 9:58 PM */
 @Component
-public class AddCommand extends AbstractBackupCommand {
+public class AddCommand extends AbstractCommand {
   @Autowired private BackupService backupService;
   @Autowired private BackupJobService backupJobService;
   @Autowired private PrintService printService;

@@ -1,17 +1,19 @@
 package de.my5t3ry;
 
-import de.my5t3ry.domain.backup.Backup;
-import de.my5t3ry.domain.backup.BackupJob;
-import de.my5t3ry.domain.backup.BackupJobService;
-import de.my5t3ry.domain.backup.BackupService;
 import de.my5t3ry.cli.command.HelpCommand;
 import de.my5t3ry.cli.command.TopLevelCommand;
 import de.my5t3ry.cli.command.backup.AddCommand;
 import de.my5t3ry.cli.command.backup.BackupCommand;
-import de.my5t3ry.cli.command.backup.ListCommand;
-import de.my5t3ry.config.Config;
-import de.my5t3ry.lxc.LxcService;
+import de.my5t3ry.cli.command.backup.BackupListCommand;
+import de.my5t3ry.cli.command.container.ContainerCommand;
+import de.my5t3ry.cli.command.container.ContainerListCommand;
 import de.my5t3ry.cli.ui.print.PrintService;
+import de.my5t3ry.config.Config;
+import de.my5t3ry.domain.backup.Backup;
+import de.my5t3ry.domain.backup.BackupJob;
+import de.my5t3ry.domain.backup.BackupJobService;
+import de.my5t3ry.domain.backup.BackupService;
+import de.my5t3ry.lxc.LxcService;
 import de.my5t3ry.os.ProcessService;
 import de.my5t3ry.terminal.TerminalService;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -31,13 +33,15 @@ import java.util.Properties;
   BackupService.class,
   BackupJobService.class,
   TopLevelCommand.class,
+  AddCommand.class,
+  BackupCommand.class,
+  BackupListCommand.class,
+  HelpCommand.class,
+  ContainerCommand.class,
+  ContainerListCommand.class,
   LxcService.class,
   ProcessService.class,
   PrintService.class,
-  AddCommand.class,
-  BackupCommand.class,
-  ListCommand.class,
-  HelpCommand.class,
   Config.class,
   Backup.class,
   BackupJob.class,
