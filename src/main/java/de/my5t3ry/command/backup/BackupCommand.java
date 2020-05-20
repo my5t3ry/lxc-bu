@@ -20,7 +20,6 @@ public class BackupCommand extends AbstractCommand {
   @Autowired private ListCommand listCommand;
   @Autowired private Environment env;
 
-
   public void init() {
     setInfo(env.getProperty("command.backup"), "backup commands");
     abstractBackupCommands = Arrays.asList(addCommand, listCommand);
@@ -32,7 +31,7 @@ public class BackupCommand extends AbstractCommand {
     for (AbstractBackupCommand curCommand : abstractBackupCommands) {
       if (curCommand.executesCommand(command)) {
         curCommand.execute(command);
-        break;
+        return;
       }
     }
     printService.printCommands(abstractBackupCommands, "backup");
