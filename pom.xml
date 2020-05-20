@@ -146,29 +146,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>wagon-maven-plugin</artifactId>
-                <version>2.0.0</version>
-                <executions>
-                    <execution>
-                        <id>build-remote</id>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>sshexec</goal>
-                        </goals>
-                        <configuration>
-                            <fromDir>.</fromDir>
-                            <includes>*</includes>
-                            <excludes>pom.xml</excludes>
-                            <url>sash@viceroy.dgm-it.de</url>
-                            <commands>
-                                <command>cd /home/sash/;./build-lxc-bu.sh</command>
-                            </commands>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+
         </plugins>
     </build>
 
