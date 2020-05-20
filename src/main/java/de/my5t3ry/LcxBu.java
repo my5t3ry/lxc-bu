@@ -4,7 +4,6 @@ import de.my5t3ry.backup.Backup;
 import de.my5t3ry.backup.BackupJob;
 import de.my5t3ry.backup.BackupJobService;
 import de.my5t3ry.backup.BackupService;
-import de.my5t3ry.command.CommandConfig;
 import de.my5t3ry.command.HelpCommand;
 import de.my5t3ry.command.TopLevelCommand;
 import de.my5t3ry.command.backup.AddCommand;
@@ -31,7 +30,6 @@ import java.util.Properties;
 @Import({
   BackupService.class,
   BackupJobService.class,
-  CommandConfig.class,
   TopLevelCommand.class,
   LxcService.class,
   CmdService.class,

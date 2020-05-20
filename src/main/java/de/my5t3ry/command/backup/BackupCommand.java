@@ -6,10 +6,12 @@ import de.my5t3ry.command.AbstractCommand;
 import de.my5t3ry.lxc.LxcService;
 import de.my5t3ry.print.PrintService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.Arrays;
 import java.util.List;
 
 /** User: my5t3ry Date: 5/4/20 9:58 PM */
@@ -17,9 +19,20 @@ import java.util.List;
 public class BackupCommand extends AbstractCommand {
   @Autowired private PrintService printService;
 
-  @Autowired private List<AbstractBackupCommand> abstractBackupCommands;
+   private List<AbstractBackupCommand> abstractBackupCommands;
 
-  @Autowired private Environment env;
+  @Value("${command.backup}")
+  private String command;
+
+  @Autowired
+  private AddCommand addCommand ;
+  @Autowired
+  private ListCommand listCommand ;
+
+  @PostConstruct
+  public void ihit() {
+    abstractBackupCommands = Arrays.asList(addCommand, listCommand);
+  }
 
   protected BackupCommand() {
     super();
@@ -27,7 +40,7 @@ public class BackupCommand extends AbstractCommand {
 
   @PostConstruct
   public void init() {
-    setInfo(env.getProperty("command.backup"), "backup commands");
+    setInfo(command, "backup commands");
   }
 
   @Override
