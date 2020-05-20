@@ -9,7 +9,7 @@ import java.util.List;
 /** User: my5t3ry Date: 5/4/20 9:52 PM */
 @Service
 public class TopLevelCommand {
-  @Autowired private List<AbstractCommand> commands = new ArrayList<>();
+   private List<AbstractCommand> commands = new ArrayList<>();
 
   public List<AbstractCommand> getCommands() {
     return commands;

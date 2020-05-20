@@ -15,16 +15,13 @@ import java.util.List;
 /** User: my5t3ry Date: 5/4/20 9:58 PM */
 @Component
 public class BackupCommand extends AbstractCommand {
-  @Autowired private BackupService backupService;
-  @Autowired private BackupJobService backupJobService;
   @Autowired private PrintService printService;
 
-  @Autowired private LxcService lxcService;
   @Autowired private List<AbstractBackupCommand> abstractBackupCommands;
 
   @Autowired private Environment env;
 
-  public BackupCommand() {
+  protected BackupCommand() {
     super();
   }
 
