@@ -8,11 +8,11 @@ import javax.annotation.PostConstruct;
 
 /** User: my5t3ry Date: 5/19/20 6:31 AM */
 public class ShellHelper {
+  private final Terminal terminal;
   public String infoColor;
   public String successColor;
   public String warningColor;
   public String errorColor;
-  private final Terminal terminal;
 
   public ShellHelper(Terminal terminal) {
     this.terminal = terminal;

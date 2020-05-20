@@ -1,9 +1,9 @@
 package de.my53ry.command;
 
+import com.jakewharton.fliptables.FlipTableConverters;
 import de.my53ry.backup.Backup;
 import de.my53ry.backup.BackupRepository;
 import de.my53ry.print.PrintService;
-import com.jakewharton.fliptables.FlipTableConverters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -18,9 +18,9 @@ public class ListCommand extends AbstractCommand {
 
   @Autowired private BackupRepository backupRepository;
 
-
   @Value("${command.list}")
   private String command;
+
   protected ListCommand() {
     super();
   }

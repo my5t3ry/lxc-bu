@@ -50,7 +50,6 @@ public class PrintService {
 
   public void printStartMessage() {
     clearScreen();
-    IOProvider.println(
-        "enter ['" + command + "'] for help");
+    IOProvider.println("enter ['" + command + "'] for help");
   }
 }

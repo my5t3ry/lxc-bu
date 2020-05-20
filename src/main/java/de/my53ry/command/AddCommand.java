@@ -21,9 +21,9 @@ public class AddCommand extends AbstractCommand {
 
   @Autowired private LxcService lxcService;
 
-
   @Value("${command.add}")
   private String command;
+
   protected AddCommand() {
     super();
   }
