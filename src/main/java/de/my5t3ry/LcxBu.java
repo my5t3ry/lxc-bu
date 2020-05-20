@@ -26,7 +26,6 @@ import java.util.Properties;
 
 @Import({
   BackupService.class,
-  BackupInterval.class,
   BackupJobService.class,
   TopLevelCommand.class,
   LxcService.class,

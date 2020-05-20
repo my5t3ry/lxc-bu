@@ -5,7 +5,9 @@ public enum BackupInterval {
   DAILY(1),
   WEEKLY(7);
 
-  private final int days;
+  private int days;
+
+  BackupInterval() {}
 
   BackupInterval(int days) {
     this.days = days;

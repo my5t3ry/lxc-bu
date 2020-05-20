@@ -19,7 +19,7 @@ public class Backup {
 
   private String container;
 
-  @Enumerated(javax.persistence.EnumType.STRING)
+  @Enumerated
   private BackupInterval backupInterval;
 
   private int keepSnaphots;
