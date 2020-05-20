@@ -21,9 +21,6 @@ public class ListCommand extends AbstractBackupCommand {
   @Autowired private Environment env;
 
 
-  protected ListCommand() {
-    super();
-  }
 
   public void init() {
     setInfo(env.getProperty("command.list"), "list backups");

@@ -9,6 +9,7 @@ public abstract class AbstractCommand implements CommandInteface {
   private List<String> commands = new ArrayList<>();
   private String description;
 
+
   public AbstractCommand() {}
 
   public void setInfo(String commands, String description) {

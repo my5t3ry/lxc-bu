@@ -22,10 +22,6 @@ public class AddCommand extends AbstractBackupCommand {
 
   @Autowired private Environment env;
 
-  protected AddCommand() {
-    super();
-  }
-
   public void init() {
     setInfo(env.getProperty("command.add"), "add backup");
   }

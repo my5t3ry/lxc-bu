@@ -16,24 +16,15 @@ public class BackupCommand extends AbstractCommand {
 
   private List<AbstractBackupCommand> abstractBackupCommands;
 
-  //  @Value("${command.backup}")
-  //  private String command;
-
   @Autowired private AddCommand addCommand;
   @Autowired private ListCommand listCommand;
   @Autowired private Environment env;
 
-  public void ihit() {
-    abstractBackupCommands = Arrays.asList(addCommand, listCommand);
-    abstractBackupCommands.forEach(curCommand -> curCommand.init());
-  }
-
-  protected BackupCommand() {
-    super();
-  }
 
   public void init() {
     setInfo(env.getProperty("command.backup"), "backup commands");
+    abstractBackupCommands = Arrays.asList(addCommand, listCommand);
+    abstractBackupCommands.forEach(curCommand -> curCommand.init());
   }
 
   @Override
