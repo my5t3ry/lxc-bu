@@ -36,7 +36,7 @@ public class CliController implements CommandLineRunner {
   private String exitCommand;
 
   @Override
-  public void run(String... args) throws Exception {
+  public void run(String... args) {
     initContainers();
     if (args.length == 1 && args[0].equals("e")) {
       backupService.execute();

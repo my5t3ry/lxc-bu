@@ -23,6 +23,9 @@ public class TopLevelCommand {
   }
 
   public void execute(String command) {
+    if (helpCommand.executesCommand(command)) {
+      printService.printCommands(commands, "top-level");
+    }
     for (AbstractCommand curCommand : commands) {
       if (curCommand.executesCommand(command)) {
         curCommand.execute(command);
