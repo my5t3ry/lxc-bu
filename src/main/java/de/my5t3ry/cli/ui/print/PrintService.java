@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StreamUtils;
-import picocli.CommandLine;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -32,9 +31,6 @@ public class PrintService {
   @Value("${command.help}")
   private String command;
 
-  private String extendWithColor(String value, String color) {
-    return CommandLine.Help.Ansi.AUTO.string("@|" + color + " " + value + "|@");
-  }
 
   public void printCommands(final List<? extends CommandInteface> commands, final String context) {
     String format = "%-15s %s";
