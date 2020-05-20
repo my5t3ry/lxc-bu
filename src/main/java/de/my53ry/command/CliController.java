@@ -21,7 +21,7 @@ import java.io.IOException;
 
 /** User: my5t3ry Date: 5/19/20 10:49 PM */
 @Controller
-public class Cli implements CommandLineRunner {
+public class CliController implements CommandLineRunner {
 
   private static ConsoleProgressBar consoleProgressBar;
   @Autowired private BackupService backupService;
@@ -67,9 +67,6 @@ public class Cli implements CommandLineRunner {
           line = lineReader.readLine("> ");
           if (line.equals(exitCommand)) {
             return;
-          }
-          if (line.equals(helpCommand)) {
-            printService.printHelp();
           }
           for (AbstractCommand curCommand : commandService.getCommands()) {
             if (curCommand.executesCommand(line)) {
