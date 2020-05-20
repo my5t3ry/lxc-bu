@@ -22,7 +22,7 @@ public class BackupJobService {
     final Date curDate = new Date();
     LocalDateTime localDateTime =
         curDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-    localDateTime = localDateTime.plusDays(backup.getBackupInterval().getDays());
+    localDateTime = localDateTime.plusDays(backup.getBackupInterval());
     Date result = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
     return result;
   }

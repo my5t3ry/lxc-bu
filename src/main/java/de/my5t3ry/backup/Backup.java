@@ -4,7 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /** User: my5t3ry Date: 5/19/20 6:17 AM */
 @Entity
@@ -19,8 +22,7 @@ public class Backup {
 
   private String container;
 
-  @Enumerated
-  private BackupInterval backupInterval;
+  private int backupInterval;
 
   private int keepSnaphots;
 

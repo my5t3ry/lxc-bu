@@ -51,16 +51,22 @@ public class AddCommand extends AbstractBackupCommand {
 
   private boolean valid(String[] args) {
     try {
-      BackupInterval.valueOf(args[1].toUpperCase());
+      BackupInterval.isValide((args[1].toUpperCase()));
       Integer.valueOf(args[2]);
       lxcService.executeCmd("info", args[0]);
     } catch (NumberFormatException e) {
       printService.printWithColor(
-          "keep snaphots amount must be integer not ['" + args[2] + "'] ", "RED");
+          "keep snaphots amount must be integer not ['" + args
+                  [2] + "'] ", "RED");
       return false;
     } catch (IllegalArgumentException e) {
       printService.printWithColor(
-          "backup interval ['" + args[1] + "'] is no member of ['DAILY','WEEKLY'] ", "RED");
+          "backup interval ['"
+              + args[1]
+              + "'] is no member of ['"
+              + BackupInterval.values.keySet().stream().collect(Collectors.joining(","))
+              + "'] ",
+          "RED");
       return false;
     } catch (Exception e) {
       printService.printWithColor(e.getMessage(), "RED");

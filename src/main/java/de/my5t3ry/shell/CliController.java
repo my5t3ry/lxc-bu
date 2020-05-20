@@ -55,7 +55,6 @@ public class CliController implements CommandLineRunner {
     try {
       consoleProgressBar = new ConsoleProgressBar();
       consoleProgressBar.start();
-      backupService.init();
       terminalService.init();
       lxcService.validateLxc();
       LineReader lineReader =

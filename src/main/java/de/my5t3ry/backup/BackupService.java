@@ -13,12 +13,6 @@ public class BackupService {
   @Autowired private BackupRepository backupRepository;
   @Autowired private PrintService printService;
 
-  public void init() {
-    final Backup tmp =
-        backupRepository.save(Backup.builder().backupInterval(BackupInterval.DAILY).build());
-    backupRepository.delete(tmp);
-  }
-
   public void execute() {
     printService.print("exec");
   }
@@ -27,7 +21,7 @@ public class BackupService {
     final Backup backup =
         Backup.builder()
             .container(args[0])
-            .backupInterval(BackupInterval.valueOf(args[1]))
+            .backupInterval(Integer.parseInt(args[1]))
             .keepSnaphots(Integer.parseInt(args[2]))
             .build();
     backupRepository.save(backup);
