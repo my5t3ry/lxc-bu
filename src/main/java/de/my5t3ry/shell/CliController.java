@@ -19,6 +19,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 /** User: my5t3ry Date: 5/19/20 10:49 PM */
 @Controller
@@ -68,7 +69,7 @@ public class CliController implements CommandLineRunner {
         String line = null;
         try {
           line = lineReader.readLine("> ");
-          if (line.equals(exitCommand)) {
+          if (Arrays.asList(exitCommand.split(",")).contains(exitCommand)) {
             return;
           }
           if (StringUtils.isNotBlank(line)) {

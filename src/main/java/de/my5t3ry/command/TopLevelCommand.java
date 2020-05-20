@@ -34,7 +34,6 @@ public class TopLevelCommand {
     }
     printService.printCommands(commands, "top-level");
   }
-
   public List<AbstractCommand> getCommands() {
     return commands;
   }
