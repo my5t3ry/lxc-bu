@@ -1,17 +1,17 @@
-package de.my53ry.command;
+package de.my53ry.command.backup;
 
-import org.aspectj.bridge.ICommand;
+import de.my53ry.command.CommandInteface;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /** User: my5t3ry Date: 5/4/20 9:53 PM */
-public abstract class AbstractCommand  implements CommandInteface {
+public abstract class AbstractBackupCommand implements CommandInteface {
   private List<String> commands = new ArrayList<>();
   private String description;
 
-  public AbstractCommand() {}
+  public AbstractBackupCommand() {}
 
   public void setInfo(String commands, String description) {
     this.description = description;

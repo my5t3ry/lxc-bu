@@ -26,6 +26,6 @@ public class HelpCommand extends AbstractCommand {
 
   @Override
   public void execute(String command) {
-    printService.printHelp();
+    printService.printTopLevelCommands();
   }
 }

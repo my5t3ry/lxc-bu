@@ -1,5 +1,6 @@
 package de.my53ry.print;
 
+import de.my53ry.command.CommandInteface;
 import de.my53ry.command.CommandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import picocli.CommandLine;
 
 import java.io.PrintStream;
+import java.util.List;
 
 /** User: my5t3ry Date: 5/4/20 1:57 PM */
 @Service
@@ -30,17 +32,15 @@ public class PrintService {
     IOProvider.println(extendWithColor(value, color));
   }
 
-  public void printHelp() {
+  public void printCommands(final List<? extends CommandInteface> commands, final String context) {
     clearScreen();
     String format = "%-15s %s";
-    IOProvider.println("commands");
-    commandService
-        .getCommands()
-        .forEach(
-            curCommand ->
-                IOProvider.println(
-                    String.format(
-                        format, curCommand.getCommandsAsString(), curCommand.getDescription())));
+    IOProvider.println("['" + context + "'] commands");
+    commands.forEach(
+        curCommand ->
+            IOProvider.println(
+                String.format(
+                    format, curCommand.getCommandsAsString(), curCommand.getDescription())));
   }
 
   public void clearScreen() {
@@ -51,5 +51,9 @@ public class PrintService {
   public void printStartMessage() {
     clearScreen();
     IOProvider.println("enter ['" + command + "'] for help");
+  }
+
+  public void printTopLevelCommands() {
+    this.printCommands(commandService.getCommands(), "top-level");
   }
 }

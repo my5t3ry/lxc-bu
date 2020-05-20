@@ -1,6 +1,8 @@
-package de.my53ry.command;
+package de.my53ry.shell;
 
 import de.my53ry.backup.BackupService;
+import de.my53ry.command.AbstractCommand;
+import de.my53ry.command.CommandService;
 import de.my53ry.history.LxcBuHistory;
 import de.my53ry.lxc.LxcService;
 import de.my53ry.print.PrintService;
@@ -34,8 +36,6 @@ public class CliController implements CommandLineRunner {
   @Value("${command.exit}")
   private String exitCommand;
 
-  @Value("${command.help}")
-  private String helpCommand;
 
   @Override
   public void run(String... args) throws Exception {

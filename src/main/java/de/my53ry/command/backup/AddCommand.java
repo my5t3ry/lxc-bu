@@ -1,4 +1,4 @@
-package de.my53ry.command;
+package de.my53ry.command.backup;
 
 import de.my53ry.backup.*;
 import de.my53ry.lxc.LxcService;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 /** User: my5t3ry Date: 5/4/20 9:58 PM */
 @Component
-public class AddCommand extends AbstractCommand {
+public class AddCommand extends AbstractBackupCommand {
   @Autowired private BackupService backupService;
   @Autowired private BackupJobService backupJobService;
   @Autowired private PrintService printService;
@@ -30,7 +30,7 @@ public class AddCommand extends AbstractCommand {
 
   @PostConstruct
   public void init() {
-    setInfo(command, "show help");
+    setInfo(command, "add backup");
   }
 
   @Override

@@ -4,6 +4,7 @@ import de.my53ry.command.CommandService;
 import org.apache.commons.lang3.StringUtils;
 import org.jline.reader.History;
 import org.jline.reader.impl.history.DefaultHistory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.List;
 public class LxcBuHistory extends DefaultHistory implements History {
   private final List<String> controlCommands = new ArrayList<>();
 
-  private final CommandService commandService;
+  @Autowired private CommandService commandService;
 
   public LxcBuHistory(CommandService commandService) {
     this.commandService = commandService;
