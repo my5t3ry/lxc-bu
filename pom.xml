@@ -161,10 +161,9 @@
                             <fromDir>.</fromDir>
                             <includes>*</includes>
                             <excludes>pom.xml</excludes>
-                            <url>sash@viceroy.dgm-it.de -T zsh</url>
-                            <toDir>/home/sash/build/lxc-bu/lxc-bu</toDir>
+                            <url>sash@viceroy.dgm-it.de</url>
                             <commands>
-                                <command>cd /home/sash/build/lxc-bu/lxc-bu;git pull;./build.sh</command>
+                                <command>cd /home/sash/;./build-lxc-bu.sh</command>
                             </commands>
                         </configuration>
                     </execution>
