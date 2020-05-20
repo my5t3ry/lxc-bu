@@ -1,7 +1,6 @@
 package de.my5t3ry.cli.ui.print;
 
 import de.my5t3ry.cli.command.CommandInteface;
-import de.my5t3ry.cli.ui.PromptColor;
 import de.my5t3ry.terminal.TerminalService;
 import org.jline.utils.AttributedStringBuilder;
 import org.jline.utils.AttributedStyle;
@@ -20,21 +19,21 @@ import java.util.List;
 @Service
 public class PrintService {
   @Autowired private TerminalService terminalService;
-  public static String infoColor = "green";
-  public static String successColor = "white";
-  public static String warningColor = "yellow";
-  public static String errorColor = "red";
-  public static String cyan = "cyan";
+  public static int green = 2;
+  public static int white = 7;
+  public static int yellow = 3;
+  public static int red = 1;
+  public static int bright = 0;
+  public static int cyan = 6;
+  public static int magenta = 5;
+  public static int blue = 4;
+  public static int black = 0;
 
   @Value("${command.help}")
   private String command;
 
   private String extendWithColor(String value, String color) {
     return CommandLine.Help.Ansi.AUTO.string("@|" + color + " " + value + "|@");
-  }
-
-  public void printWithColor(String value, String color) {
-    terminalService.getTerminal().writer().println(extendWithColor(value, color));
   }
 
   public void printCommands(final List<? extends CommandInteface> commands, final String context) {
@@ -61,53 +60,51 @@ public class PrintService {
   }
 
   public String getInfoMessage(String message) {
-    return getColored(message, PromptColor.valueOf(infoColor));
+    return getColored(message, green);
   }
 
   public String getSuccessMessage(String message) {
-    return getColored(message, PromptColor.valueOf(successColor));
+    return getColored(message, white);
   }
 
   public String getWarningMessage(String message) {
-    return getColored(message, PromptColor.valueOf(warningColor));
+    return getColored(message, yellow);
   }
 
   public String getErrorMessage(String message) {
-    return getColored(message, PromptColor.valueOf(errorColor));
+    return getColored(message, red);
   }
 
   public void print(String message) {
-    print(message, null);
+    print(message, black);
   }
 
   public void printSuccess(String message) {
-    print(message, PromptColor.valueOf(successColor));
+    print(message, white);
   }
 
   public void printInfo(String message) {
-    print(message, PromptColor.valueOf(infoColor));
+    print(message, green);
   }
 
   public void printWarning(String message) {
-    print(message, PromptColor.valueOf(warningColor));
+    print(message, yellow);
   }
 
   public void printError(String message) {
-    print(message, PromptColor.valueOf(errorColor));
+    print(message, red);
   }
 
-  public void print(String message, PromptColor color) {
+  public void print(String message, int color) {
     String toPrint = message;
-    if (color != null) {
-      toPrint = getColored(message, color);
-    }
+    toPrint = getColored(message, color);
     terminalService.getTerminal().writer().println(toPrint);
     terminalService.getTerminal().writer().flush();
   }
 
-  public String getColored(String message, PromptColor color) {
+  public String getColored(String message, int color) {
     return (new AttributedStringBuilder())
-        .append(message, AttributedStyle.DEFAULT.foreground(color.toJlineAttributedStyle()))
+        .append(message, AttributedStyle.DEFAULT.foreground(color))
         .toAnsi();
   }
 
@@ -116,7 +113,7 @@ public class PrintService {
       final String banner =
           StreamUtils.copyToString(
               new ClassPathResource("banner.txt").getInputStream(), Charset.defaultCharset());
-      printWithColor(banner, PrintService.cyan);
+      print(banner, PrintService.cyan);
     } catch (IOException e) {
       e.printStackTrace();
     }
