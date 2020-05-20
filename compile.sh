@@ -33,7 +33,7 @@ echo "Compiling $ARTIFACT with $GRAALVM_VERSION"
   --no-server \
   --no-fallback \
   -H:Name=$ARTIFACT \
-  --initialize-at-build-time=java.sql.DriverManager,org.hibernate.internal.util.ReflectHelper \
+  --initialize-at-build-time=java.sql.DriverManager,org.hibernate.internal.util.ReflectHelper,de.my5t3ry.backup.BackupInterval \
   -H:+ReportExceptionStackTraces \
   -H:ResourceConfigurationFiles=resources.conf \
   -Dspring.native.remove-unused-autoconfig=true \
