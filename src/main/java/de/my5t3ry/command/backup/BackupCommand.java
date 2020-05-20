@@ -24,7 +24,7 @@ public class BackupCommand extends AbstractCommand {
 
   @Autowired private Environment env;
 
-  protected BackupCommand() {
+  public BackupCommand() {
     super();
   }
 

@@ -54,11 +54,11 @@ public class PrintService {
   }
 
   public void printStartMessage() {
-    clearBannern();
+    printBanner();
     IOProvider.println("enter ['" + command + "'] for help");
   }
 
-  private void clearBannern() {
+  private void printBanner() {
     try {
       final String banner =
           StreamUtils.copyToString(

@@ -4,8 +4,10 @@ import de.my5t3ry.backup.Backup;
 import de.my5t3ry.backup.BackupJob;
 import de.my5t3ry.backup.BackupJobService;
 import de.my5t3ry.backup.BackupService;
+import de.my5t3ry.command.AbstractCommand;
 import de.my5t3ry.command.HelpCommand;
 import de.my5t3ry.command.TopLevelCommand;
+import de.my5t3ry.command.backup.AbstractBackupCommand;
 import de.my5t3ry.command.backup.AddCommand;
 import de.my5t3ry.command.backup.BackupCommand;
 import de.my5t3ry.command.backup.ListCommand;
@@ -14,12 +16,9 @@ import de.my5t3ry.lxc.LxcService;
 import de.my5t3ry.print.PrintService;
 import de.my5t3ry.shell.CmdService;
 import de.my5t3ry.term.TerminalService;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.ImportResource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
@@ -40,6 +39,8 @@ import java.util.Properties;
   AddCommand.class,
   BackupCommand.class,
   ListCommand.class,
+  AbstractCommand.class,
+  AbstractBackupCommand.class,
   HelpCommand.class,
   Config.class,
   Backup.class,

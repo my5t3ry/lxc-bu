@@ -1,12 +1,11 @@
 package de.my5t3ry.command;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /** User: my5t3ry Date: 5/4/20 9:53 PM */
-public abstract class AbstractCommand  implements CommandInteface {
+public abstract class AbstractCommand implements CommandInteface {
   private List<String> commands = new ArrayList<>();
   private String description;
 

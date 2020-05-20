@@ -35,7 +35,6 @@ public class CliController implements CommandLineRunner {
   @Value("${command.exit}")
   private String exitCommand;
 
-
   @Override
   public void run(String... args) throws Exception {
     if (args.length == 1 && args[0].equals("e")) {
