@@ -31,7 +31,7 @@ public class AddCommand extends AbstractBackupCommand {
     final List<String> argumentList = Arrays.asList(command.split(" "));
     if (argumentList.size() != 4) {
       printService.print(
-          "add command requires 3 arguments: container, interval, keep number of snapshots");
+          "wrong argument count. add command requires 3 arguments: container, interval, keep number of snapshots");
       printService.print(
           "['add [<remote>:]<source>[/<snapshot>] <interval(DAILY,WEEKLY)> <keep-snapshots(int)']");
     } else {
@@ -48,7 +48,6 @@ public class AddCommand extends AbstractBackupCommand {
       }
     }
   }
-
 
   private boolean valid(String[] args) {
     try {

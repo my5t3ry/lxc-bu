@@ -16,7 +16,7 @@ public abstract class AbstractCommand implements CommandInteface {
     this.commands.addAll(Arrays.asList(commands.split(",")));
   }
 
-  protected String stripParentCommands(final String cmd) {
+  protected String stripParentCommand(final String cmd) {
     final String[] result = {cmd};
     commands.forEach(curCommand -> result[0] = cmd.replace(curCommand, ""));
     return result[0].trim();
