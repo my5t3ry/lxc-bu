@@ -1,7 +1,6 @@
 package de.my5t3ry.shell;
 
 import de.my5t3ry.backup.BackupService;
-import de.my5t3ry.command.AbstractCommand;
 import de.my5t3ry.command.TopLevelCommand;
 import de.my5t3ry.history.LxcBuHistory;
 import de.my5t3ry.lxc.LxcService;
@@ -66,12 +65,8 @@ public class CliController implements CommandLineRunner {
           if (line.equals(exitCommand)) {
             return;
           }
-          for (AbstractCommand curCommand : topLevelCommand.getCommands()) {
-            if (curCommand.executesCommand(line)) {
-              curCommand.execute(line);
-              break;
-            }
-          }
+          printService.print(line);
+          topLevelCommand.execute(line);
         } catch (UserInterruptException | EndOfFileException e) {
           return;
         }

@@ -1,6 +1,7 @@
 package de.my5t3ry.command;
 
 import de.my5t3ry.print.PrintService;
+import de.my5t3ry.shell.ShellHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,6 @@ public class HelpCommand extends AbstractCommand {
 
   @Override
   public void execute(String command) {
-    printService.printTopLevelCommands();
+    printService.printWithColor("test", ShellHelper.errorColor);
   }
 }

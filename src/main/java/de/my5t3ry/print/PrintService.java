@@ -20,7 +20,6 @@ import java.util.List;
 public class PrintService {
 
   private final PrintStream IOProvider = System.out;
-  @Autowired private TopLevelCommand topLevelCommand;
 
   @Value("${command.help}")
   private String command;
@@ -69,7 +68,4 @@ public class PrintService {
     }
   }
 
-  public void printTopLevelCommands() {
-    this.printCommands(topLevelCommand.getCommands(), "top-level");
-  }
 }
