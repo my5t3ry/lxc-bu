@@ -14,14 +14,14 @@ import java.util.List;
 public class LxcService {
   @Autowired private ProcessService processService;
 
-  public void validateLxc() throws Exception {
+  public void validateLxc() throws VerifyError {
     try {
       final String result = processService.runCmd("lxc", "info");
       if (result.toLowerCase().contains("error")) {
-        throw new IllegalStateException("lxc validation failed with message \\n['" + result + "']");
+        throw new VerifyError("lxc validation failed with message \\n['" + result + "']");
       }
     } catch (IOException | InterruptedException e) {
-      throw new IllegalStateException(
+      throw new VerifyError(
           "lxc validation failed with message \\n['" + e.getMessage() + "']");
     }
   }

@@ -19,6 +19,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 /** User: my5t3ry Date: 5/19/20 10:49 PM */
@@ -38,19 +39,33 @@ public class CliController implements CommandLineRunner {
 
   @Override
   public void run(String... args) {
+    initTerminal();
+    validateLxc();
+    initContainers();
+    if (args.length == 1 && args[0].equals("e")) {
+      backupService.execute();
+    } else {
+      startCli();
+      System.exit(SpringApplication.exit(context));
+    }
+  }
+
+  private void validateLxc() {
+    try {
+      lxcService.validateLxc();
+    } catch (VerifyError e) {
+      printService.printError("lxc not reachable");
+      e.printStackTrace();
+      System.exit(SpringApplication.exit(context));
+    }
+  }
+
+  private void initTerminal() {
     try {
       terminalService.init();
-      lxcService.validateLxc();
-      initContainers();
-      if (args.length == 1 && args[0].equals("e")) {
-        backupService.execute();
-      } else {
-        startCli();
-        System.exit(SpringApplication.exit(context));
-      }
-    } catch (Exception e) {
-      printService.printError("lxc not reachable ");
-      e.printStackTrace();
+    } catch (IOException e) {
+      printService.printError(
+          "terminal could not be initialized with message ['" + e.getMessage() + "'].");
       System.exit(SpringApplication.exit(context));
     }
   }
