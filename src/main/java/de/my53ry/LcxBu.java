@@ -1,9 +1,24 @@
 package de.my53ry;
 
+import de.my53ry.backup.BackupJobService;
+import de.my53ry.backup.BackupService;
+import de.my53ry.command.CommandService;
+import de.my53ry.lxc.LxcService;
+import de.my53ry.print.PrintService;
+import de.my53ry.term.TerminalService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Import;
 
 @SpringBootApplication(proxyBeanMethods = false)
+@Import({
+  BackupService.class,
+  BackupJobService.class,
+  CommandService.class,
+  LxcService.class,
+  PrintService.class,
+  TerminalService.class
+})
 public class LcxBu {
 
   public LcxBu() {}
