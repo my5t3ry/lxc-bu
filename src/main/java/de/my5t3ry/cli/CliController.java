@@ -39,12 +39,18 @@ public class CliController implements CommandLineRunner {
 
   @Override
   public void run(String... args) {
-    initContainers();
-    if (args.length == 1 && args[0].equals("e")) {
-      backupService.execute();
-    } else {
-      startCli();
-      System.exit(SpringApplication.exit(context));
+    try {
+      lxcService.validateLxc();
+      initContainers();
+      if (args.length == 1 && args[0].equals("e")) {
+        backupService.execute();
+      } else {
+        startCli();
+        System.exit(SpringApplication.exit(context));
+      }
+    } catch (Exception e) {
+      printService.printError("lxc not reachable ");
+      e.printStackTrace();
     }
   }
 
@@ -57,7 +63,6 @@ public class CliController implements CommandLineRunner {
       consoleProgressBar = new ConsoleProgressBar();
       consoleProgressBar.start();
       terminalService.init();
-      lxcService.validateLxc();
       LineReader lineReader =
           LineReaderBuilder.builder()
               .terminal(terminalService.getTerminal())

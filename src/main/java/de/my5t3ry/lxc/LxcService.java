@@ -14,7 +14,7 @@ import java.util.List;
 public class LxcService {
   @Autowired private ProcessService processService;
 
-  public void validateLxc() {
+  public void validateLxc() throws Exception {
     try {
       final String result = processService.runCmd("lxc", "info");
       if (result.toLowerCase().contains("error")) {
