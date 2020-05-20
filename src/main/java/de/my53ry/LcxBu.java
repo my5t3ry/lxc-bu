@@ -2,7 +2,7 @@ package de.my53ry;
 
 import de.my53ry.backup.BackupJobService;
 import de.my53ry.backup.BackupService;
-import de.my53ry.command.CommandService;
+import de.my53ry.command.TopLevelCommand;
 import de.my53ry.command.HelpCommand;
 import de.my53ry.command.ListCommand;
 import de.my53ry.command.backup.AddCommand;
@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Import;
 @Import({
   BackupService.class,
   BackupJobService.class,
-  CommandService.class,
+  TopLevelCommand.class,
   LxcService.class,
   CmdService.class,
   PrintService.class,

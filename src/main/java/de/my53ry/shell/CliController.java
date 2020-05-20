@@ -2,11 +2,10 @@ package de.my53ry.shell;
 
 import de.my53ry.backup.BackupService;
 import de.my53ry.command.AbstractCommand;
-import de.my53ry.command.CommandService;
+import de.my53ry.command.TopLevelCommand;
 import de.my53ry.history.LxcBuHistory;
 import de.my53ry.lxc.LxcService;
 import de.my53ry.print.PrintService;
-import de.my53ry.shell.ConsoleProgressBar;
 import de.my53ry.term.TerminalService;
 import org.jline.reader.EndOfFileException;
 import org.jline.reader.LineReader;
@@ -27,7 +26,7 @@ public class CliController implements CommandLineRunner {
 
   private static ConsoleProgressBar consoleProgressBar;
   @Autowired private BackupService backupService;
-  @Autowired private CommandService commandService;
+  @Autowired private TopLevelCommand topLevelCommand;
   @Autowired private TerminalService terminalService;
   @Autowired private LxcService lxcService;
   @Autowired private PrintService printService;
@@ -57,7 +56,7 @@ public class CliController implements CommandLineRunner {
       LineReader lineReader =
           LineReaderBuilder.builder()
               .terminal(terminalService.getTerminal())
-              .history(new LxcBuHistory(commandService))
+              .history(new LxcBuHistory(topLevelCommand))
               .build();
       consoleProgressBar.stop();
       printService.printStartMessage();
@@ -68,7 +67,7 @@ public class CliController implements CommandLineRunner {
           if (line.equals(exitCommand)) {
             return;
           }
-          for (AbstractCommand curCommand : commandService.getCommands()) {
+          for (AbstractCommand curCommand : topLevelCommand.getCommands()) {
             if (curCommand.executesCommand(line)) {
               curCommand.execute(line);
               break;

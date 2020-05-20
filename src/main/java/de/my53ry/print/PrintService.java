@@ -1,7 +1,7 @@
 package de.my53ry.print;
 
 import de.my53ry.command.CommandInteface;
-import de.my53ry.command.CommandService;
+import de.my53ry.command.TopLevelCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import java.util.List;
 public class PrintService {
 
   private final PrintStream IOProvider = System.out;
-  @Autowired private CommandService commandService;
+  @Autowired private TopLevelCommand topLevelCommand;
 
   @Value("${command.help}")
   private String command;
@@ -54,6 +54,6 @@ public class PrintService {
   }
 
   public void printTopLevelCommands() {
-    this.printCommands(commandService.getCommands(), "top-level");
+    this.printCommands(topLevelCommand.getCommands(), "top-level");
   }
 }

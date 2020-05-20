@@ -1,6 +1,6 @@
 package de.my53ry.history;
 
-import de.my53ry.command.CommandService;
+import de.my53ry.command.TopLevelCommand;
 import org.apache.commons.lang3.StringUtils;
 import org.jline.reader.History;
 import org.jline.reader.impl.history.DefaultHistory;
@@ -14,11 +14,11 @@ import java.util.List;
 public class LxcBuHistory extends DefaultHistory implements History {
   private final List<String> controlCommands = new ArrayList<>();
 
-  @Autowired private CommandService commandService;
+  @Autowired private TopLevelCommand topLevelCommand;
 
-  public LxcBuHistory(CommandService commandService) {
-    this.commandService = commandService;
-    this.commandService
+  public LxcBuHistory(TopLevelCommand topLevelCommand) {
+    this.topLevelCommand = topLevelCommand;
+    this.topLevelCommand
         .getCommands()
         .forEach(
             curCommand ->
