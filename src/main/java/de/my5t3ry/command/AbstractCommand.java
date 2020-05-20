@@ -19,7 +19,7 @@ public abstract class AbstractCommand implements CommandInteface {
   protected String stripParentCommands(final String cmd) {
     final String[] result = {cmd};
     commands.forEach(curCommand -> result[0] = cmd.replace(curCommand, ""));
-    return result[0];
+    return result[0].trim();
   }
 
   public boolean executesCommand(final String command) {

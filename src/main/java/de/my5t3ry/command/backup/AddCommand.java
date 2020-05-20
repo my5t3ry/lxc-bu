@@ -49,6 +49,7 @@ public class AddCommand extends AbstractBackupCommand {
     }
   }
 
+
   private boolean valid(String[] args) {
     try {
       BackupInterval.isValide((args[1].toUpperCase()));
@@ -56,8 +57,7 @@ public class AddCommand extends AbstractBackupCommand {
       lxcService.executeCmd("info", args[0]);
     } catch (NumberFormatException e) {
       printService.printWithColor(
-          "keep snaphots amount must be integer not ['" + args
-                  [2] + "'] ", "RED");
+          "keep snaphots amount must be integer not ['" + args[2] + "'] ", "RED");
       return false;
     } catch (IllegalArgumentException e) {
       printService.printWithColor(
