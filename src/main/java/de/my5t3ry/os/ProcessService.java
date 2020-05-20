@@ -1,12 +1,10 @@
 package de.my5t3ry.os;
 
 import org.springframework.stereotype.Service;
-import picocli.CommandLine;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
-
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
@@ -25,7 +23,8 @@ public class ProcessService {
     }
   }
 
-  public String runCmd(final String... cmd) throws IOException, InterruptedException , RuntimeException {
+  public String runCmd(final String... cmd)
+      throws IOException, InterruptedException, RuntimeException {
     final StringBuilder stringBuilder = new StringBuilder();
     ProcessBuilder builder = new ProcessBuilder();
     builder.command(cmd);
