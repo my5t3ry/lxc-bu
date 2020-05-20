@@ -1,5 +1,7 @@
 package de.my5t3ry.config;
 
+import de.my5t3ry.command.backup.ListCommand;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -19,4 +21,6 @@ public class Config {
         new ClassPathResource("application.properties"));
     return propertySourcesPlaceholderConfigurer;
   }
+
+  @Autowired public ListCommand listCommand;
 }
