@@ -19,7 +19,7 @@ public class ProcessService {
       int exitCode = process.waitFor();
       assert exitCode == 0;
     } catch (IOException | InterruptedException e) {
-      throw new IllegalStateException("lxc not found.");
+      throw new IllegalStateException("command failed with message ['" + e.getMessage() + "']");
     }
   }
 

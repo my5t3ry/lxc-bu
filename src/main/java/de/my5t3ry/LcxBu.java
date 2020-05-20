@@ -27,8 +27,6 @@ import java.io.IOException;
 import java.util.Properties;
 
 @SpringBootApplication(proxyBeanMethods = false)
-// @EnableJpaRepositories("de.my53ry")
-
 @Import({
   BackupService.class,
   BackupJobService.class,
