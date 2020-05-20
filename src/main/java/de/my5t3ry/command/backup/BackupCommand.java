@@ -29,7 +29,7 @@ public class BackupCommand extends AbstractCommand {
   @Override
   public void execute(String command) {
     for (AbstractBackupCommand curCommand : abstractBackupCommands) {
-      if (curCommand.executesCommand(command)) {
+      if (curCommand.executesCommand(stripParentCommands(command))) {
         curCommand.execute(command);
         return;
       }

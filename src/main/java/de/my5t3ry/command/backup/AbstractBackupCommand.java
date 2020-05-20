@@ -19,7 +19,7 @@ public abstract class AbstractBackupCommand implements CommandInteface {
   }
 
   public boolean executesCommand(final String command) {
-    return commands.contains(command.split(" ")[0]);
+    return commands.contains(command.replaceAll(" ", ""));
   }
 
   public abstract void execute(String command);

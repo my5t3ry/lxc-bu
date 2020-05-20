@@ -19,6 +19,6 @@ public class HelpCommand extends AbstractCommand {
 
   @Override
   public void execute(String command) {
-    printService.printWithColor("test", ShellHelper.errorColor);
+    return;
   }
 }

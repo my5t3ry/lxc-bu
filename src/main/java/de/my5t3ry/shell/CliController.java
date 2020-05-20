@@ -6,6 +6,7 @@ import de.my5t3ry.history.LxcBuHistory;
 import de.my5t3ry.lxc.LxcService;
 import de.my5t3ry.print.PrintService;
 import de.my5t3ry.term.TerminalService;
+import org.apache.commons.lang3.StringUtils;
 import org.jline.reader.EndOfFileException;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
@@ -40,7 +41,6 @@ public class CliController implements CommandLineRunner {
     if (args.length == 1 && args[0].equals("e")) {
       backupService.execute();
     } else {
-
       startCli();
       System.exit(SpringApplication.exit(context));
     }
@@ -71,9 +71,9 @@ public class CliController implements CommandLineRunner {
           if (line.equals(exitCommand)) {
             return;
           }
-          printService.print("toplevelsize:" + topLevelCommand.getCommands().size());
-          printService.print(line);
-          topLevelCommand.execute(line);
+          if (StringUtils.isNotBlank(line)) {
+            topLevelCommand.execute(line);
+          }
         } catch (UserInterruptException | EndOfFileException e) {
           return;
         }

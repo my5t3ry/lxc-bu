@@ -18,8 +18,6 @@ public class TopLevelCommand {
   private List<AbstractCommand> commands = new ArrayList<>();
 
   public void init() {
-    printService.print("test");
-    helpCommand.execute("h");
     commands = Arrays.asList(helpCommand, backupCommand);
     commands.forEach(curCommand -> curCommand.init());
   }
