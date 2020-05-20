@@ -40,7 +40,6 @@ import java.util.Properties;
   BackupCommand.class,
   ListCommand.class,
   AbstractCommand.class,
-  AbstractBackupCommand.class,
   HelpCommand.class,
   Config.class,
   Backup.class,
