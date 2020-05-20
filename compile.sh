@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ARTIFACT=lxc-bu
-MAINCLASS=de.my53ry.LcxBu
+MAINCLASS=de.my5t3ry.LcxBu
 VERSION=0.0.1.BUILD-SNAPSHOT
 
 GREEN='\033[0;32m'
@@ -31,7 +31,7 @@ echo "Compiling $ARTIFACT with $GRAALVM_VERSION"
   --no-server \
   --no-fallback \
   -H:Name=$ARTIFACT \
-  --initialize-at-build-time=org.jboss.logging,org.hibernate.internal,org.hibernate.jmx,org.hibernate.query,org.hibernate.type \
+  --initialize-at-build-time=java.sql.DriverManager,org.hibernate.internal.util.ReflectHelper \
   -H:+ReportExceptionStackTraces \
   -Dspring.native.remove-unused-autoconfig=true \
   -cp $CP $MAINCLASS >> output.txt ; } 2>> output.txt
