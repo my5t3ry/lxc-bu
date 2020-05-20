@@ -6,7 +6,6 @@ import java.util.stream.Stream;
 
 /** User: my5t3ry Date: 5/19/20 2:16 PM */
 public class BackupInterval {
-
   public static Map<String, Integer> values =
       Stream.of(
               new Object[][] {
