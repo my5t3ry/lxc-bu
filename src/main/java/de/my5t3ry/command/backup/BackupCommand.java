@@ -21,14 +21,15 @@ public class BackupCommand extends AbstractCommand {
 
    private List<AbstractBackupCommand> abstractBackupCommands;
 
-  @Value("${command.backup}")
-  private String command;
+//  @Value("${command.backup}")
+//  private String command;
 
   @Autowired
   private AddCommand addCommand ;
   @Autowired
   private ListCommand listCommand ;
-
+  @Autowired
+  private Environment env;
   @PostConstruct
   public void ihit() {
     abstractBackupCommands = Arrays.asList(addCommand, listCommand);
@@ -40,7 +41,7 @@ public class BackupCommand extends AbstractCommand {
 
   @PostConstruct
   public void init() {
-    setInfo(command, "backup commands");
+    setInfo(env.getProperty("command.backup"), "backup commands");
   }
 
   @Override
