@@ -17,13 +17,6 @@
         <start-class>de.my53ry.LcxBu</start-class>
     </properties>
 
-    <extensions>
-        <extension>
-            <groupId>org.apache.maven.wagon</groupId>
-            <artifactId>wagon-ssh</artifactId>
-            <version>3.0.0</version>
-        </extension>
-    </extensions>
     <dependencies>
         <dependency>
             <groupId>org.springframework.experimental</groupId>
@@ -106,6 +99,14 @@
         </dependency>
     </dependencies>
     <build>
+
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh</artifactId>
+                <version>3.0.0</version>
+            </extension>
+        </extensions>
         <resources>
             <resource>
                 <directory>src/main/resources/</directory>
@@ -154,14 +155,17 @@
                         <id>build-remote</id>
                         <phase>deploy</phase>
                         <goals>
-                            <goal>upload</goal>
+                            <goal>sshexec</goal>
                         </goals>
                         <configuration>
                             <fromDir>.</fromDir>
                             <includes>*</includes>
                             <excludes>pom.xml</excludes>
-                            <url>scp://your.remote.host/</url>
-                            <toDir>remote.dir</toDir>
+                            <url>sash@viceroy.dgm-it.de -T zsh</url>
+                            <toDir>/home/sash/build/lxc-bu/lxc-bu</toDir>
+                            <commands>
+                                <command>cd /home/sash/build/lxc-bu/lxc-bu;git pull;./build.sh</command>
+                            </commands>
                         </configuration>
                     </execution>
                 </executions>
