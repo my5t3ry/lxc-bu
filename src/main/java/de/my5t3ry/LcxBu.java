@@ -1,19 +1,19 @@
 package de.my5t3ry;
 
-import de.my5t3ry.backup.Backup;
-import de.my5t3ry.backup.BackupJob;
-import de.my5t3ry.backup.BackupJobService;
-import de.my5t3ry.backup.BackupService;
-import de.my5t3ry.command.HelpCommand;
-import de.my5t3ry.command.TopLevelCommand;
-import de.my5t3ry.command.backup.AddCommand;
-import de.my5t3ry.command.backup.BackupCommand;
-import de.my5t3ry.command.backup.ListCommand;
+import de.my5t3ry.domain.backup.Backup;
+import de.my5t3ry.domain.backup.BackupJob;
+import de.my5t3ry.domain.backup.BackupJobService;
+import de.my5t3ry.domain.backup.BackupService;
+import de.my5t3ry.cli.command.HelpCommand;
+import de.my5t3ry.cli.command.TopLevelCommand;
+import de.my5t3ry.cli.command.backup.AddCommand;
+import de.my5t3ry.cli.command.backup.BackupCommand;
+import de.my5t3ry.cli.command.backup.ListCommand;
 import de.my5t3ry.config.Config;
 import de.my5t3ry.lxc.LxcService;
-import de.my5t3ry.print.PrintService;
-import de.my5t3ry.shell.CmdService;
-import de.my5t3ry.term.TerminalService;
+import de.my5t3ry.cli.ui.print.PrintService;
+import de.my5t3ry.os.ProcessService;
+import de.my5t3ry.terminal.TerminalService;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Import;
@@ -32,7 +32,7 @@ import java.util.Properties;
   BackupJobService.class,
   TopLevelCommand.class,
   LxcService.class,
-  CmdService.class,
+  ProcessService.class,
   PrintService.class,
   AddCommand.class,
   BackupCommand.class,
@@ -44,8 +44,6 @@ import java.util.Properties;
   TerminalService.class
 })
 public class LcxBu {
-
-  public LcxBu() {}
 
   public static void main(String[] args) {
     try {
