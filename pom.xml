@@ -17,6 +17,13 @@
         <start-class>de.my53ry.LcxBu</start-class>
     </properties>
 
+    <extensions>
+        <extension>
+            <groupId>org.apache.maven.wagon</groupId>
+            <artifactId>wagon-ssh</artifactId>
+            <version>3.0.0</version>
+        </extension>
+    </extensions>
     <dependencies>
         <dependency>
             <groupId>org.springframework.experimental</groupId>
@@ -138,8 +145,30 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>wagon-maven-plugin</artifactId>
+                <version>2.0.0</version>
+                <executions>
+                    <execution>
+                        <id>build-remote</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>upload</goal>
+                        </goals>
+                        <configuration>
+                            <fromDir>.</fromDir>
+                            <includes>*</includes>
+                            <excludes>pom.xml</excludes>
+                            <url>scp://your.remote.host/</url>
+                            <toDir>remote.dir</toDir>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
+
 
     <repositories>
         <repository>
