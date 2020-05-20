@@ -9,4 +9,6 @@ public interface CommandInteface {
   public String getCommandsAsString();
 
   public String getDescription();
+
+  public void init();
 }

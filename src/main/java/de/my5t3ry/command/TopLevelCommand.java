@@ -5,7 +5,6 @@ import de.my5t3ry.print.PrintService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +21,7 @@ public class TopLevelCommand {
     printService.print("test");
     helpCommand.execute("h");
     commands = Arrays.asList(helpCommand, backupCommand);
+    commands.forEach(curCommand -> curCommand.init());
   }
 
   public void execute(String command) {

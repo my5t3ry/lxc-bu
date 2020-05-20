@@ -6,6 +6,7 @@ import de.my5t3ry.backup.BackupRepository;
 import de.my5t3ry.print.PrintService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -17,17 +18,15 @@ public class ListCommand extends AbstractBackupCommand {
   @Autowired private PrintService printService;
 
   @Autowired private BackupRepository backupRepository;
+  @Autowired private Environment env;
 
-  @Value("${command.list}")
-  private String command;
 
   protected ListCommand() {
     super();
   }
 
-  @PostConstruct
   public void init() {
-    setInfo(command, "list backups");
+    setInfo(env.getProperty("command.list"), "list backups");
   }
 
   @Override

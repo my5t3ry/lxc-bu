@@ -4,10 +4,9 @@ import de.my5t3ry.backup.*;
 import de.my5t3ry.lxc.LxcService;
 import de.my5t3ry.print.PrintService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,16 +20,14 @@ public class AddCommand extends AbstractBackupCommand {
 
   @Autowired private LxcService lxcService;
 
-  @Value("${command.add}")
-  private String command;
+  @Autowired private Environment env;
 
   protected AddCommand() {
     super();
   }
 
-  @PostConstruct
   public void init() {
-    setInfo(command, "add backup");
+    setInfo(env.getProperty("command.add"), "add backup");
   }
 
   @Override

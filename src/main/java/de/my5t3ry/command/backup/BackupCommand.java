@@ -1,16 +1,11 @@
 package de.my5t3ry.command.backup;
 
-import de.my5t3ry.backup.BackupJobService;
-import de.my5t3ry.backup.BackupService;
 import de.my5t3ry.command.AbstractCommand;
-import de.my5t3ry.lxc.LxcService;
 import de.my5t3ry.print.PrintService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,27 +14,24 @@ import java.util.List;
 public class BackupCommand extends AbstractCommand {
   @Autowired private PrintService printService;
 
-   private List<AbstractBackupCommand> abstractBackupCommands;
+  private List<AbstractBackupCommand> abstractBackupCommands;
 
-//  @Value("${command.backup}")
-//  private String command;
+  //  @Value("${command.backup}")
+  //  private String command;
 
-  @Autowired
-  private AddCommand addCommand ;
-  @Autowired
-  private ListCommand listCommand ;
-  @Autowired
-  private Environment env;
-  @PostConstruct
+  @Autowired private AddCommand addCommand;
+  @Autowired private ListCommand listCommand;
+  @Autowired private Environment env;
+
   public void ihit() {
     abstractBackupCommands = Arrays.asList(addCommand, listCommand);
+    abstractBackupCommands.forEach(curCommand -> curCommand.init());
   }
 
   protected BackupCommand() {
     super();
   }
 
-  @PostConstruct
   public void init() {
     setInfo(env.getProperty("command.backup"), "backup commands");
   }
