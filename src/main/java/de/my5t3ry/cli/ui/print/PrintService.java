@@ -42,7 +42,6 @@ public class PrintService {
 
   public void stopSpinner() {
     consoleProgressBar.stop();
-    print("\n");
   }
 
   public void printCommands(final List<? extends CommandInteface> commands, final String context) {
@@ -54,8 +53,8 @@ public class PrintService {
                             .getTerminal()
                             .writer()
                             .println(
-                    String.format(
-                        format, curCommand.getCommandsAsString(), curCommand.getDescription())));
+                                    String.format(
+                                            format, curCommand.getCommandsAsString(), curCommand.getDescription())));
   }
 
   public void clearScreen() {
