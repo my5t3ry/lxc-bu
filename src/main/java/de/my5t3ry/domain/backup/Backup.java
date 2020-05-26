@@ -4,10 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /** User: my5t3ry Date: 5/19/20 6:17 AM */
 @Entity
@@ -26,15 +25,19 @@ public class Backup {
 
   private int keepSnaphots;
 
-  public Backup() {}
+  @OneToMany
+  private List<Snapshot> snapshots = new ArrayList<>();
+
+  public Backup() {
+  }
 
   @Override
   public String toString() {
     return "Backup{"
-        + "container='"
-        + container
-        + '\''
-        + ", interval="
+            + "container='"
+            + container
+            + '\''
+            + ", interval="
         + backupInterval
         + ", keepSnaphots="
         + keepSnaphots

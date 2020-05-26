@@ -3,6 +3,7 @@ package de.my5t3ry.cli.command;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /** User: my5t3ry Date: 5/4/20 9:53 PM */
 public abstract class AbstractCommand implements CommandInteface {
@@ -17,9 +18,14 @@ public abstract class AbstractCommand implements CommandInteface {
   }
 
   protected String stripParentCommand(final String cmd) {
-    final String[] result = {cmd};
-    commands.forEach(curCommand -> result[0] = result[0].replace(curCommand, ""));
-    return result[0].trim();
+    final List<String>[] result = new List[]{Arrays.asList(cmd.split(" "))};
+    commands.forEach(
+            curCommand -> {
+              if (result[0].get(0).equals(curCommand)) {
+                result[0] = result[0].subList(1, result[0].size());
+              }
+            });
+    return result[0].stream().collect(Collectors.joining(" "));
   }
 
   public boolean executesCommand(final String command) {

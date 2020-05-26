@@ -10,9 +10,8 @@ import de.my5t3ry.cli.command.container.ContainerListCommand;
 import de.my5t3ry.cli.ui.print.PrintService;
 import de.my5t3ry.config.Config;
 import de.my5t3ry.domain.backup.Backup;
-import de.my5t3ry.domain.backup.BackupJob;
-import de.my5t3ry.domain.backup.BackupJobService;
 import de.my5t3ry.domain.backup.BackupService;
+import de.my5t3ry.domain.backup.Snapshot;
 import de.my5t3ry.lxc.LxcService;
 import de.my5t3ry.os.ProcessService;
 import de.my5t3ry.terminal.TerminalService;
@@ -29,21 +28,20 @@ import java.util.Properties;
 @SpringBootApplication(proxyBeanMethods = false)
 @Import({
   BackupService.class,
-  BackupJobService.class,
   TopLevelCommand.class,
   AddCommand.class,
-  BackupCommand.class,
-  BackupListCommand.class,
-  HelpCommand.class,
-  ContainerCommand.class,
-  ContainerListCommand.class,
-  LxcService.class,
-  ProcessService.class,
-  PrintService.class,
-  Config.class,
-  Backup.class,
-  BackupJob.class,
-  TerminalService.class
+        BackupCommand.class,
+        BackupListCommand.class,
+        HelpCommand.class,
+        ContainerCommand.class,
+        ContainerListCommand.class,
+        LxcService.class,
+        ProcessService.class,
+        PrintService.class,
+        Config.class,
+        Backup.class,
+        Snapshot.class,
+        TerminalService.class
 })
 public class LcxBu {
 

@@ -1,13 +1,17 @@
 package de.my5t3ry.cli.command.backup;
 
 import de.my5t3ry.cli.command.AbstractCommand;
+import de.my5t3ry.cli.ui.ConsoleProgressBar;
 import de.my5t3ry.cli.ui.print.PrintService;
-import de.my5t3ry.domain.backup.*;
+import de.my5t3ry.domain.backup.Backup;
+import de.my5t3ry.domain.backup.BackupInterval;
+import de.my5t3ry.domain.backup.BackupService;
 import de.my5t3ry.lxc.LxcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,7 +20,6 @@ import java.util.stream.Collectors;
 @Component
 public class AddCommand extends AbstractCommand {
   @Autowired private BackupService backupService;
-  @Autowired private BackupJobService backupJobService;
   @Autowired private PrintService printService;
 
   @Autowired private LxcService lxcService;
@@ -29,23 +32,30 @@ public class AddCommand extends AbstractCommand {
 
   @Override
   public void execute(String command) {
+    ConsoleProgressBar consoleProgressBar = new ConsoleProgressBar();
+    consoleProgressBar.start();
     final List<String> argumentList = Arrays.asList(command.split(" "));
     if (argumentList.size() != 4) {
       printService.print(
-          "wrong argument count. add command requires 3 arguments: container, interval, keep number of snapshots");
+              "wrong argument count. add command requires 3 arguments: container, interval, keep number of snapshots");
       printService.print(
-          "['add [<remote>:]<source>[/<snapshot>] <interval(DAILY,WEEKLY)> <keep-snapshots(int)']");
+              "['add [<remote>:]<source>[/<snapshot>] <interval(DAILY,WEEKLY)> <keep-snapshots(int)']");
     } else {
       String[] args =
-          argumentList.subList(1, argumentList.size()).toArray(new String[argumentList.size() - 1]);
+              argumentList.subList(1, argumentList.size()).toArray(new String[argumentList.size() - 1]);
       if (!valid(args)) {
         return;
       } else {
-        printService.print(Arrays.asList(args).stream().collect(Collectors.joining(", ")));
-        final Backup backup = backupService.addBackup(args);
-        final BackupJob backupJob = backupJobService.scheduleBackupJob(backup);
-        printService.print("added backup ['" + backup.toString() + "']");
-        printService.print("scheduled backup job for  ['" + backupJob.getScheduledTime() + "']");
+        try {
+
+          printService.print(Arrays.asList(args).stream().collect(Collectors.joining(", ")));
+          final Backup backup;
+          backup = backupService.addBackup(args);
+          printService.print("added backup ['" + backup.toString() + "']");
+          consoleProgressBar.stop();
+        } catch (IOException | InterruptedException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
