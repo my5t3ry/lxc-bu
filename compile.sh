@@ -12,7 +12,7 @@ rm -rf target
 mkdir -p target/native-image
 
 echo "Packaging $ARTIFACT with Maven"
-mvn -ntp package -T 8 > target/native-image/output.txt
+mvn -ntp package -T 8 >target/native-image/output.txt
 
 JAR="$ARTIFACT-$VERSION-exec.jar"
 rm -f $ARTIFACT
@@ -22,10 +22,10 @@ cd target/native-image
 jar -xvf ../$JAR
 cp -R META-INF BOOT-INF/classes
 
-LIBPATH=`find BOOT-INF/lib | tr '\n' ':'`
+LIBPATH=$(find BOOT-INF/lib | tr '\n' ':')
 CP=BOOT-INF/classes:$LIBPATH
 
-GRAALVM_VERSION=`native-image --version`
+GRAALVM_VERSION=$(native-image --version)
 echo "Compiling $ARTIFACT with $GRAALVM_VERSION"
 { time native-image \
   --verbose \
@@ -35,12 +35,14 @@ echo "Compiling $ARTIFACT with $GRAALVM_VERSION"
   -H:Name=$ARTIFACT \
   --initialize-at-build-time=java.sql.DriverManager,org.hibernate.internal.util.ReflectHelper \
   -H:+ReportExceptionStackTraces \
-  -H:ResourceConfigurationFiles=resources.conf \
+  -H:ReflectionConfigurationFiles=reflect-config.json \
+  -H:DynamicProxyConfigurationFiles=proxy-config.json \
+  -H:JNIConfigurationFiles=jni-config.json \
+  -H:ResourceConfigurationFiles=resources-config.config \
   -Dspring.native.remove-unused-autoconfig=true \
-  -cp $CP $MAINCLASS  ; }
+  -cp $CP $MAINCLASS; }
 
-if [[ -f $ARTIFACT ]]
-then
+if [[ -f $ARTIFACT ]]; then
   printf "${GREEN}SUCCESS${NC}\n"
   mv ./$ARTIFACT ..
   exit 0
@@ -49,4 +51,3 @@ else
   printf "${RED}FAILURE${NC}: an error occurred when compiling the native-image.\n"
   exit 1
 fi
-

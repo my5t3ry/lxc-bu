@@ -115,7 +115,14 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
                 <configuration>
+                    <mainClass>de.my5t3ry.LcxBu</mainClass>
+                    <executable>true</executable>
                     <classifier>exec</classifier>
                 </configuration>
             </plugin>

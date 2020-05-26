@@ -1,5 +1,6 @@
 package de.my5t3ry;
 
+import de.my5t3ry.cli.command.ExecuteCommand;
 import de.my5t3ry.cli.command.HelpCommand;
 import de.my5t3ry.cli.command.TopLevelCommand;
 import de.my5t3ry.cli.command.backup.AddCommand;
@@ -32,6 +33,7 @@ import java.util.Properties;
         TopLevelCommand.class,
         AddCommand.class,
         BackupCommand.class,
+        ExecuteCommand.class,
         BackupListCommand.class,
         HelpCommand.class,
         ContainerCommand.class,

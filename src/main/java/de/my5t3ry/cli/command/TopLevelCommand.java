@@ -14,13 +14,17 @@ import java.util.List;
 @Controller
 public class TopLevelCommand {
   @Autowired public BackupCommand backupCommand;
-  @Autowired public HelpCommand helpCommand;
-  @Autowired public ContainerCommand containerCommand;
+  @Autowired
+  public HelpCommand helpCommand;
+  @Autowired
+  public ExecuteCommand executeCommand;
+  @Autowired
+  public ContainerCommand containerCommand;
   @Autowired private PrintService printService;
   private List<AbstractCommand> commands = new ArrayList<>();
 
   public void init() {
-    commands = Arrays.asList(helpCommand, backupCommand, containerCommand);
+    commands = Arrays.asList(helpCommand, backupCommand, containerCommand, executeCommand);
     commands.forEach(curCommand -> curCommand.init());
   }
 

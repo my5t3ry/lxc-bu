@@ -28,6 +28,13 @@ public class Backup {
   @OneToMany(cascade = CascadeType.ALL)
   private List<Snapshot> snapshots = new ArrayList<>();
 
+  public Date getScheduled() {
+    if (scheduled == null) {
+      return new Date();
+    }
+    return scheduled;
+  }
+
   private Date scheduled;
 
   public Backup() {
