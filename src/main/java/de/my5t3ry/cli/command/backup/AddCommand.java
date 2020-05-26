@@ -45,7 +45,6 @@ public class AddCommand extends AbstractCommand {
         return;
       } else {
         try {
-
           printService.print(Arrays.asList(args).stream().collect(Collectors.joining(", ")));
           final Backup backup;
           backup = backupService.addBackup(args);
