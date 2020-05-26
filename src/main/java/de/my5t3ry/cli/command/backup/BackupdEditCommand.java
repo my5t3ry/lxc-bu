@@ -63,7 +63,7 @@ public class BackupdEditCommand extends AbstractCommand {
     if (!StringUtils.isNumeric(argumentList.get(0))) {
       return null;
     }
-    return backupRepository.findById(Long.valueOf(argumentList.get(0))).get();
+    return backupRepository.findById(Long.valueOf(argumentList.get(0))).orElse(null);
   }
 
   private boolean valid(List<String> args) {
