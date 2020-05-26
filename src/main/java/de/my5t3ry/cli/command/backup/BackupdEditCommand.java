@@ -32,8 +32,7 @@ public class BackupdEditCommand extends AbstractBackupCommand {
   public void execute(String command) {
     final List<String> argumentList = Arrays.asList(stripParentCommand(command).split(" "));
     if (argumentList.size() != 4) {
-      printService.printInfo(
-          "wrong argument count. add command requires 4 arguments:");
+      printService.printInfo("wrong argument count. add command requires 4 arguments:");
       printService.printInfo(
           "['edit id|name [<remote>:]<source>[/<snapshot>] <interval("
               + BackupInterval.values.keySet().stream().collect(Collectors.joining(","))
