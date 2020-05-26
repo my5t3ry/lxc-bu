@@ -29,7 +29,7 @@ public class BackupSnapshotDeleteCommand extends AbstractBackupCommand {
     final List<String> argumentList = Arrays.asList(stripParentCommand(command).split(" "));
     if (argumentList.size() != 2) {
       printService.printInfo(
-          "wrong argument count. add command requires 2 arguments: backup(id,name)] snapshot(id,name )");
+          "wrong argument count. add command requires 2 arguments: backup(id,name)] snapshot(id,name)");
       printService.printInfo("['delete/d backup(id,name)] snapshot(id,name )");
     } else {
       if (isBackupArgumentValid(argumentList.get(0))) {
@@ -46,7 +46,7 @@ public class BackupSnapshotDeleteCommand extends AbstractBackupCommand {
           printService.printInfo(
               " backup ['"
                   + argumentList.get(0)
-                  + "'] has no snapshot  ['"
+                  + "'] has no snapshot ['"
                   + argumentList.get(1)
                   + "']");
         }
