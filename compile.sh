@@ -35,10 +35,10 @@ echo "Compiling $ARTIFACT with $GRAALVM_VERSION"
   -H:Name=$ARTIFACT \
   --initialize-at-build-time=java.sql.DriverManager,org.hibernate.internal.util.ReflectHelper \
   -H:+ReportExceptionStackTraces \
-  -H:ReflectionConfigurationFiles=graal-config/reflect-config.json \
-  -H:DynamicProxyConfigurationFiles=graal-config/proxy-config.json \
-  -H:JNIConfigurationFiles=graal-config/jni-config.json \
-  -H:ResourceConfigurationFiles=graal-config/resources-config.config \
+  -H:ReflectionConfigurationFiles=../classes/graal-config/reflect-config.json \
+  -H:DynamicProxyConfigurationFiles=../classes/graal-config/proxy-config.json \
+  -H:JNIConfigurationFiles=../classes/graal-config/jni-config.json \
+  -H:ResourceConfigurationFiles=../classes/graal-config/resources-config.config \
   -Dspring.native.remove-unused-autoconfig=true \
   -cp $CP $MAINCLASS; }
 
