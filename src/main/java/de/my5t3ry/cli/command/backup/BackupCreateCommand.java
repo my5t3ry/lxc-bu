@@ -34,7 +34,7 @@ public class BackupCreateCommand extends AbstractBackupCommand {
 
       } else {
         printService.printError(
-            "can not find backup for [" + argumentList.get(0) + "] id or name required");
+            String.format("can not find backup for [%s] id or name required", argumentList.get(0)));
       }
     }
   }

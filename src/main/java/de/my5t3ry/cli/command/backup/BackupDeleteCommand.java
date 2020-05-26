@@ -32,7 +32,7 @@ public class BackupDeleteCommand extends AbstractBackupCommand {
     } else {
       if (isBackupArgumentValid(argumentList.get(0))) {
         backupRepository.delete(getBackupByArgument(argumentList.get(0)));
-        printService.printInfo("deleted backup ['" + argumentList.get(0) + "']");
+        printService.printInfo(String.format("deleted backup ['%s']", argumentList.get(0)));
       } else {
         printService.printError(
             String.format("can not find backup for [%s] id or name required", argumentList.get(0)));
