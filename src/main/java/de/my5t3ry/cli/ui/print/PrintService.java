@@ -100,11 +100,11 @@ public class PrintService {
   }
 
   public void printSuccess(String message) {
-    print(message, green);
+    println(message, green);
   }
 
   public void printInfo(String message) {
-    print(message, white);
+    println(message, white);
   }
 
   public void printInfoWithTimeStamp(String message) {
@@ -112,18 +112,23 @@ public class PrintService {
   }
 
   public void print(String message, int color) {
-    String toPrint = message;
-    toPrint = getColored(message, color);
+    String toPrint = getColored(message, color);
+    terminalService.getTerminal().writer().print(toPrint);
+    terminalService.getTerminal().writer().flush();
+  }
+
+  public void println(String message, int color) {
+    String toPrint = getColored(message, color);
     terminalService.getTerminal().writer().println(toPrint);
     terminalService.getTerminal().writer().flush();
   }
 
   public void printWarning(String message) {
-    print("warning: ".concat(message), yellow);
+    println("warning: ".concat(message), yellow);
   }
 
   public void printError(String message) {
-    print(message, red);
+    println(message, red);
   }
 
   public void printWithTimestamp(String message, int color) {
