@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * User: my5t3ry Date: 5/19/20 6:17 AM
@@ -39,7 +40,10 @@ public class BackupService {
             curDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
     localDateTime = localDateTime.plusDays(20);
     Date result = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
-    final List<Backup> activeBackups = backupRepository.findAllWithScheduledBefore(result);
+    final List<Backup> activeBackups =
+            backupRepository.findAll().stream()
+                    .filter(curBackup -> curBackup.getScheduled().compareTo(result) > 0)
+                    .collect(Collectors.toList());
     if (activeBackups.size() > 0) {
       printService.printInfo("processing  ['" + activeBackups.size() + "'] scheduled snapshots");
       activeBackups.forEach(
