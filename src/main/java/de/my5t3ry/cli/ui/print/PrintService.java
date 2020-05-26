@@ -52,6 +52,7 @@ public class PrintService {
 
   public void stopSpinner() {
     consoleProgressBar.stop();
+    print("\n");
   }
 
   public void printCommands(final List<? extends CommandInteface> commands, final String context) {
