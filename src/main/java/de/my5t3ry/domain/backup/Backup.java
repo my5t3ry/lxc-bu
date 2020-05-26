@@ -21,10 +21,8 @@ public class Backup {
   private Long id;
 
   private String container;
-
-  private int backupInterval;
-
-  private int keepSnaphots;
+  private int scheduleInterval;
+  private int keepSnapshots;
 
   @OneToMany(cascade = CascadeType.ALL)
   private List<Snapshot> snapshots = new ArrayList<>();
@@ -41,9 +39,9 @@ public class Backup {
             + container
             + '\''
             + ", interval="
-            + backupInterval
+            + scheduleInterval
             + ", keepSnaphots="
-            + keepSnaphots
+            + keepSnapshots
             + '}';
   }
 }

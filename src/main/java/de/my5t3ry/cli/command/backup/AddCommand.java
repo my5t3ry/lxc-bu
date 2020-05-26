@@ -49,7 +49,7 @@ public class AddCommand extends AbstractCommand {
           final Backup backup;
           backup = backupService.addBackup(args);
           printService.stopSpinner();
-          if (backup.getSnapshots().size() > backup.getKeepSnaphots()) {
+          if (backup.getSnapshots().size() > backup.getScheduleInterval()) {
             printService.printWarning(
                     "the number of existing snapshots is bigger than the configured amount of snapshots to keep\n,"
                             + " old snapshots will be deleted on the next scheduled backup run ");
