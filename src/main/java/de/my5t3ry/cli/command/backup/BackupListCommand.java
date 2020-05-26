@@ -1,6 +1,7 @@
 package de.my5t3ry.cli.command.backup;
 
 import de.my5t3ry.backup.Backup;
+import de.my5t3ry.backup.BackupInterval;
 import de.my5t3ry.backup.BackupRepository;
 import de.my5t3ry.cli.command.AbstractCommand;
 import de.my5t3ry.cli.ui.print.PrintService;
@@ -9,6 +10,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /** User: my5t3ry Date: 5/4/20 9:58 PM */
 @Component
@@ -26,7 +28,9 @@ public class BackupListCommand extends AbstractCommand {
     final List<Backup> backups = backupRepository.findAll();
     if (backups.isEmpty()) {
       printService.printInfo(
-          "no backup found. add job with ['backup add [<remote>:]<source>[/<snapshot>] <interval(DAILY,WEEKLY)> <keep-snapshots(int)']");
+          "no backup found. add job with ['backup add [<remote>:]<source>[/<snapshot>] <interval("
+              + BackupInterval.values.keySet().stream().collect(Collectors.joining(","))
+              + ")> <keep-snapshots(int)']");
     } else {
       printService.printTable(backups);
     }
