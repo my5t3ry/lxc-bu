@@ -30,7 +30,10 @@ public class BackupCreateCommand extends AbstractBackupCommand {
       printService.printInfo("['create/c id,name]");
     } else {
       if (isCommandValid(argumentList)) {
+        printService.startSpinner();
         backupService.createBackup(getBackupByArgument(argumentList));
+        printService.stopSpinner();
+
       } else {
         printService.printError(
             "can not find backup for [" + argumentList.get(0) + "] id or name required");
