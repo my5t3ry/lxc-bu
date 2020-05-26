@@ -31,12 +31,11 @@ public class BackupCreateCommand extends AbstractBackupCommand {
       printService.printInfo("wrong argument count. add command requires 1 argument: id||name");
       printService.printInfo("['create/c id,name]");
     } else {
-      if (!valid(argumentList)) {
-        printService.printError(
-            "can not find backup for [" + argumentList.get(0) + "] id or name required");
-      } else {
+      if (valid(argumentList)) {
         backupService.createBackup(getBackupByArgument(argumentList));
       }
+      printService.printError(
+          "can not find backup for [" + argumentList.get(0) + "] id or name required");
     }
   }
 
@@ -56,5 +55,10 @@ public class BackupCreateCommand extends AbstractBackupCommand {
   @Override
   protected BackupRepository getBackupRepository() {
     return this.backupRepository;
+  }
+
+  @Override
+  protected PrintService getPrintService() {
+    return this.printService;
   }
 }

@@ -1,10 +1,11 @@
 package de.my5t3ry.cli.command.backup;
 
-import de.my5t3ry.cli.command.AbstractCommand;
-import de.my5t3ry.cli.ui.print.PrintService;
 import de.my5t3ry.backup.Backup;
 import de.my5t3ry.backup.BackupInterval;
+import de.my5t3ry.backup.BackupRepository;
 import de.my5t3ry.backup.BackupService;
+import de.my5t3ry.cli.command.AbstractCommand;
+import de.my5t3ry.cli.ui.print.PrintService;
 import de.my5t3ry.lxc.LxcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -16,8 +17,9 @@ import java.util.stream.Collectors;
 
 /** User: my5t3ry Date: 5/4/20 9:58 PM */
 @Component
-public class BackupdAddCommand extends AbstractCommand {
+public class BackupdAddCommand extends AbstractBackupCommand {
   @Autowired private BackupService backupService;
+  @Autowired private BackupRepository backupRepository;
   @Autowired private PrintService printService;
   @Autowired private LxcService lxcService;
   @Autowired private Environment env;
@@ -54,16 +56,7 @@ public class BackupdAddCommand extends AbstractCommand {
 
   private boolean valid(List<String> args) {
     try {
-      if (!BackupInterval.isValide((args.get(1).toUpperCase()))) {
-        printService.print(
-            "backup interval ['"
-                + args.get(1)
-                + "'] is no member of ['"
-                + BackupInterval.values.keySet().stream().collect(Collectors.joining(","))
-                + "'] ",
-            PrintService.red);
-        return false;
-      }
+      if (isIntervalArgumentValid(args)) return false;
       Integer.valueOf(args.get(2));
       lxcService.executeCmd("info", args.get(0));
     } catch (NumberFormatException e) {
@@ -84,5 +77,20 @@ public class BackupdAddCommand extends AbstractCommand {
       return false;
     }
     return true;
+  }
+
+  @Override
+  protected BackupService getBackupService() {
+    return this.backupService;
+  }
+
+  @Override
+  protected BackupRepository getBackupRepository() {
+    return this.backupRepository;
+  }
+
+  @Override
+  protected PrintService getPrintService() {
+    return this.printService;
   }
 }

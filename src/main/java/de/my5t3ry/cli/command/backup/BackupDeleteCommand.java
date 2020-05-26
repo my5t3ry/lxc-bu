@@ -32,15 +32,13 @@ public class BackupDeleteCommand extends AbstractBackupCommand {
       printService.printInfo("wrong argument count. add command requires 1 argument: id||name");
       printService.printInfo("['create/c id,name]");
     } else {
-      if (!valid(argumentList)) {
-        printService.printError(
-            "can not find backup for [" + argumentList.get(0) + "] id or name required");
-      } else {
+      if (valid(argumentList)) {
         backupRepository.delete(getBackupByArgument(argumentList));
         printService.print("deleted backup ['" + argumentList.get(0) + "']");
       }
+      printService.printError(
+          "can not find backup for [" + argumentList.get(0) + "] id or name required");
     }
-    return;
   }
 
   private boolean valid(List<String> argumentList) {
@@ -59,5 +57,10 @@ public class BackupDeleteCommand extends AbstractBackupCommand {
   @Override
   protected BackupRepository getBackupRepository() {
     return this.backupRepository;
+  }
+
+  @Override
+  protected PrintService getPrintService() {
+    return this.printService;
   }
 }

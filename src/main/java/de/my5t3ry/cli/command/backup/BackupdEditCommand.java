@@ -1,10 +1,10 @@
 package de.my5t3ry.cli.command.backup;
 
+import de.my5t3ry.backup.Backup;
+import de.my5t3ry.backup.BackupInterval;
 import de.my5t3ry.backup.BackupRepository;
 import de.my5t3ry.backup.BackupService;
 import de.my5t3ry.cli.ui.print.PrintService;
-import de.my5t3ry.backup.Backup;
-import de.my5t3ry.backup.BackupInterval;
 import de.my5t3ry.lxc.LxcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -59,14 +59,7 @@ public class BackupdEditCommand extends AbstractBackupCommand {
             "can not find backup for [" + args.get(0) + "] id or name required");
         return false;
       }
-      if (!BackupInterval.isValide((args.get(2).toUpperCase()))) {
-        printService.print(
-            "backup interval ['"
-                + args.get(2)
-                + "'] is no member of ['"
-                + BackupInterval.values.keySet().stream().collect(Collectors.joining(","))
-                + "'] ",
-            PrintService.red);
+      if (!isIntervalArgumentValid(args)) {
         return false;
       }
       Integer.valueOf(args.get(3));
@@ -97,5 +90,10 @@ public class BackupdEditCommand extends AbstractBackupCommand {
   @Override
   protected BackupRepository getBackupRepository() {
     return this.backupRepository;
+  }
+
+  @Override
+  protected PrintService getPrintService() {
+    return this.printService;
   }
 }
