@@ -13,7 +13,7 @@ public class BackupInterval {
                 {"HOURLY", 1},
                 {"FOUR_HOURLY", 4},
                 {"TWELVE_HOURLY", 24},
-                {"DAILY", 24},
+                {"DAILY", 12},
                 {"TWO_DAILY", 48},
                 {"WEEKLY", 168},
               })
