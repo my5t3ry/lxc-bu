@@ -10,7 +10,7 @@ import java.io.IOException;
 @Service
 public class TerminalService {
 
-  public Terminal terminal;
+  private Terminal terminal;
 
   public void init() throws IOException {
     terminal = TerminalBuilder.builder().system(true).nativeSignals(true).build();
