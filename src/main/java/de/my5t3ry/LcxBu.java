@@ -10,7 +10,10 @@ import de.my5t3ry.cli.command.container.ContainerCommand;
 import de.my5t3ry.cli.command.container.ContainerListCommand;
 import de.my5t3ry.cli.ui.print.PrintService;
 import de.my5t3ry.config.Config;
-import de.my5t3ry.domain.backup.*;
+import de.my5t3ry.domain.backup.Backup;
+import de.my5t3ry.domain.backup.BackupService;
+import de.my5t3ry.domain.backup.ContainerInfo;
+import de.my5t3ry.domain.backup.Snapshot;
 import de.my5t3ry.lxc.LxcService;
 import de.my5t3ry.os.ProcessService;
 import de.my5t3ry.terminal.TerminalService;
@@ -27,7 +30,6 @@ import java.util.Properties;
 @SpringBootApplication(proxyBeanMethods = false)
 @Import({
         BackupService.class,
-        BackupRepository.class,
         TopLevelCommand.class,
         AddCommand.class,
         BackupCommand.class,
