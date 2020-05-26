@@ -12,8 +12,8 @@ public class BackupInterval {
               new Object[][] {
                 {"HOURLY", 1},
                 {"FOUR_HOURLY", 4},
-                {"TWELVE_HOURLY", 24},
-                {"DAILY", 12},
+                {"TWELVE_HOURLY", 12},
+                {"DAILY", 24},
                 {"TWO_DAILY", 48},
                 {"WEEKLY", 168},
               })
