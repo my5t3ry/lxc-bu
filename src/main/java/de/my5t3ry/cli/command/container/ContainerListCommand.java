@@ -30,13 +30,14 @@ public class ContainerListCommand extends AbstractCommand {
       try {
         final String processResultMsg = lxcService.executeCmd("list", stripParentCommand(command));
         if (StringUtils.isBlank(processResultMsg)) {
-          printService.printInfo("host ['" + stripParentCommand(command) + "'] empty or not found");
+          printService.printInfo(
+              String.format("host ['%s'] empty or not found", stripParentCommand(command)));
         } else {
           printService.printInfo(processResultMsg);
         }
       } catch (IOException | InterruptedException e) {
         printService.printError(
-            "container list command failed with msg ['" + e.getMessage() + "']");
+                String.format("container list command failed with msg ['%s']", e.getMessage()));
       }
     }
   }

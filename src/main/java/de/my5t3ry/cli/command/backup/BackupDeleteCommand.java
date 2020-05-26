@@ -35,7 +35,7 @@ public class BackupDeleteCommand extends AbstractBackupCommand {
         printService.printInfo("deleted backup ['" + argumentList.get(0) + "']");
       } else {
         printService.printError(
-            "can not find backup for [" + argumentList.get(0) + "] id or name required");
+            String.format("can not find backup for [%s] id or name required", argumentList.get(0)));
       }
     }
   }

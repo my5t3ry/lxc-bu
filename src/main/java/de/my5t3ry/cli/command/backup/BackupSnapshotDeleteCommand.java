@@ -38,21 +38,19 @@ public class BackupSnapshotDeleteCommand extends AbstractBackupCommand {
           try {
             backupService.deleteSnapshot(
                 backup, backup.getSnapShotFromArgument(argumentList.get(1)));
-            printService.printInfo("deleted backup ['" + argumentList.get(0) + "']");
+            printService.printInfo(String.format("deleted backup ['%s']", argumentList.get(0)));
           } catch (VerifyError error) {
             printService.printError(error.getMessage());
           }
         } else {
           printService.printInfo(
-              " backup ['"
-                  + argumentList.get(0)
-                  + "'] has no snapshot ['"
-                  + argumentList.get(1)
-                  + "']");
+              String.format(
+                  " backup ['%s'] has no snapshot ['%s']",
+                  argumentList.get(0), argumentList.get(1)));
         }
       } else {
         printService.printError(
-            "can not find backup for [" + argumentList.get(0) + "] id or name required");
+            String.format("can not find backup for [%s] id or name required", argumentList.get(0)));
       }
     }
   }

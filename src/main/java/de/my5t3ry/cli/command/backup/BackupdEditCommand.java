@@ -34,9 +34,9 @@ public class BackupdEditCommand extends AbstractBackupCommand {
     if (argumentList.size() != 4) {
       printService.printInfo("wrong argument count. add command requires 4 arguments:");
       printService.printInfo(
-          "['edit id|name [<remote>:]<source>[/<snapshot>] <interval("
-              + BackupInterval.values.keySet().stream().collect(Collectors.joining(","))
-              + ")> <keep-snapshots(int)']");
+          String.format(
+              "['edit id|name [<remote>:]<source>[/<snapshot>] <interval(%s)> <keep-snapshots(int)']",
+              BackupInterval.values.keySet().stream().collect(Collectors.joining(","))));
     } else {
       if (isCommandValid(argumentList)) {
         Backup backup = getBackupByArgument(argumentList.get(0));
@@ -56,21 +56,21 @@ public class BackupdEditCommand extends AbstractBackupCommand {
       final Backup backupByArgument = getBackupByArgument(args.get(0));
       if (Objects.isNull(backupByArgument)) {
         printService.printError(
-            "can not find backup for [" + args.get(0) + "] id or name required");
+            String.format("can not find backup for [%s] id or name required", args.get(0)));
         return false;
       }
       Integer.valueOf(args.get(3));
       lxcService.executeCmd("info", args.get(1));
     } catch (NumberFormatException e) {
-      printService.printError("keep snapshots amount must be integer not ['" + args.get(3) + "'] ");
+      printService.printError(
+          String.format("keep snapshots amount must be integer not ['%s'] ", args.get(3)));
       return false;
     } catch (IllegalArgumentException e) {
       printService.printError(
-          "backup interval ['"
-              + args.get(2)
-              + "'] is no member of ['"
-              + BackupInterval.values.keySet().stream().collect(Collectors.joining(","))
-              + "'] ");
+          String.format(
+              "backup interval ['%s'] is no member of ['%s'] ",
+              args.get(2),
+              BackupInterval.values.keySet().stream().collect(Collectors.joining(","))));
       return false;
     } catch (Exception e) {
       printService.print(e.getMessage(), PrintService.red);

@@ -36,7 +36,7 @@ public class BackupService {
             .collect(Collectors.toList());
     if (activeBackups.size() > 0) {
       printService.printInfoWithTimeStamp(
-          "processing  ['" + activeBackups.size() + "'] scheduled snapshots");
+          String.format("processing  ['%d'] scheduled snapshots", activeBackups.size()));
       activeBackups.forEach(
           curBackup -> {
             createSnapshot(curBackup);
@@ -65,23 +65,17 @@ public class BackupService {
   public void deleteSnapshot(Backup curBackup, Snapshot curSnapshot) {
     try {
       printService.printInfo(
-          "deleting snapshot for backup ['"
-              + curBackup
-              + "'] snapshot ['"
-              + curSnapshot.getName()
-              + "']");
+          String.format(
+              "deleting snapshot for backup ['%s'] snapshot ['%s']",
+              curBackup, curSnapshot.getName()));
       lxcService.executeCmd(
           "delete", curBackup.getContainer().concat("/").concat(curSnapshot.getName()));
       updateBackup(curBackup);
     } catch (IOException | InterruptedException e) {
       throw new IllegalStateException(
-          "something went wrong while deleting snapshot for backup ['"
-              + curBackup
-              + "'] snapshot ['"
-              + curSnapshot.getName()
-              + "'] info with msg ['"
-              + e.getMessage()
-              + "']",
+          String.format(
+              "something went wrong while deleting snapshot for backup ['%s'] snapshot ['%s'] info with msg ['%s']",
+              curBackup, curSnapshot.getName(), e.getMessage()),
           e);
     }
   }
@@ -94,11 +88,9 @@ public class BackupService {
       setNextScheduledDate(curBackup);
     } catch (IOException | InterruptedException e) {
       throw new IllegalStateException(
-          "something went wrong while creating snapshot for backup ['"
-              + curBackup
-              + "'] info with msg ['"
-              + e.getMessage()
-              + "']",
+          String.format(
+              "something went wrong while creating snapshot for backup ['%s'] info with msg ['%s']",
+              curBackup, e.getMessage()),
           e);
     }
   }
@@ -118,7 +110,7 @@ public class BackupService {
             .keepSnapshots(Integer.parseInt(args.get(2)))
             .build();
     updateBackup(backup);
-    printService.printInfo("added backup ['" + backup.getContainer() + "'] ->");
+    printService.printInfo(String.format("added backup ['%s'] ->", backup.getContainer()));
     printService.print(backup);
     return backup;
   }
@@ -137,11 +129,9 @@ public class BackupService {
       backupRepository.save(backup);
     } catch (IOException | InterruptedException e) {
       throw new IllegalStateException(
-          "something went wrong while updating container snapshots ['"
-              + backup.getContainer()
-              + "'] info with msg ['"
-              + e.getMessage()
-              + "']",
+          String.format(
+              "something went wrong while updating container snapshots ['%s'] info with msg ['%s']",
+              backup.getContainer(), e.getMessage()),
           e);
     }
   }
@@ -157,7 +147,8 @@ public class BackupService {
     final List<ContainerInfo> containerInfos = om.readValue(lxcOutput, new TypeReference<>() {});
     if (containerInfos.size() != 1) {
       throw new VerifyError(
-          "something went wrong while receiving container info with msg ['" + lxcOutput + "']");
+          String.format(
+              "something went wrong while receiving container info with msg ['%s']", lxcOutput));
     }
     return containerInfos.get(0).getSnapshots();
   }
@@ -173,7 +164,7 @@ public class BackupService {
     backup.setKeepSnapshots(Integer.parseInt(arguments.get(3)));
     updateBackup(backup);
     final Backup result = backupRepository.save(backup);
-    printService.printInfo("edited backup ['" + result.getContainer() + "'] ->");
+    printService.printInfo(String.format("edited backup ['%s'] ->", result.getContainer()));
     printService.print(result);
   }
 

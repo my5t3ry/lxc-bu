@@ -26,20 +26,16 @@ public abstract class AbstractBackupCommand extends AbstractCommand {
     }
     getPrintService()
         .printError(
-            "backup interval ['"
-                + intervalArgument
-                + "'] is no member of ['"
-                + BackupInterval.values.keySet().stream().collect(Collectors.joining(","))
-                + "'] ");
+            String.format(
+                "backup interval ['%s'] is no member of ['%s'] ",
+                intervalArgument,
+                BackupInterval.values.keySet().stream().collect(Collectors.joining(","))));
     return false;
   }
 
   protected boolean isBackupArgumentValid(String backupArgument) {
     Backup result = getBackupByArgument(backupArgument);
-    if (Objects.nonNull(result)) {
-      return true;
-    }
-    return false;
+    return Objects.nonNull(result);
   }
 
   protected Backup getBackupByArgument(String backupArgument) {

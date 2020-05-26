@@ -35,9 +35,9 @@ public class BackupdAddCommand extends AbstractBackupCommand {
       printService.printInfo(
           "wrong argument count. add command requires 3 arguments: container, interval, keep number of snapshots");
       printService.printInfo(
-          "['add [<remote>:]<source>[/<snapshot>] <interval("
-              + BackupInterval.values.keySet().stream().collect(Collectors.joining(","))
-              + ")> <keep-snapshots(int)']");
+          String.format(
+              "['add [<remote>:]<source>[/<snapshot>] <interval(%s)> <keep-snapshots(int)']",
+              BackupInterval.values.keySet().stream().collect(Collectors.joining(","))));
       printService.stopSpinner();
 
     } else {
@@ -62,15 +62,15 @@ public class BackupdAddCommand extends AbstractBackupCommand {
       lxcService.executeCmd("info", args.get(0));
     } catch (NumberFormatException e) {
       printService.print(
-          "keep snaphots amount must be integer not ['" + args.get(2) + "'] ", PrintService.red);
+          String.format("keep snaphots amount must be integer not ['%s'] ", args.get(2)),
+          PrintService.red);
       return false;
     } catch (IllegalArgumentException e) {
       printService.print(
-          "backup interval ['"
-              + args.get(1)
-              + "'] is no member of ['"
-              + BackupInterval.values.keySet().stream().collect(Collectors.joining(","))
-              + "'] ",
+          String.format(
+              "backup interval ['%s'] is no member of ['%s'] ",
+              args.get(1),
+              BackupInterval.values.keySet().stream().collect(Collectors.joining(","))),
           PrintService.red);
       return false;
     } catch (Exception e) {

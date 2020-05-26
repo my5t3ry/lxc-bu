@@ -54,7 +54,8 @@ public class CliController implements CommandLineRunner {
     try {
       lxcService.validateLxc();
     } catch (VerifyError e) {
-      printService.printError("lxc not reachable with message ['" + e.getMessage() + "'].");
+      printService.printError(
+          String.format("lxc not reachable with message ['%s'].", e.getMessage()));
       e.printStackTrace();
       System.exit(SpringApplication.exit(context));
     }
@@ -65,7 +66,7 @@ public class CliController implements CommandLineRunner {
       terminalService.init();
     } catch (IOException e) {
       printService.printError(
-          "terminal could not be initialized with message ['" + e.getMessage() + "'].");
+          String.format("terminal could not be initialized with message ['%s'].", e.getMessage()));
       System.exit(SpringApplication.exit(context));
     }
   }
