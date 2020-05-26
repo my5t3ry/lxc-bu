@@ -35,15 +35,15 @@ public class BackupService {
   }
 
   public void execute() {
-    final Date curDate = new Date();
-    LocalDateTime localDateTime =
-            curDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-    localDateTime = localDateTime.plusDays(20);
-    Date result = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
-    //    final List<Backup> activeBackups = backupRepository.findBackupByScheduledBefore(result);
+    //    final Date curDate = new Date();
+    //    LocalDateTime localDateTime =
+    //            curDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+    //    localDateTime = localDateTime.plusDays(20);
+    //    Date result = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    //    final List<Backup> acb tiveBackups = backupRepository.findBackupByScheduledBefore(result);
     final List<Backup> activeBackups =
             backupRepository.findAll().stream()
-                    .filter(curBackup -> curBackup.getScheduled().compareTo(result) <= 0)
+                    .filter(curBackup -> curBackup.getScheduled().compareTo(new Date()) <= 0)
                     .collect(Collectors.toList());
     if (activeBackups.size() > 0) {
       printService.printInfo("processing  ['" + activeBackups.size() + "'] scheduled snapshots");
@@ -52,7 +52,7 @@ public class BackupService {
                 printService.printInfo("creating snapshot for ['" + curBackup.getContainer() + "']");
                 createSnapshot(curBackup);
                 removeLegacySnapshots(curBackup);
-                printService.printInfo("processing scheduled snapshots");
+                printService.printInfo("done");
               });
     } else {
       printService.printInfo("nothing to process.");
