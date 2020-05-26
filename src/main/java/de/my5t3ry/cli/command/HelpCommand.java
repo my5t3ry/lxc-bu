@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 /** User: my5t3ry Date: 5/4/20 9:58 PM */
 @Component
 public class HelpCommand extends AbstractCommand {
-  @Autowired private PrintService printService;
   @Autowired private Environment env;
 
   public void init() {
