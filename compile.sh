@@ -36,7 +36,7 @@ echo "Compiling $ARTIFACT with $GRAALVM_VERSION"
     -H:Name=$ARTIFACT \
     --initialize-at-build-time=java.sql.DriverManager,org.hibernate.internal.util.ReflectHelper \
     -H:+ReportExceptionStackTraces \
-    -H:ResourceConfigurationFiles=../classes/graal-config/resource-config.json \
+    -H:ResourceConfigurationFiles=resources.conf \
     -Dspring.native.remove-unused-autoconfig=true \
     -cp $CP $MAINCLASS
 }
