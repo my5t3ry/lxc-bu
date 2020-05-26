@@ -1,5 +1,7 @@
 package de.my5t3ry.cli.command.backup;
 
+import de.my5t3ry.backup.BackupRepository;
+import de.my5t3ry.backup.BackupService;
 import de.my5t3ry.cli.ui.print.PrintService;
 import de.my5t3ry.backup.Backup;
 import de.my5t3ry.backup.BackupInterval;
@@ -18,6 +20,8 @@ import java.util.stream.Collectors;
 public class BackupdEditCommand extends AbstractBackupCommand {
   @Autowired private PrintService printService;
   @Autowired private LxcService lxcService;
+  @Autowired private BackupService backupService;
+  @Autowired private BackupRepository backupRepository;
   @Autowired private Environment env;
 
   public void init() {
@@ -83,5 +87,15 @@ public class BackupdEditCommand extends AbstractBackupCommand {
       return false;
     }
     return true;
+  }
+
+  @Override
+  protected BackupService getBackupService() {
+    return this.backupService;
+  }
+
+  @Override
+  protected BackupRepository getBackupRepository() {
+    return this.backupRepository;
   }
 }

@@ -1,7 +1,9 @@
 package de.my5t3ry.cli.command.backup;
 
-import de.my5t3ry.cli.ui.print.PrintService;
 import de.my5t3ry.backup.Backup;
+import de.my5t3ry.backup.BackupRepository;
+import de.my5t3ry.backup.BackupService;
+import de.my5t3ry.cli.ui.print.PrintService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -14,6 +16,8 @@ import java.util.Objects;
 @Component
 public class BackupDeleteCommand extends AbstractBackupCommand {
   @Autowired private PrintService printService;
+  @Autowired private BackupService backupService;
+  @Autowired private BackupRepository backupRepository;
 
   @Autowired private Environment env;
 
@@ -45,5 +49,15 @@ public class BackupDeleteCommand extends AbstractBackupCommand {
       return true;
     }
     return false;
+  }
+
+  @Override
+  protected BackupService getBackupService() {
+    return this.backupService;
+  }
+
+  @Override
+  protected BackupRepository getBackupRepository() {
+    return this.backupRepository;
   }
 }
