@@ -42,20 +42,16 @@ public class BackupdEditCommand extends AbstractCommand {
       printService.print(
           "['edit id|name [<remote>:]<source>[/<snapshot>] <interval(DAILY,WEEKLY)> <keep-snapshots(int)']");
     } else {
-      String[] args =
-          argumentList.subList(1, argumentList.size()).toArray(new String[argumentList.size() - 1]);
-      if (!valid(args)) {
-        return;
-      } else {
-        Backup backup = getBackupByArgument(Arrays.asList(args));
-        backupService.editBackup(backup, args);
-        if (backup.getExistingSnaphots() > backup.getScheduledInterval()) {
+      if (valid(argumentList)) {
+        Backup backup = getBackupByArgument(argumentList);
+        backupService.editBackup(backup, argumentList);
+        if (backup.getExistingSnaphots() > backup.getKeepSnapshots()) {
           printService.printWarning(
               "the number of existing snapshots is bigger than the configured amount of snapshots to keep,\n"
                   + "old snapshots will be deleted on the next scheduled backup run.");
         }
-        printService.print("added backup ['" + backup.toString() + "']");
       }
+      printService.stopSpinner();
     }
   }
 
@@ -70,24 +66,34 @@ public class BackupdEditCommand extends AbstractCommand {
     return backupRepository.findById(Long.valueOf(argumentList.get(0))).get();
   }
 
-  private boolean valid(String[] args) {
+  private boolean valid(List<String> args) {
     try {
-      final Backup backupByArgument = getBackupByArgument(Arrays.asList(args));
+      final Backup backupByArgument = getBackupByArgument(args);
       if (Objects.isNull(backupByArgument)) {
-        printService.printError("can not find backup for [" + args[0] + "] id or name required");
+        printService.printError(
+            "can not find backup for [" + args.get(0) + "] id or name required");
         return false;
       }
-      BackupInterval.isValide((args[2].toUpperCase()));
-      Integer.valueOf(args[2]);
-      lxcService.executeCmd("info", args[1]);
+      if (!BackupInterval.isValide((args.get(2).toUpperCase()))) {
+        printService.print(
+            "backup interval ['"
+                + args.get(2)
+                + "'] is no member of ['"
+                + BackupInterval.values.keySet().stream().collect(Collectors.joining(","))
+                + "'] ",
+            PrintService.red);
+        return false;
+      }
+      Integer.valueOf(args.get(3));
+      lxcService.executeCmd("info", args.get(1));
     } catch (NumberFormatException e) {
       printService.print(
-          "keep snaphots amount must be integer not ['" + args[3] + "'] ", PrintService.red);
+          "keep snapshots amount must be integer not ['" + args.get(3) + "'] ", PrintService.red);
       return false;
     } catch (IllegalArgumentException e) {
       printService.print(
           "backup interval ['"
-              + args[2]
+              + args.get(2)
               + "'] is no member of ['"
               + BackupInterval.values.keySet().stream().collect(Collectors.joining(","))
               + "'] ",

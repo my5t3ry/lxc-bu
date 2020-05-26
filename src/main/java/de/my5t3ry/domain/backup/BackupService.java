@@ -113,14 +113,16 @@ public class BackupService {
     return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
   }
 
-  public Backup addBackup(final String[] args) throws IOException, InterruptedException {
+  public Backup addBackup(final List<String> args) {
     final Backup backup =
         Backup.builder()
-            .container(args[0])
-            .scheduledInterval(BackupInterval.values.get(args[1]))
-            .keepSnapshots(Integer.parseInt(args[2]))
+            .container(args.get(0))
+            .scheduledInterval(BackupInterval.values.get(args.get(1)))
+            .keepSnapshots(Integer.parseInt(args.get(2)))
             .build();
     updateBackup(backup);
+    printService.printInfo("added backup ['" + backup.getContainer() + "'] ->");
+    printService.print(backup);
     return backup;
   }
 
@@ -164,10 +166,10 @@ public class BackupService {
     removeLegacySnapshots(backup);
   }
 
-  public void editBackup(Backup backup, String[] arguments) {
-    backup.setContainer(arguments[1]);
-    backup.setKeepSnapshots(Integer.parseInt(arguments[2]));
-    backup.setScheduledInterval(Integer.parseInt(arguments[3]));
+  public void editBackup(Backup backup, List<String> arguments) {
+    backup.setContainer(arguments.get(1));
+    backup.setScheduledInterval(BackupInterval.values.get(arguments.get(2)));
+    backup.setKeepSnapshots(Integer.parseInt(arguments.get(3)));
     backupRepository.save(backup);
     printService.printInfo("edited backup ['" + backup.getContainer() + "'] ->");
     printService.print(backup);
