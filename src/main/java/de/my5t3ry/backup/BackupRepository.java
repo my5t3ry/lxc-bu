@@ -1,4 +1,4 @@
-package de.my5t3ry.domain.backup;
+package de.my5t3ry.backup;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

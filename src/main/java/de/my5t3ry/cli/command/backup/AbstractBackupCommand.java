@@ -1,9 +1,9 @@
 package de.my5t3ry.cli.command.backup;
 
 import de.my5t3ry.cli.command.AbstractCommand;
-import de.my5t3ry.domain.backup.Backup;
-import de.my5t3ry.domain.backup.BackupRepository;
-import de.my5t3ry.domain.backup.BackupService;
+import de.my5t3ry.backup.Backup;
+import de.my5t3ry.backup.BackupRepository;
+import de.my5t3ry.backup.BackupService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 

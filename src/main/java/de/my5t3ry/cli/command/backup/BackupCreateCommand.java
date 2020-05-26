@@ -1,7 +1,7 @@
 package de.my5t3ry.cli.command.backup;
 
 import de.my5t3ry.cli.ui.print.PrintService;
-import de.my5t3ry.domain.backup.Backup;
+import de.my5t3ry.backup.Backup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;

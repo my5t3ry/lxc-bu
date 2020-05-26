@@ -1,10 +1,10 @@
 package de.my5t3ry.cli.ui.print;
 
 import com.jakewharton.fliptables.FlipTable;
+import de.my5t3ry.backup.Backup;
+import de.my5t3ry.backup.BackupInterval;
 import de.my5t3ry.cli.command.CommandInteface;
 import de.my5t3ry.cli.ui.ConsoleProgressBar;
-import de.my5t3ry.domain.backup.Backup;
-import de.my5t3ry.domain.backup.BackupInterval;
 import de.my5t3ry.terminal.TerminalService;
 import org.jline.utils.AttributedStringBuilder;
 import org.jline.utils.AttributedStyle;
@@ -20,6 +20,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /** User: my5t3ry Date: 5/4/20 1:57 PM */
@@ -106,6 +107,17 @@ public class PrintService {
     print(message, white);
   }
 
+  public void printInfoWithTimeStamp(String message) {
+    printWithTimestamp(message, white);
+  }
+
+  public void print(String message, int color) {
+    String toPrint = message;
+    toPrint = getColored(message, color);
+    terminalService.getTerminal().writer().println(toPrint);
+    terminalService.getTerminal().writer().flush();
+  }
+
   public void printWarning(String message) {
     print("warning: ".concat(message), yellow);
   }
@@ -114,11 +126,15 @@ public class PrintService {
     print(message, red);
   }
 
-  public void print(String message, int color) {
-    String toPrint = message;
-    toPrint = getColored(message, color);
+  public void printWithTimestamp(String message, int color) {
+    final String messageWithTime = "['" + getCurrentTime() + "'] " + message;
+    final String toPrint = getColored(messageWithTime, color);
     terminalService.getTerminal().writer().println(toPrint);
     terminalService.getTerminal().writer().flush();
+  }
+
+  private String getCurrentTime() {
+    return dateFormat.format(new Date());
   }
 
   public String getColored(String message, int color) {

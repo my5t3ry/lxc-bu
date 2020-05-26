@@ -1,6 +1,6 @@
 package de.my5t3ry.cli.command;
 
-import de.my5t3ry.domain.backup.BackupService;
+import de.my5t3ry.backup.BackupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;

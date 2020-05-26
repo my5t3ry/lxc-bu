@@ -2,9 +2,9 @@ package de.my5t3ry.cli.command.backup;
 
 import de.my5t3ry.cli.command.AbstractCommand;
 import de.my5t3ry.cli.ui.print.PrintService;
-import de.my5t3ry.domain.backup.Backup;
-import de.my5t3ry.domain.backup.BackupInterval;
-import de.my5t3ry.domain.backup.BackupService;
+import de.my5t3ry.backup.Backup;
+import de.my5t3ry.backup.BackupInterval;
+import de.my5t3ry.backup.BackupService;
 import de.my5t3ry.lxc.LxcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;

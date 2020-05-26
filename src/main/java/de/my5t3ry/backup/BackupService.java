@@ -1,4 +1,4 @@
-package de.my5t3ry.domain.backup;
+package de.my5t3ry.backup;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -30,26 +30,21 @@ public class BackupService {
   }
 
   public void execute() {
-    //    final Date curDate = new Date();
-    //    LocalDateTime localDateTime =
-    //            curDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-    //    localDateTime = localDateTime.plusDays(20);
-    //    Date result = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
-    //    final List<Backup> acb tiveBackups = backupRepository.findBackupByScheduledBefore(result);
     final List<Backup> activeBackups =
         backupRepository.findAll().stream()
             .filter(curBackup -> curBackup.getScheduled().compareTo(new Date()) <= 0)
             .collect(Collectors.toList());
     if (activeBackups.size() > 0) {
-      printService.printInfo("processing  ['" + activeBackups.size() + "'] scheduled snapshots");
+      printService.printInfoWithTimeStamp(
+          "processing  ['" + activeBackups.size() + "'] scheduled snapshots");
       activeBackups.forEach(
           curBackup -> {
             createSnapshot(curBackup);
             removeLegacySnapshots(curBackup);
-            printService.printInfo("done");
+            printService.printInfoWithTimeStamp("done");
           });
     } else {
-      printService.printInfo("nothing to process.");
+      printService.printInfoWithTimeStamp("nothing to process.");
     }
   }
 

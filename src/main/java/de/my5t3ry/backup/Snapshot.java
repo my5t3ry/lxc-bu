@@ -1,4 +1,4 @@
-package de.my5t3ry.domain.backup;
+package de.my5t3ry.backup;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
