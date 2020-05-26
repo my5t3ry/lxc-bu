@@ -23,7 +23,7 @@ public class ContainerListCommand extends AbstractCommand {
 
   @Override
   public void execute(String command) {
-    if (!valid(command)) {
+    if (!isCommandValid(command)) {
       printService.printInfo(
           "wrong argument count. container lost command requires <= 1 argument: host (local:,some-remote-host:)");
     } else {
@@ -41,7 +41,7 @@ public class ContainerListCommand extends AbstractCommand {
     }
   }
 
-  private boolean valid(String command) {
+  private boolean isCommandValid(String command) {
     return stripParentCommand(command).split(" ").length == 1;
   }
 }

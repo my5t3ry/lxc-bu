@@ -35,7 +35,9 @@ public class BackupdAddCommand extends AbstractBackupCommand {
       printService.printInfo(
           "wrong argument count. add command requires 3 arguments: container, interval, keep number of snapshots");
       printService.printInfo(
-          "['add [<remote>:]<source>[/<snapshot>] <interval(DAILY,WEEKLY)> <keep-snapshots(int)']");
+          "['add [<remote>:]<source>[/<snapshot>] <interval("
+              + BackupInterval.values.keySet().stream().collect(Collectors.joining(","))
+              + ")> <keep-snapshots(int)']");
       printService.stopSpinner();
 
     } else {
