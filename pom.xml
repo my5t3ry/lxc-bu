@@ -153,10 +153,7 @@
 
 
     <repositories>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
+
         <repository>
             <id>central</id>
             <name>Central Repository</name>
@@ -165,6 +162,10 @@
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
         <repository>
             <id>spring-libs-snapshot</id>
