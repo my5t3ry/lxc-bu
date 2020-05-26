@@ -59,9 +59,9 @@ public class BackupCreateCommand extends AbstractCommand {
   }
 
   private Backup getBackupByArgument(List<String> argumentList) {
-    Backup result = backupRepository.findByContainer(argumentList.get(0));
-    if (Objects.nonNull(result)) {
-      return result;
+    List<Backup>result = backupService.findByContainer(argumentList.get(0));
+    if (result.size() ==0) {
+      return result.get(0);
     }
     if (!StringUtils.isNumeric(argumentList.get(0))) {
       return null;

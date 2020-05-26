@@ -174,4 +174,10 @@ public class BackupService {
     printService.printInfo("edited backup ['" + backup.getContainer() + "'] ->");
     printService.print(backup);
   }
+
+  public List<Backup> findByContainer(String containerName) {
+    return backupRepository.findAll().stream()
+            .filter(curBackup -> curBackup.getContainer().equals(containerName))
+            .collect(Collectors.toList());
+  }
 }
