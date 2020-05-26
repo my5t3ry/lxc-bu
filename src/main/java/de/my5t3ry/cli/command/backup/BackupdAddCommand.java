@@ -4,7 +4,6 @@ import de.my5t3ry.backup.Backup;
 import de.my5t3ry.backup.BackupInterval;
 import de.my5t3ry.backup.BackupRepository;
 import de.my5t3ry.backup.BackupService;
-import de.my5t3ry.cli.command.AbstractCommand;
 import de.my5t3ry.cli.ui.print.PrintService;
 import de.my5t3ry.lxc.LxcService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +39,7 @@ public class BackupdAddCommand extends AbstractBackupCommand {
       printService.stopSpinner();
 
     } else {
-      if (valid(argumentList)) {
+      if (isCommandValid(argumentList)) {
         final Backup backup;
         backup = backupService.addBackup(argumentList);
         printService.stopSpinner();
@@ -54,9 +53,9 @@ public class BackupdAddCommand extends AbstractBackupCommand {
     }
   }
 
-  private boolean valid(List<String> args) {
+  private boolean isCommandValid(List<String> args) {
     try {
-      if (isIntervalArgumentValid(args)) return false;
+      if (!isIntervalArgumentValid(args)) return false;
       Integer.valueOf(args.get(2));
       lxcService.executeCmd("info", args.get(0));
     } catch (NumberFormatException e) {

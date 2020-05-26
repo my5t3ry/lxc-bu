@@ -38,7 +38,7 @@ public class BackupdEditCommand extends AbstractBackupCommand {
       printService.printInfo(
           "['edit id|name [<remote>:]<source>[/<snapshot>] <interval(DAILY,WEEKLY)> <keep-snapshots(int)']");
     } else {
-      if (valid(argumentList)) {
+      if (isCommandValid(argumentList)) {
         Backup backup = getBackupByArgument(argumentList);
         backupService.editBackup(backup, argumentList);
         if (backup.getExistingSnaphots() > backup.getKeepSnapshots()) {
@@ -51,15 +51,13 @@ public class BackupdEditCommand extends AbstractBackupCommand {
     }
   }
 
-  private boolean valid(List<String> args) {
+  private boolean isCommandValid(List<String> args) {
     try {
+      if (!isIntervalArgumentValid(args)) return false;
       final Backup backupByArgument = getBackupByArgument(args);
       if (Objects.isNull(backupByArgument)) {
         printService.printError(
             "can not find backup for [" + args.get(0) + "] id or name required");
-        return false;
-      }
-      if (!isIntervalArgumentValid(args)) {
         return false;
       }
       Integer.valueOf(args.get(3));

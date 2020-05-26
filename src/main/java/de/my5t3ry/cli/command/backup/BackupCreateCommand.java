@@ -31,7 +31,7 @@ public class BackupCreateCommand extends AbstractBackupCommand {
       printService.printInfo("wrong argument count. add command requires 1 argument: id||name");
       printService.printInfo("['create/c id,name]");
     } else {
-      if (valid(argumentList)) {
+      if (isCommandValid(argumentList)) {
         backupService.createBackup(getBackupByArgument(argumentList));
       }
       printService.printError(
@@ -39,12 +39,9 @@ public class BackupCreateCommand extends AbstractBackupCommand {
     }
   }
 
-  private boolean valid(List<String> argumentList) {
+  private boolean isCommandValid(List<String> argumentList) {
     Backup result = getBackupByArgument(argumentList);
-    if (Objects.nonNull(result)) {
-      return true;
-    }
-    return false;
+    return Objects.nonNull(result);
   }
 
   @Override

@@ -32,7 +32,7 @@ public class BackupDeleteCommand extends AbstractBackupCommand {
       printService.printInfo("wrong argument count. add command requires 1 argument: id||name");
       printService.printInfo("['create/c id,name]");
     } else {
-      if (valid(argumentList)) {
+      if (isCommandValid(argumentList)) {
         backupRepository.delete(getBackupByArgument(argumentList));
         printService.print("deleted backup ['" + argumentList.get(0) + "']");
       }
@@ -41,7 +41,7 @@ public class BackupDeleteCommand extends AbstractBackupCommand {
     }
   }
 
-  private boolean valid(List<String> argumentList) {
+  private boolean isCommandValid(List<String> argumentList) {
     Backup result = getBackupByArgument(argumentList);
     if (Objects.nonNull(result)) {
       return true;

@@ -14,22 +14,22 @@ import java.util.stream.Collectors;
 /** User: my5t3ry Date: 5/26/20 12:07 PM */
 public abstract class AbstractBackupCommand extends AbstractCommand {
   protected abstract BackupService getBackupService();
+
   protected abstract BackupRepository getBackupRepository();
+
   protected abstract PrintService getPrintService();
 
-
-
   protected boolean isIntervalArgumentValid(List<String> args) {
-    if (!BackupInterval.isValide((args.get(1).toUpperCase()))) {
-      getPrintService().print(
-              "backup interval ['"
-                      + args.get(1)
-                      + "'] is no member of ['"
-                      + BackupInterval.values.keySet().stream().collect(Collectors.joining(","))
-                      + "'] ",
-              PrintService.red);
+    if (BackupInterval.isValid((args.get(1).toUpperCase()))) {
       return true;
     }
+    getPrintService()
+        .printError(
+            "backup interval ['"
+                + args.get(1)
+                + "'] is no member of ['"
+                + BackupInterval.values.keySet().stream().collect(Collectors.joining(","))
+                + "'] ");
     return false;
   }
 

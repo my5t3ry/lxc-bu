@@ -29,7 +29,7 @@ public class BackupInterval {
     return result.get(0).getKey();
   }
 
-  public static boolean isValide(String toUpperCase) {
+  public static boolean isValid(String toUpperCase) {
     return values.containsKey(toUpperCase);
   }
 }
