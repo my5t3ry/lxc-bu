@@ -64,7 +64,7 @@ public class BackupService {
           throws IOException, InterruptedException {
     final String lxcOutput = lxcService.executeCmd("list", backup.getContainer(), "--format=json");
     final List<ContainerInfo> containerInfos =
-            om.readValue(lxcOutput, new TypeReference<List<ContainerInfo>>() {
+            om.readValue(lxcOutput, new TypeReference<>() {
             });
     if (containerInfos.size() != 1) {
       throw new VerifyError(
