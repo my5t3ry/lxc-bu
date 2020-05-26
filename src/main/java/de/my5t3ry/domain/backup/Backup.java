@@ -21,7 +21,7 @@ public class Backup {
   private Long id;
 
   private String container;
-  private int scheduleInterval;
+  private int scheduledInterval;
   private int keepSnapshots;
 
   @OneToMany(cascade = CascadeType.ALL)
@@ -32,6 +32,10 @@ public class Backup {
   public Backup() {
   }
 
+  public int getExistingSnaphots() {
+    return snapshots.size();
+  }
+
   @Override
   public String toString() {
     return "Backup{"
@@ -39,7 +43,7 @@ public class Backup {
             + container
             + '\''
             + ", interval="
-            + scheduleInterval
+            + scheduledInterval
             + ", keepSnaphots="
             + keepSnapshots
             + '}';

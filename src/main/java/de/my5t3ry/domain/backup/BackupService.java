@@ -41,7 +41,7 @@ public class BackupService {
     final Date curDate = new Date();
     LocalDateTime localDateTime =
             curDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-    localDateTime = localDateTime.plusDays(backup.getScheduleInterval());
+    localDateTime = localDateTime.plusDays(backup.getScheduledInterval());
     Date result = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
     return result;
   }
@@ -50,7 +50,7 @@ public class BackupService {
     final Backup backup =
             Backup.builder()
                     .container(args[0])
-                    .scheduleInterval(BackupInterval.values.get(args[1]))
+                    .scheduledInterval(BackupInterval.values.get(args[1]))
                     .keepSnapshots(Integer.parseInt(args[2]))
                     .build();
     final List<Snapshot> existingSnapshots = getExistingSnapshots(backup);
