@@ -51,6 +51,11 @@ public class AddCommand extends AbstractCommand {
           printService.print(Arrays.asList(args).stream().collect(Collectors.joining(", ")));
           final Backup backup;
           backup = backupService.addBackup(args);
+          if (backup.getSnapshots().size() > backup.getKeepSnaphots()) {
+            printService.printWarning(
+                    "the number of existing snapshots is bigger than the configured amount of snapshots to keep\n,"
+                            + " old snapshots will be deleted on the next scheduled backup run ");
+          }
           printService.print("added backup ['" + backup.toString() + "']");
           consoleProgressBar.stop();
         } catch (IOException | InterruptedException e) {

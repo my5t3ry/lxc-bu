@@ -46,7 +46,6 @@ import java.util.Properties;
         TerminalService.class
 })
 public class LcxBu {
-
   public static void main(String[] args) {
     try {
       new SpringApplicationBuilder(LcxBu.class).properties(props()).build().run(args);
