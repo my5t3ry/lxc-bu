@@ -2,7 +2,6 @@ package de.my5t3ry.cli.command.container;
 
 import de.my5t3ry.cli.command.AbstractCommand;
 import de.my5t3ry.cli.ui.print.PrintService;
-import de.my5t3ry.domain.backup.BackupRepository;
 import de.my5t3ry.lxc.LxcService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +14,6 @@ import java.io.IOException;
 @Component
 public class ContainerListCommand extends AbstractCommand {
   @Autowired private PrintService printService;
-
-  @Autowired private BackupRepository backupRepository;
   @Autowired private LxcService lxcService;
   @Autowired private Environment env;
 
