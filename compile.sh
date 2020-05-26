@@ -38,7 +38,7 @@ echo "Compiling $ARTIFACT with $GRAALVM_VERSION"
   -H:ReflectionConfigurationFiles=../classes/graal-config/reflect-config.json \
   -H:DynamicProxyConfigurationFiles=../classes/graal-config/proxy-config.json \
   -H:JNIConfigurationFiles=../classes/graal-config/jni-config.json \
-  -H:ResourceConfigurationFiles=../classes/graal-config/resources-config.json \
+  -H:ResourceConfigurationFiles=../classes/graal-config/resource-config.json \
   -Dspring.native.remove-unused-autoconfig=true \
   -cp $CP $MAINCLASS; }
 
