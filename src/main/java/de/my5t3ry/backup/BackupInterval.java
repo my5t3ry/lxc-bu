@@ -11,9 +11,10 @@ public class BackupInterval {
       Stream.of(
               new Object[][] {
                 {"HOURLY", 1},
+                {"FOUR_HOURLY", 4},
                 {"TWELVE_HOURLY", 24},
                 {"DAILY", 24},
-                {"TOW_DAILY", 48},
+                {"TWO_DAILY", 48},
                 {"WEEKLY", 168},
               })
           .collect(Collectors.toMap(data -> (String) data[0], data -> (Integer) data[1]));
