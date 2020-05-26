@@ -46,7 +46,8 @@ public class BackupdEditCommand extends AbstractBackupCommand {
               "the number of existing snapshots is bigger than the configured amount of snapshots to keep,\n"
                   + "old snapshots will be deleted on the next scheduled backup run.");
         }
-      } else printService.stopSpinner();
+      }
+      printService.stopSpinner();
     }
   }
 
