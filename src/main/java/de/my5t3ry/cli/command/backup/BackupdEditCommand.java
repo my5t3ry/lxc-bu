@@ -30,7 +30,6 @@ public class BackupdEditCommand extends AbstractBackupCommand {
 
   @Override
   public void execute(String command) {
-    printService.startSpinner();
     final List<String> argumentList = Arrays.asList(stripParentCommand(command).split(" "));
     if (argumentList.size() != 4) {
       printService.printInfo(
@@ -49,7 +48,6 @@ public class BackupdEditCommand extends AbstractBackupCommand {
                   + "old snapshots will be deleted on the next scheduled backup run.");
         }
       }
-      printService.stopSpinner();
     }
   }
 
