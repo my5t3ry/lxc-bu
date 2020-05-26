@@ -27,20 +27,22 @@ CP=BOOT-INF/classes:$LIBPATH
 
 GRAALVM_VERSION=$(native-image --version)
 echo "Compiling $ARTIFACT with $GRAALVM_VERSION"
-{ time native-image \
-  --verbose \
-  -Dspring.native.verbose=true \
-  --no-server \
-  --no-fallback \
-  -H:Name=$ARTIFACT \
-  --initialize-at-build-time=java.sql.DriverManager,org.hibernate.internal.util.ReflectHelper \
-  -H:+ReportExceptionStackTraces \
-#  -H:ReflectionConfigurationFiles=../classes/graal-config/reflect-config.json \
-#  -H:DynamicProxyConfigurationFiles=../classes/graal-config/proxy-config.json \
-#  -H:JNIConfigurationFiles=../classes/graal-config/jni-config.json \
+{
+  time native-image \
+    --verbose \
+    -Dspring.native.verbose=true \
+    --no-server \
+    --no-fallback \
+    -H:Name=$ARTIFACT \
+    --initialize-at-build-time=java.sql.DriverManager,org.hibernate.internal.util.ReflectHelper \
+    -H:+ReportExceptionStackTraces
+  #  -H:ReflectionConfigurationFiles=../classes/graal-config/reflect-config.json \
+  #  -H:DynamicProxyConfigurationFiles=../classes/graal-config/proxy-config.json \
+  #  -H:JNIConfigurationFiles=../classes/graal-config/jni-config.json \
   -H:ResourceConfigurationFiles=../classes/graal-config/resource-config.json \
-  -Dspring.native.remove-unused-autoconfig=true \
-  -cp $CP $MAINCLASS; }
+    -Dspring.native.remove-unused-autoconfig=true \
+    -cp $CP $MAINCLASS
+}
 
 if [[ -f $ARTIFACT ]]; then
   printf "${GREEN}SUCCESS${NC}\n"
