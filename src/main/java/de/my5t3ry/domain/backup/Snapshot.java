@@ -27,10 +27,10 @@ public class Snapshot {
   @Override
   public String toString() {
     return "snapshot ['"
-            + this.name
-            + "'] ->\n"
-            + mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this)
-            + "\n";
+        + this.name
+        + "'] ->\n"
+        + mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this)
+        + "\n";
   }
 
   private Date last_used_at;

@@ -38,8 +38,7 @@ public class PrintService {
   private static final String DATE_FORMAT = "yyyy/MM/dd HH:mm";
   private static final DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
 
-  @Autowired
-  private TerminalService terminalService;
+  @Autowired private TerminalService terminalService;
 
   @Value("${command.help}")
   private String command;
@@ -59,13 +58,13 @@ public class PrintService {
     String format = "%-15s %s";
     terminalService.getTerminal().writer().println("['" + context + "'] commands");
     commands.forEach(
-            curCommand ->
-                    terminalService
-                            .getTerminal()
-                            .writer()
-                            .println(
-                                    String.format(
-                                            format, curCommand.getCommandsAsString(), curCommand.getDescription())));
+        curCommand ->
+            terminalService
+                .getTerminal()
+                .writer()
+                .println(
+                    String.format(
+                        format, curCommand.getCommandsAsString(), curCommand.getDescription())));
   }
 
   public void clearScreen() {
@@ -130,8 +129,8 @@ public class PrintService {
   private void printBanner() {
     try {
       final String banner =
-              StreamUtils.copyToString(
-                      new ClassPathResource("banner.txt").getInputStream(), Charset.defaultCharset());
+          StreamUtils.copyToString(
+              new ClassPathResource("banner.txt").getInputStream(), Charset.defaultCharset());
       print(banner, PrintService.cyan);
     } catch (IOException e) {
       e.printStackTrace();
@@ -140,23 +139,25 @@ public class PrintService {
 
   public void printTable(List<Backup> backups) {
     String[] headers = {
-            "id", "contnainer", "interval", "scheduled", "snaps", "cur/max",
+      "id", "container", "interval", "scheduled", "snaps", "cur/max",
     };
     List<List<String>> dataList = new ArrayList<>();
     backups.forEach(
-            curBackup -> {
-              dataList.add(
-                      Arrays.asList(
-                              curBackup.getId().toString(),
-                              curBackup.getContainer(),
-                              BackupInterval.getKey(curBackup.getScheduledInterval()),
-                              dateFormat.format(curBackup.getScheduled()),
-                              curBackup.getSnapshotsAsString(),
-                              String.format(
-                                      "%d/%d", curBackup.getExistingSnaphots(), curBackup.getKeepSnapshots())));
-            });
+        curBackup -> {
+          dataList.add(getPrintData(curBackup));
+        });
     String[][] data = toDoubleIndexArray(dataList);
     print(FlipTable.of(headers, data), PrintService.white);
+  }
+
+  private List<String> getPrintData(Backup curBackup) {
+    return Arrays.asList(
+        curBackup.getId().toString(),
+        curBackup.getContainer(),
+        BackupInterval.getKey(curBackup.getScheduledInterval()),
+        dateFormat.format(curBackup.getScheduled()),
+        curBackup.getSnapshotsAsString(),
+        String.format("%d/%d", curBackup.getExistingSnaphots(), curBackup.getKeepSnapshots()));
   }
 
   private String[][] toDoubleIndexArray(List<List<String>> mergedList) {
@@ -166,5 +167,15 @@ public class PrintService {
       result[i] = currentList.toArray(new String[currentList.size()]);
     }
     return result;
+  }
+
+  public void print(Backup backup) {
+    String[] headers = {
+      "id", "container", "interval", "scheduled", "snaps", "cur/max",
+    };
+    List<List<String>> dataList = new ArrayList<>();
+    dataList.add(getPrintData(backup));
+    String[][] data = toDoubleIndexArray(dataList);
+    print(FlipTable.of(headers, data), PrintService.white);
   }
 }

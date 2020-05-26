@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 /** User: my5t3ry Date: 5/4/20 9:58 PM */
 @Component
-public class AddCommand extends AbstractCommand {
+public class BackupdAddCommand extends AbstractCommand {
   @Autowired private BackupService backupService;
   @Autowired private PrintService printService;
 
@@ -35,13 +35,14 @@ public class AddCommand extends AbstractCommand {
     final List<String> argumentList = Arrays.asList(command.split(" "));
     if (argumentList.size() != 4) {
       printService.print(
-              "wrong argument count. add command requires 3 arguments: container, interval, keep number of snapshots");
+          "wrong argument count. add command requires 3 arguments: container, interval, keep number of snapshots");
       printService.print(
-              "['add [<remote>:]<source>[/<snapshot>] <interval(DAILY,WEEKLY)> <keep-snapshots(int)']");
+          "['add [<remote>:]<source>[/<snapshot>] <interval(DAILY,WEEKLY)> <keep-snapshots(int)']");
     } else {
       String[] args =
-              argumentList.subList(1, argumentList.size()).toArray(new String[argumentList.size() - 1]);
+          argumentList.subList(1, argumentList.size()).toArray(new String[argumentList.size() - 1]);
       if (!valid(args)) {
+        printService.stopSpinner();
         return;
       } else {
         try {
@@ -50,8 +51,8 @@ public class AddCommand extends AbstractCommand {
           printService.stopSpinner();
           if (backup.getExistingSnaphots() > backup.getScheduledInterval()) {
             printService.printWarning(
-                    "the number of existing snapshots is bigger than the configured amount of snapshots to keep,\n"
-                            + "old snapshots will be deleted on the next scheduled backup run.");
+                "the number of existing snapshots is bigger than the configured amount of snapshots to keep,\n"
+                    + "old snapshots will be deleted on the next scheduled backup run.");
           }
           printService.print("added backup ['" + backup.toString() + "']");
         } catch (IOException | InterruptedException e) {
@@ -63,7 +64,16 @@ public class AddCommand extends AbstractCommand {
 
   private boolean valid(String[] args) {
     try {
-      BackupInterval.isValide((args[1].toUpperCase()));
+      if (!BackupInterval.isValide((args[1].toUpperCase()))) {
+        printService.print(
+            "backup interval ['"
+                + args[1]
+                + "'] is no member of ['"
+                + BackupInterval.values.keySet().stream().collect(Collectors.joining(","))
+                + "'] ",
+            PrintService.red);
+        return false;
+      }
       Integer.valueOf(args[2]);
       lxcService.executeCmd("info", args[0]);
     } catch (NumberFormatException e) {

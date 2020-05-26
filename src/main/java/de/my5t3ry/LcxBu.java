@@ -27,25 +27,26 @@ import java.util.Properties;
 
 @SpringBootApplication(proxyBeanMethods = false)
 @Import({
-        BackupService.class,
-        TopLevelCommand.class,
-        AddCommand.class,
-        BackupCommand.class,
-        BackupDeleteCommand.class,
-        BackupCreateCommand.class,
-        ExecuteCommand.class,
-        BackupListCommand.class,
-        HelpCommand.class,
-        ContainerCommand.class,
-        ContainerListCommand.class,
-        LxcService.class,
-        ProcessService.class,
-        PrintService.class,
-        Config.class,
-        Backup.class,
-        ContainerInfo.class,
-        Snapshot.class,
-        TerminalService.class
+  BackupService.class,
+  TopLevelCommand.class,
+  BackupdAddCommand.class,
+  BackupCommand.class,
+  BackupDeleteCommand.class,
+  BackupdEditCommand.class,
+  BackupCreateCommand.class,
+  ExecuteCommand.class,
+  BackupListCommand.class,
+  HelpCommand.class,
+  ContainerCommand.class,
+  ContainerListCommand.class,
+  LxcService.class,
+  ProcessService.class,
+  PrintService.class,
+  Config.class,
+  Backup.class,
+  ContainerInfo.class,
+  Snapshot.class,
+  TerminalService.class
 })
 public class LcxBu {
   public static void main(String[] args) {

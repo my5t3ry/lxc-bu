@@ -10,31 +10,29 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * User: my5t3ry Date: 5/4/20 9:58 PM
- */
+/** User: my5t3ry Date: 5/4/20 9:58 PM */
 @Component
 public class BackupCommand extends AbstractCommand {
-  @Autowired
-  private PrintService printService;
+  @Autowired private PrintService printService;
 
   private List<AbstractCommand> abstractBackupCommands;
 
-  @Autowired
-  private AddCommand addCommand;
-  @Autowired
-  private BackupDeleteCommand deleteCommand;
-  @Autowired
-  private BackupListCommand backupListCommand;
-  @Autowired
-  private BackupCreateCommand backupCreateCommand;
-  @Autowired
-  private Environment env;
+  @Autowired private BackupdAddCommand backupdAddCommand;
+  @Autowired private BackupDeleteCommand deleteCommand;
+  @Autowired private BackupListCommand backupListCommand;
+  @Autowired private BackupdEditCommand backupdEditCommand;
+  @Autowired private BackupCreateCommand backupCreateCommand;
+  @Autowired private Environment env;
 
   public void init() {
     setInfo(env.getProperty("command.backup"), "backup commands");
     abstractBackupCommands =
-            Arrays.asList(addCommand, backupListCommand, backupCreateCommand, deleteCommand);
+        Arrays.asList(
+            backupdAddCommand,
+            backupListCommand,
+            backupCreateCommand,
+            deleteCommand,
+            backupdEditCommand);
     abstractBackupCommands.forEach(curCommand -> curCommand.init());
   }
 

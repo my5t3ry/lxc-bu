@@ -15,18 +15,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * User: my5t3ry Date: 5/19/20 6:17 AM
- */
+/** User: my5t3ry Date: 5/19/20 6:17 AM */
 @Service
 public class BackupService {
 
-  @Autowired
-  private BackupRepository backupRepository;
-  @Autowired
-  private PrintService printService;
-  @Autowired
-  private LxcService lxcService;
+  @Autowired private BackupRepository backupRepository;
+  @Autowired private PrintService printService;
+  @Autowired private LxcService lxcService;
 
   private final ObjectMapper om = new ObjectMapper();
 
@@ -42,17 +37,17 @@ public class BackupService {
     //    Date result = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
     //    final List<Backup> acb tiveBackups = backupRepository.findBackupByScheduledBefore(result);
     final List<Backup> activeBackups =
-            backupRepository.findAll().stream()
-                    .filter(curBackup -> curBackup.getScheduled().compareTo(new Date()) <= 0)
-                    .collect(Collectors.toList());
+        backupRepository.findAll().stream()
+            .filter(curBackup -> curBackup.getScheduled().compareTo(new Date()) <= 0)
+            .collect(Collectors.toList());
     if (activeBackups.size() > 0) {
       printService.printInfo("processing  ['" + activeBackups.size() + "'] scheduled snapshots");
       activeBackups.forEach(
-              curBackup -> {
-                createSnapshot(curBackup);
-                removeLegacySnapshots(curBackup);
-                printService.printInfo("done");
-              });
+          curBackup -> {
+            createSnapshot(curBackup);
+            removeLegacySnapshots(curBackup);
+            printService.printInfo("done");
+          });
     } else {
       printService.printInfo("nothing to process.");
     }
@@ -61,13 +56,13 @@ public class BackupService {
   private void removeLegacySnapshots(Backup curBackup) {
     if (curBackup.getKeepSnapshots() < curBackup.getSnapshots().size()) {
       final List<Snapshot> legacySnapshots =
-              curBackup
-                      .getSnapshots()
-                      .subList(0, curBackup.getSnapshots().size() - curBackup.getKeepSnapshots());
+          curBackup
+              .getSnapshots()
+              .subList(0, curBackup.getSnapshots().size() - curBackup.getKeepSnapshots());
       legacySnapshots.forEach(
-              curSnapshot -> {
-                deleteSnapshot(curBackup, curSnapshot);
-              });
+          curSnapshot -> {
+            deleteSnapshot(curBackup, curSnapshot);
+          });
       updateBackup(curBackup);
     }
   }
@@ -75,23 +70,23 @@ public class BackupService {
   private void deleteSnapshot(Backup curBackup, Snapshot curSnapshot) {
     try {
       printService.printInfo(
-              "deleting legacy snapshot for backup ['"
-                      + curBackup
-                      + "'] snapshot ['"
-                      + curSnapshot.getName()
-                      + "']");
+          "deleting legacy snapshot for backup ['"
+              + curBackup
+              + "'] snapshot ['"
+              + curSnapshot.getName()
+              + "']");
       lxcService.executeCmd(
-              "delete", curBackup.getContainer().concat("/").concat(curSnapshot.getName()));
+          "delete", curBackup.getContainer().concat("/").concat(curSnapshot.getName()));
     } catch (IOException | InterruptedException e) {
       throw new IllegalStateException(
-              "something went wrong while deleting snapshot for backup ['"
-                      + curBackup
-                      + "'] snapshot ['"
-                      + curSnapshot.getName()
-                      + "'] info with msg ['"
-                      + e.getMessage()
-                      + "']",
-              e);
+          "something went wrong while deleting snapshot for backup ['"
+              + curBackup
+              + "'] snapshot ['"
+              + curSnapshot.getName()
+              + "'] info with msg ['"
+              + e.getMessage()
+              + "']",
+          e);
     }
   }
 
@@ -102,29 +97,29 @@ public class BackupService {
       updateBackup(curBackup);
     } catch (IOException | InterruptedException e) {
       throw new IllegalStateException(
-              "something went wrong while creating snapshot for backup ['"
-                      + curBackup
-                      + "'] info with msg ['"
-                      + e.getMessage()
-                      + "']",
-              e);
+          "something went wrong while creating snapshot for backup ['"
+              + curBackup
+              + "'] info with msg ['"
+              + e.getMessage()
+              + "']",
+          e);
     }
   }
 
   private Date getScheduleDate(Backup backup) {
     LocalDateTime localDateTime =
-            backup.getScheduled().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        backup.getScheduled().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
     localDateTime = localDateTime.plusHours(backup.getScheduledInterval());
     return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
   }
 
   public Backup addBackup(final String[] args) throws IOException, InterruptedException {
     final Backup backup =
-            Backup.builder()
-                    .container(args[0])
-                    .scheduledInterval(BackupInterval.values.get(args[1]))
-                    .keepSnapshots(Integer.parseInt(args[2]))
-                    .build();
+        Backup.builder()
+            .container(args[0])
+            .scheduledInterval(BackupInterval.values.get(args[1]))
+            .keepSnapshots(Integer.parseInt(args[2]))
+            .build();
     updateBackup(backup);
     return backup;
   }
@@ -136,31 +131,30 @@ public class BackupService {
       backup.setSnapshots(existingSnapshots);
       backup.setScheduled(getScheduleDate(backup));
       printService.printInfo(
-              "next snapshot for ['"
-                      + backup.getContainer()
-                      + "'] scheduled @['"
-                      + backup.getScheduled()
-                      + "']");
+          "next snapshot for ['"
+              + backup.getContainer()
+              + "'] scheduled @['"
+              + backup.getScheduled()
+              + "']");
       backupRepository.save(backup);
     } catch (IOException | InterruptedException e) {
       throw new IllegalStateException(
-              "something went wrong while updating container snapshots ['"
-                      + backup.getContainer()
-                      + "'] info with msg ['"
-                      + e.getMessage()
-                      + "']",
-              e);
+          "something went wrong while updating container snapshots ['"
+              + backup.getContainer()
+              + "'] info with msg ['"
+              + e.getMessage()
+              + "']",
+          e);
     }
   }
 
   private List<Snapshot> getExistingSnapshots(Backup backup)
-          throws IOException, InterruptedException {
+      throws IOException, InterruptedException {
     final String lxcOutput = lxcService.executeCmd("list", backup.getContainer(), "--format=json");
-    final List<ContainerInfo> containerInfos = om.readValue(lxcOutput, new TypeReference<>() {
-    });
+    final List<ContainerInfo> containerInfos = om.readValue(lxcOutput, new TypeReference<>() {});
     if (containerInfos.size() != 1) {
       throw new VerifyError(
-              "something went wrong while receiving container info with msg ['" + lxcOutput + "']");
+          "something went wrong while receiving container info with msg ['" + lxcOutput + "']");
     }
     return containerInfos.get(0).getSnapshots();
   }
@@ -168,5 +162,14 @@ public class BackupService {
   public void createBackup(Backup backup) {
     createSnapshot(backup);
     removeLegacySnapshots(backup);
+  }
+
+  public void editBackup(Backup backup, String[] arguments) {
+    backup.setContainer(arguments[1]);
+    backup.setKeepSnapshots(Integer.parseInt(arguments[2]));
+    backup.setScheduledInterval(Integer.parseInt(arguments[3]));
+    backupRepository.save(backup);
+    printService.printInfo("edited backup ['" + backup.getContainer() + "'] ->");
+    printService.print(backup);
   }
 }
