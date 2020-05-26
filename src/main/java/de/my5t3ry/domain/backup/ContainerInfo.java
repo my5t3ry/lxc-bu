@@ -23,7 +23,6 @@ public class ContainerInfo {
   private String description;
   private String created_at;
   private String name;
-  private String status;
   private float status_code;
   private String last_used_at;
   private String location;
