@@ -177,7 +177,7 @@ public class BackupService {
 
   public List<Backup> findByContainer(String containerName) {
     return backupRepository.findAll().stream()
-            .filter(curBackup -> curBackup.getContainer().equals(containerName))
-            .collect(Collectors.toList());
+        .filter(curBackup -> curBackup.getContainer().equals(containerName))
+        .collect(Collectors.toList());
   }
 }
