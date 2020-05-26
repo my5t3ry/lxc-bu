@@ -49,7 +49,6 @@ public class BackupService {
       printService.printInfo("processing  ['" + activeBackups.size() + "'] scheduled snapshots");
       activeBackups.forEach(
               curBackup -> {
-                printService.printInfo("creating snapshot for ['" + curBackup.getContainer() + "']");
                 createSnapshot(curBackup);
                 removeLegacySnapshots(curBackup);
                 printService.printInfo("done");
@@ -98,6 +97,7 @@ public class BackupService {
 
   private void createSnapshot(Backup curBackup) {
     try {
+      printService.printInfo("creating snapshot for ['" + curBackup.getContainer() + "']");
       lxcService.executeCmd("snapshot", curBackup.getContainer());
       updateBackup(curBackup);
     } catch (IOException | InterruptedException e) {
@@ -165,7 +165,8 @@ public class BackupService {
     return containerInfos.get(0).getSnapshots();
   }
 
-  public List<Backup> findAll() {
-    return findAll();
+  public void createBackup(Backup backup) {
+    createSnapshot(backup);
+    removeLegacySnapshots(backup);
   }
 }

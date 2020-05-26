@@ -140,7 +140,7 @@ public class PrintService {
 
   public void printTable(List<Backup> backups) {
     String[] headers = {
-            "id", "interval", "scheduled", "snaps", "cur/max",
+            "id", "contnainer", "interval", "scheduled", "snaps", "cur/max",
     };
     List<List<String>> dataList = new ArrayList<>();
     backups.forEach(
@@ -148,6 +148,7 @@ public class PrintService {
               dataList.add(
                       Arrays.asList(
                               curBackup.getId().toString(),
+                              curBackup.getContainer(),
                               BackupInterval.getKey(curBackup.getScheduledInterval()),
                               dateFormat.format(curBackup.getScheduled()),
                               curBackup.getSnapshotsAsString(),

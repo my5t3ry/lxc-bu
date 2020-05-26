@@ -5,6 +5,7 @@ import de.my5t3ry.cli.command.HelpCommand;
 import de.my5t3ry.cli.command.TopLevelCommand;
 import de.my5t3ry.cli.command.backup.AddCommand;
 import de.my5t3ry.cli.command.backup.BackupCommand;
+import de.my5t3ry.cli.command.backup.BackupCreateCommand;
 import de.my5t3ry.cli.command.backup.BackupListCommand;
 import de.my5t3ry.cli.command.container.ContainerCommand;
 import de.my5t3ry.cli.command.container.ContainerListCommand;
@@ -33,6 +34,7 @@ import java.util.Properties;
         TopLevelCommand.class,
         AddCommand.class,
         BackupCommand.class,
+        BackupCreateCommand.class,
         ExecuteCommand.class,
         BackupListCommand.class,
         HelpCommand.class,
