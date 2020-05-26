@@ -38,7 +38,7 @@ public class BackupSnapshotRestoreCommand extends AbstractBackupCommand {
           try {
             backupService.restoreSnapshot(
                 backup, backup.getSnapShotFromArgument(argumentList.get(1)));
-            printService.printInfo(String.format("deleted backup ['%s']", argumentList.get(0)));
+            printService.printInfo(String.format("restored backup ['%s']", argumentList.get(0)));
           } catch (VerifyError error) {
             printService.printError(error.getMessage());
           }

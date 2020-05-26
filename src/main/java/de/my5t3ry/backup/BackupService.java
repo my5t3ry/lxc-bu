@@ -121,11 +121,9 @@ public class BackupService {
       existingSnapshots = getExistingSnapshots(backup);
       backup.setSnapshots(existingSnapshots);
       printService.printInfo(
-          "next snapshot for ['"
-              + backup.getContainer()
-              + "'] scheduled @['"
-              + backup.getScheduled()
-              + "']");
+          String.format(
+              "next snapshot for ['%s'] scheduled @['%s']",
+              backup.getContainer(), backup.getScheduled()));
       backupRepository.save(backup);
     } catch (IOException | InterruptedException e) {
       throw new IllegalStateException(
