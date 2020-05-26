@@ -1,7 +1,6 @@
 package de.my5t3ry.cli.command.backup;
 
 import de.my5t3ry.cli.command.AbstractCommand;
-import de.my5t3ry.cli.ui.ConsoleProgressBar;
 import de.my5t3ry.cli.ui.print.PrintService;
 import de.my5t3ry.domain.backup.Backup;
 import de.my5t3ry.domain.backup.BackupInterval;
@@ -32,8 +31,7 @@ public class AddCommand extends AbstractCommand {
 
   @Override
   public void execute(String command) {
-    ConsoleProgressBar consoleProgressBar = new ConsoleProgressBar();
-    consoleProgressBar.start();
+    printService.startSpinner();
     final List<String> argumentList = Arrays.asList(command.split(" "));
     if (argumentList.size() != 4) {
       printService.print(
@@ -51,13 +49,13 @@ public class AddCommand extends AbstractCommand {
           printService.print(Arrays.asList(args).stream().collect(Collectors.joining(", ")));
           final Backup backup;
           backup = backupService.addBackup(args);
+          printService.stopSpinner();
           if (backup.getSnapshots().size() > backup.getKeepSnaphots()) {
             printService.printWarning(
                     "the number of existing snapshots is bigger than the configured amount of snapshots to keep\n,"
                             + " old snapshots will be deleted on the next scheduled backup run ");
           }
           printService.print("added backup ['" + backup.toString() + "']");
-          consoleProgressBar.stop();
         } catch (IOException | InterruptedException e) {
           e.printStackTrace();
         }

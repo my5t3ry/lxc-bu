@@ -1,6 +1,7 @@
 package de.my5t3ry.cli.ui.print;
 
 import de.my5t3ry.cli.command.CommandInteface;
+import de.my5t3ry.cli.ui.ConsoleProgressBar;
 import de.my5t3ry.terminal.TerminalService;
 import org.jline.utils.AttributedStringBuilder;
 import org.jline.utils.AttributedStyle;
@@ -26,19 +27,33 @@ public class PrintService {
   public static int magenta = 5;
   public static int blue = 4;
   public static int black = 0;
-  @Autowired private TerminalService terminalService;
+  @Autowired
+  private TerminalService terminalService;
+
   @Value("${command.help}")
   private String command;
+
+  private ConsoleProgressBar consoleProgressBar;
+
+  public void startSpinner() {
+    consoleProgressBar = new ConsoleProgressBar();
+    consoleProgressBar.start();
+  }
+
+  public void stopSpinner() {
+    consoleProgressBar.stop();
+    print("\n");
+  }
 
   public void printCommands(final List<? extends CommandInteface> commands, final String context) {
     String format = "%-15s %s";
     terminalService.getTerminal().writer().println("['" + context + "'] commands");
     commands.forEach(
-        curCommand ->
-            terminalService
-                .getTerminal()
-                .writer()
-                .println(
+            curCommand ->
+                    terminalService
+                            .getTerminal()
+                            .writer()
+                            .println(
                     String.format(
                         format, curCommand.getCommandsAsString(), curCommand.getDescription())));
   }
@@ -82,7 +97,7 @@ public class PrintService {
   }
 
   public void printWarning(String message) {
-    print(message, yellow);
+    print("warning: ".concat(message), yellow);
   }
 
   public void printError(String message) {
