@@ -20,14 +20,14 @@ public abstract class AbstractBackupCommand extends AbstractCommand {
 
   protected abstract PrintService getPrintService();
 
-  protected boolean isIntervalArgumentValid(List<String> args) {
-    if (BackupInterval.isValid((args.get(1).toUpperCase()))) {
+  protected boolean isIntervalArgumentValid(String intervalArgument) {
+    if (BackupInterval.isValid((intervalArgument.toUpperCase()))) {
       return true;
     }
     getPrintService()
         .printError(
             "backup interval ['"
-                + args.get(1)
+                + intervalArgument
                 + "'] is no member of ['"
                 + BackupInterval.values.keySet().stream().collect(Collectors.joining(","))
                 + "'] ");

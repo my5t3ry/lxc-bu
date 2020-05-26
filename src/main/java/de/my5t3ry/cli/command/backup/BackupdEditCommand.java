@@ -46,15 +46,14 @@ public class BackupdEditCommand extends AbstractBackupCommand {
               "the number of existing snapshots is bigger than the configured amount of snapshots to keep,\n"
                   + "old snapshots will be deleted on the next scheduled backup run.");
         }
-      }
-      printService.stopSpinner();
+      } else printService.stopSpinner();
     }
   }
 
   @Override
   protected boolean isCommandValid(List<String> args) {
     try {
-      if (!isIntervalArgumentValid(args)) return false;
+      if (!isIntervalArgumentValid(args.get(2))) return false;
       final Backup backupByArgument = getBackupByArgument(args);
       if (Objects.isNull(backupByArgument)) {
         printService.printError(

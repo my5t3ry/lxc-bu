@@ -58,7 +58,7 @@ public class BackupdAddCommand extends AbstractBackupCommand {
   @Override
   protected boolean isCommandValid(List<String> args) {
     try {
-      if (!isIntervalArgumentValid(args)) return false;
+      if (!isIntervalArgumentValid(args.get(1))) return false;
       Integer.valueOf(args.get(2));
       lxcService.executeCmd("info", args.get(0));
     } catch (NumberFormatException e) {
