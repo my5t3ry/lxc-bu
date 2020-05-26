@@ -10,6 +10,12 @@
       "pattern": "\\QMETA-INF/services/org.apache.logging.log4j.util.PropertySource\\E"
     },
     {
+      "pattern": "\\QMETA-INF/services/org.hibernate.integrator.spi.Integrator\\E"
+    },
+    {
+      "pattern": "\\QMETA-INF/services/org.hibernate.service.spi.ServiceContributor\\E"
+    },
+    {
       "pattern": "\\QMETA-INF/services/org.jline.terminal.spi.JansiSupport\\E"
     },
     {

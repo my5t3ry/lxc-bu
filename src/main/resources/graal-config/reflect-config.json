@@ -1738,6 +1738,9 @@
     "name": "javax.naming.ldap.LdapContext"
   },
   {
+    "name": "javax.persistence.EmbeddedId"
+  },
+  {
     "name": "javax.persistence.Entity",
     "allDeclaredMethods": true
   },
@@ -2146,7 +2149,7 @@
     ]
   },
   {
-    "name": "org.hibernate.event.internal.EntityCopyNotAllowedObserver$$Lambda$850/0x0000000840666c40",
+    "name": "org.hibernate.event.internal.EntityCopyNotAllowedObserver$$Lambda$874/0x000000084069e840",
     "allPublicMethods": true
   },
   {
@@ -2189,6 +2192,15 @@
   },
   {
     "name": "org.hibernate.event.spi.PersistEventListener[]"
+  },
+  {
+    "name": "org.hibernate.event.spi.PostCollectionRecreateEventListener[]"
+  },
+  {
+    "name": "org.hibernate.event.spi.PostCollectionRemoveEventListener[]"
+  },
+  {
+    "name": "org.hibernate.event.spi.PostCollectionUpdateEventListener[]"
   },
   {
     "name": "org.hibernate.event.spi.PostDeleteEventListener[]"
@@ -2463,6 +2475,17 @@
       {
         "name": "<init>",
         "parameterTypes": []
+      }
+    ]
+  },
+  {
+    "name": "org.hibernate.search.util.logging.impl.Log_$logger",
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "org.jboss.logging.Logger"
+        ]
       }
     ]
   },
@@ -3255,7 +3278,7 @@
     "allDeclaredConstructors": true
   },
   {
-    "name": "org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration$$Lambda$394/0x00000008402c2440",
+    "name": "org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration$$Lambda$395/0x00000008402c2440",
     "allDeclaredFields": true,
     "allDeclaredMethods": true,
     "methods": [
@@ -3532,7 +3555,7 @@
     "allDeclaredConstructors": true
   },
   {
-    "name": "org.springframework.boot.autoconfigure.jdbc.metadata.DataSourcePoolMetadataProvidersConfiguration$HikariPoolDataSourceMetadataProviderConfiguration$$Lambda$364/0x000000084028fc40",
+    "name": "org.springframework.boot.autoconfigure.jdbc.metadata.DataSourcePoolMetadataProvidersConfiguration$HikariPoolDataSourceMetadataProviderConfiguration$$Lambda$365/0x000000084028e040",
     "allDeclaredFields": true,
     "allDeclaredMethods": true,
     "methods": [

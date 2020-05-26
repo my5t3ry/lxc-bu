@@ -33,6 +33,11 @@
             <artifactId>spring-context-indexer</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-orm</artifactId>
+            <version>5.11.5.Final</version>
+        </dependency>
+        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
             <version>2.11.0</version>
@@ -115,14 +120,14 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <!--                <executions>-->
-                <!--                    <execution>-->
-                <!--                        <phase>package</phase>-->
-                <!--                    </execution>-->
-                <!--                </executions>-->
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
                 <configuration>
-                    <!--                    <mainClass>de.my5t3ry.LcxBu</mainClass>-->
-                    <!--                    <executable>true</executable>-->
+                    <mainClass>de.my5t3ry.LcxBu</mainClass>
+                    <executable>true</executable>
                     <classifier>exec</classifier>
                 </configuration>
             </plugin>
