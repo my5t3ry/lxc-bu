@@ -1,11 +1,7 @@
 package de.my5t3ry.cli.command.backup;
 
-import de.my5t3ry.cli.command.AbstractCommand;
 import de.my5t3ry.cli.ui.print.PrintService;
 import de.my5t3ry.domain.backup.Backup;
-import de.my5t3ry.domain.backup.BackupRepository;
-import de.my5t3ry.domain.backup.BackupService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -16,11 +12,8 @@ import java.util.Objects;
 
 /** User: my5t3ry Date: 5/4/20 9:58 PM */
 @Component
-public class BackupCreateCommand extends AbstractCommand {
+public class BackupCreateCommand extends AbstractBackupCommand {
   @Autowired private PrintService printService;
-
-  @Autowired private BackupRepository backupRepository;
-  @Autowired private BackupService backupService;
   @Autowired private Environment env;
 
   public void init() {
@@ -41,7 +34,6 @@ public class BackupCreateCommand extends AbstractCommand {
         backupService.createBackup(getBackupByArgument(argumentList));
       }
     }
-    return;
   }
 
   private boolean valid(List<String> argumentList) {
@@ -50,16 +42,5 @@ public class BackupCreateCommand extends AbstractCommand {
       return true;
     }
     return false;
-  }
-
-  private Backup getBackupByArgument(List<String> argumentList) {
-    List<Backup> result = backupService.findByContainer(argumentList.get(0));
-    if (result.size() == 1) {
-      return result.get(0);
-    }
-    if (!StringUtils.isNumeric(argumentList.get(0))) {
-      return null;
-    }
-    return backupRepository.findById(Long.valueOf(argumentList.get(0))).orElse(null);
   }
 }
