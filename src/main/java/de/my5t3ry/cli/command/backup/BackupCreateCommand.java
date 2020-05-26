@@ -14,20 +14,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * User: my5t3ry Date: 5/4/20 9:58 PM
- */
+/** User: my5t3ry Date: 5/4/20 9:58 PM */
 @Component
 public class BackupCreateCommand extends AbstractCommand {
-  @Autowired
-  private PrintService printService;
+  @Autowired private PrintService printService;
 
-  @Autowired
-  private BackupRepository backupRepository;
-  @Autowired
-  private BackupService backupService;
-  @Autowired
-  private Environment env;
+  @Autowired private BackupRepository backupRepository;
+  @Autowired private BackupService backupService;
+  @Autowired private Environment env;
 
   public void init() {
     setInfo(env.getProperty("command.create"), "create snapshot");
@@ -42,7 +36,7 @@ public class BackupCreateCommand extends AbstractCommand {
     } else {
       if (!valid(argumentList)) {
         printService.printError(
-                "can not find backup for [" + argumentList.get(0) + "] id or name required");
+            "can not find backup for [" + argumentList.get(0) + "] id or name required");
       } else {
         backupService.createBackup(getBackupByArgument(argumentList));
       }
@@ -59,8 +53,8 @@ public class BackupCreateCommand extends AbstractCommand {
   }
 
   private Backup getBackupByArgument(List<String> argumentList) {
-    List<Backup>result = backupService.findByContainer(argumentList.get(0));
-    if (result.size() ==0) {
+    List<Backup> result = backupService.findByContainer(argumentList.get(0));
+    if (result.size() == 1) {
       return result.get(0);
     }
     if (!StringUtils.isNumeric(argumentList.get(0))) {

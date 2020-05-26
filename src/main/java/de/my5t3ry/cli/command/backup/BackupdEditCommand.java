@@ -56,8 +56,8 @@ public class BackupdEditCommand extends AbstractCommand {
   }
 
   private Backup getBackupByArgument(List<String> argumentList) {
-    List<Backup>result = backupService.findByContainer(argumentList.get(0));
-    if (result.size() ==0) {
+    List<Backup> result = backupService.findByContainer(argumentList.get(0));
+    if (result.size() == 1) {
       return result.get(0);
     }
     if (!StringUtils.isNumeric(argumentList.get(0))) {
@@ -87,8 +87,7 @@ public class BackupdEditCommand extends AbstractCommand {
       Integer.valueOf(args.get(3));
       lxcService.executeCmd("info", args.get(1));
     } catch (NumberFormatException e) {
-      printService.printError(
-          "keep snapshots amount must be integer not ['" + args.get(3) + "'] ");
+      printService.printError("keep snapshots amount must be integer not ['" + args.get(3) + "'] ");
       return false;
     } catch (IllegalArgumentException e) {
       printService.printError(
