@@ -1,7 +1,9 @@
 package de.my5t3ry.cli.ui.print;
 
+import com.jakewharton.fliptables.FlipTable;
 import de.my5t3ry.cli.command.CommandInteface;
 import de.my5t3ry.cli.ui.ConsoleProgressBar;
+import de.my5t3ry.domain.backup.Backup;
 import de.my5t3ry.terminal.TerminalService;
 import org.jline.utils.AttributedStringBuilder;
 import org.jline.utils.AttributedStyle;
@@ -13,6 +15,10 @@ import org.springframework.util.StreamUtils;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /** User: my5t3ry Date: 5/4/20 1:57 PM */
@@ -27,6 +33,10 @@ public class PrintService {
   public static int magenta = 5;
   public static int blue = 4;
   public static int black = 0;
+
+  private static final String DATE_FORMAT = "yyyy/MM/dd HH:mm";
+  private static final DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+
   @Autowired
   private TerminalService terminalService;
 
@@ -119,11 +129,39 @@ public class PrintService {
   private void printBanner() {
     try {
       final String banner =
-          StreamUtils.copyToString(
-              new ClassPathResource("banner.txt").getInputStream(), Charset.defaultCharset());
+              StreamUtils.copyToString(
+                      new ClassPathResource("banner.txt").getInputStream(), Charset.defaultCharset());
       print(banner, PrintService.cyan);
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  public void printTable(List<Backup> backups) {
+    String[] headers = {
+            "id", "scheduled", "snaps", "cur/max",
+    };
+    List<List<String>> dataList = new ArrayList<>();
+    backups.forEach(
+            curBackup -> {
+              dataList.add(
+                      Arrays.asList(
+                              curBackup.getId().toString(),
+                              dateFormat.format(curBackup.getScheduled()),
+                              curBackup.getSnapshotsAsString(),
+                              String.format(
+                                      "%d/%d", curBackup.getExistingSnaphots(), curBackup.getKeepSnapshots())));
+            });
+    String[][] data = toDoubleIndexArray(dataList);
+    print(FlipTable.of(headers, data), PrintService.white);
+  }
+
+  private String[][] toDoubleIndexArray(List<List<String>> mergedList) {
+    String[][] result = new String[mergedList.size()][];
+    for (int i = 0; i < mergedList.size(); i++) {
+      List<String> currentList = mergedList.get(i);
+      result[i] = currentList.toArray(new String[currentList.size()]);
+    }
+    return result;
   }
 }

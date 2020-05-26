@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Backup {
 
+
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
@@ -36,6 +37,7 @@ public class Backup {
     return snapshots.size();
   }
 
+
   @Override
   public String toString() {
     return "Backup{"
@@ -47,5 +49,11 @@ public class Backup {
             + ", keepSnaphots="
             + keepSnapshots
             + '}';
+  }
+
+  public String getSnapshotsAsString() {
+    final StringBuilder sb = new StringBuilder();
+    snapshots.forEach(curSnapshot -> sb.append(curSnapshot.toString()));
+    return sb.toString();
   }
 }

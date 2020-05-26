@@ -1,6 +1,5 @@
 package de.my5t3ry.cli.command.backup;
 
-import com.jakewharton.fliptables.FlipTableConverters;
 import de.my5t3ry.cli.command.AbstractCommand;
 import de.my5t3ry.cli.ui.print.PrintService;
 import de.my5t3ry.domain.backup.Backup;
@@ -30,7 +29,7 @@ public class BackupListCommand extends AbstractCommand {
       printService.print(
           "no backup found. add job with ['backup add [<remote>:]<source>[/<snapshot>] <interval(DAILY,WEEKLY)> <keep-snapshots(int)']");
     } else {
-      System.out.println(FlipTableConverters.fromIterable(backups, Backup.class));
+      printService.printTable(backups);
     }
   }
 }

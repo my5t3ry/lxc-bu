@@ -28,8 +28,9 @@ public class Snapshot {
   public String toString() {
     return "snapshot ['"
             + this.name
-            + "']: "
-            + mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this);
+            + "'] ->\n"
+            + mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this)
+            + "\n";
   }
 
   private Date last_used_at;
