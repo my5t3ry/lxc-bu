@@ -27,8 +27,8 @@ public class ContainerInfo {
   private String last_used_at;
   private String location;
   private String backups = null;
-  private String state = null;
 
   @OneToMany(cascade = CascadeType.ALL)
   private List<Snapshot> snapshots = new ArrayList<>();
 }
+
