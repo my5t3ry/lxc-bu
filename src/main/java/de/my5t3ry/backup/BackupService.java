@@ -91,6 +91,7 @@ public class BackupService {
       printService.printInfo("creating snapshot for ['" + curBackup.getContainer() + "']");
       lxcService.executeCmd("snapshot", curBackup.getContainer());
       updateBackup(curBackup);
+      setNextScheduledDate(curBackup);
     } catch (IOException | InterruptedException e) {
       throw new IllegalStateException(
           "something went wrong while creating snapshot for backup ['"
@@ -127,7 +128,6 @@ public class BackupService {
     try {
       existingSnapshots = getExistingSnapshots(backup);
       backup.setSnapshots(existingSnapshots);
-      backup.setScheduled(getScheduleDate(backup));
       printService.printInfo(
           "next snapshot for ['"
               + backup.getContainer()
@@ -144,6 +144,11 @@ public class BackupService {
               + "']",
           e);
     }
+  }
+
+  private void setNextScheduledDate(Backup backup) {
+    backup.setScheduled(getScheduleDate(backup));
+    backupRepository.save(backup);
   }
 
   private List<Snapshot> getExistingSnapshots(Backup backup)
