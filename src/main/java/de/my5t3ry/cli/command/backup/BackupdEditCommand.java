@@ -51,7 +51,8 @@ public class BackupdEditCommand extends AbstractBackupCommand {
     }
   }
 
-  private boolean isCommandValid(List<String> args) {
+  @Override
+  protected boolean isCommandValid(List<String> args) {
     try {
       if (!isIntervalArgumentValid(args)) return false;
       final Backup backupByArgument = getBackupByArgument(args);

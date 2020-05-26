@@ -9,6 +9,7 @@ import de.my5t3ry.cli.ui.print.PrintService;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /** User: my5t3ry Date: 5/26/20 12:07 PM */
@@ -32,7 +33,13 @@ public abstract class AbstractBackupCommand extends AbstractCommand {
                 + "'] ");
     return false;
   }
-
+ protected boolean isCommandValid(List<String> argumentList) {
+    Backup result = getBackupByArgument(argumentList);
+    if (Objects.nonNull(result)) {
+      return true;
+    }
+    return false;
+  }
   protected Backup getBackupByArgument(List<String> argumentList) {
     List<Backup> result = getBackupService().findByContainer(argumentList.get(0));
     if (result.size() == 1) {

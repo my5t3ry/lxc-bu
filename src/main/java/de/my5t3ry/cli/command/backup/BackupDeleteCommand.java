@@ -1,6 +1,5 @@
 package de.my5t3ry.cli.command.backup;
 
-import de.my5t3ry.backup.Backup;
 import de.my5t3ry.backup.BackupRepository;
 import de.my5t3ry.backup.BackupService;
 import de.my5t3ry.cli.ui.print.PrintService;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 /** User: my5t3ry Date: 5/4/20 9:58 PM */
 @Component
@@ -34,19 +32,12 @@ public class BackupDeleteCommand extends AbstractBackupCommand {
     } else {
       if (isCommandValid(argumentList)) {
         backupRepository.delete(getBackupByArgument(argumentList));
-        printService.print("deleted backup ['" + argumentList.get(0) + "']");
+        printService.printInfo("deleted backup ['" + argumentList.get(0) + "']");
+      } else {
+        printService.printError(
+            "can not find backup for [" + argumentList.get(0) + "] id or name required");
       }
-      printService.printError(
-          "can not find backup for [" + argumentList.get(0) + "] id or name required");
     }
-  }
-
-  private boolean isCommandValid(List<String> argumentList) {
-    Backup result = getBackupByArgument(argumentList);
-    if (Objects.nonNull(result)) {
-      return true;
-    }
-    return false;
   }
 
   @Override
