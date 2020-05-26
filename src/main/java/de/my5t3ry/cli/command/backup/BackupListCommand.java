@@ -26,7 +26,7 @@ public class BackupListCommand extends AbstractCommand {
   public void execute(String command) {
     final List<Backup> backups = backupRepository.findAll();
     if (backups.isEmpty()) {
-      printService.print(
+      printService.printInfo(
           "no backup found. add job with ['backup add [<remote>:]<source>[/<snapshot>] <interval(DAILY,WEEKLY)> <keep-snapshots(int)']");
     } else {
       printService.printTable(backups);

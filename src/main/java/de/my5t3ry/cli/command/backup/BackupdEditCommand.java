@@ -37,9 +37,9 @@ public class BackupdEditCommand extends AbstractCommand {
     printService.startSpinner();
     final List<String> argumentList = Arrays.asList(stripParentCommand(command).split(" "));
     if (argumentList.size() != 4) {
-      printService.print(
+      printService.printInfo(
           "wrong argument count. add command requires 4 arguments: container, interval, keep number of snapshots");
-      printService.print(
+      printService.printInfo(
           "['edit id|name [<remote>:]<source>[/<snapshot>] <interval(DAILY,WEEKLY)> <keep-snapshots(int)']");
     } else {
       if (valid(argumentList)) {
@@ -87,17 +87,16 @@ public class BackupdEditCommand extends AbstractCommand {
       Integer.valueOf(args.get(3));
       lxcService.executeCmd("info", args.get(1));
     } catch (NumberFormatException e) {
-      printService.print(
-          "keep snapshots amount must be integer not ['" + args.get(3) + "'] ", PrintService.red);
+      printService.printError(
+          "keep snapshots amount must be integer not ['" + args.get(3) + "'] ");
       return false;
     } catch (IllegalArgumentException e) {
-      printService.print(
+      printService.printError(
           "backup interval ['"
               + args.get(2)
               + "'] is no member of ['"
               + BackupInterval.values.keySet().stream().collect(Collectors.joining(","))
-              + "'] ",
-          PrintService.red);
+              + "'] ");
       return false;
     } catch (Exception e) {
       printService.print(e.getMessage(), PrintService.red);

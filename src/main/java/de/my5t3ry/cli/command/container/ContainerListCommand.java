@@ -27,16 +27,15 @@ public class ContainerListCommand extends AbstractCommand {
   @Override
   public void execute(String command) {
     if (!valid(command)) {
-      printService.print(
+      printService.printInfo(
           "wrong argument count. container lost command requires <= 1 argument: host (local:,some-remote-host:)");
     } else {
       try {
         final String processResultMsg = lxcService.executeCmd("list", stripParentCommand(command));
         if (StringUtils.isBlank(processResultMsg)) {
-          printService.getInfoMessage(
-              "host ['" + stripParentCommand(command) + "'] empty or not found");
+          printService.printInfo("host ['" + stripParentCommand(command) + "'] empty or not found");
         } else {
-          printService.print(processResultMsg);
+          printService.printInfo(processResultMsg);
         }
       } catch (IOException | InterruptedException e) {
         printService.printError(

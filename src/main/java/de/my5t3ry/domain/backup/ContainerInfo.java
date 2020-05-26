@@ -31,4 +31,3 @@ public class ContainerInfo {
   @OneToMany(cascade = CascadeType.ALL)
   private List<Snapshot> snapshots = new ArrayList<>();
 }
-

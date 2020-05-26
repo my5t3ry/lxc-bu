@@ -37,8 +37,8 @@ public class BackupDeleteCommand extends AbstractCommand {
   public void execute(String command) {
     final List<String> argumentList = Arrays.asList(stripParentCommand(command).split(" "));
     if (argumentList.size() != 1) {
-      printService.printError("wrong argument count. add command requires 1 argument: id||name");
-      printService.printError("['create/c id,name]");
+      printService.printInfo("wrong argument count. add command requires 1 argument: id||name");
+      printService.printInfo("['create/c id,name]");
     } else {
       if (!valid(argumentList)) {
         printService.printError(

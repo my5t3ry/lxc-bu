@@ -99,11 +99,11 @@ public class PrintService {
   }
 
   public void printSuccess(String message) {
-    print(message, white);
+    print(message, green);
   }
 
   public void printInfo(String message) {
-    print(message, green);
+    print(message, white);
   }
 
   public void printWarning(String message) {
