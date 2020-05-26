@@ -20,7 +20,8 @@ public class ProcessService {
       int exitCode = process.waitFor();
       assert exitCode == 0;
     } catch (IOException | InterruptedException e) {
-      throw new RuntimeException("command failed with message ['" + e.getMessage() + "']");
+      throw new RuntimeException(
+          String.format("command failed with message ['%s']", e.getMessage()));
     }
   }
 
@@ -42,11 +43,10 @@ public class ProcessService {
         sb.append((char) c);
       }
       throw new RuntimeException(
-          "failed to run cmd ['"
-              + Arrays.asList(cmd).stream().collect(Collectors.joining(" "))
-              + "'] with msg ['"
-              + sb.toString().replaceAll("\n", "")
-              + "']");
+          String.format(
+              "failed to run cmd ['%s'] with msg ['%s']",
+              Arrays.asList(cmd).stream().collect(Collectors.joining(" ")),
+              sb.toString().replaceAll("\n", "")));
     } else {
       return stringBuilder.toString();
     }

@@ -18,10 +18,12 @@ public class LxcService {
     try {
       final String result = processService.runCmd("lxc", "info");
       if (result.toLowerCase().contains("error")) {
-        throw new VerifyError("lxc validation failed with message \\n['" + result + "']");
+        throw new VerifyError(
+            String.format("lxc validation failed with message \\n['%s']", result));
       }
     } catch (IOException | RuntimeException | InterruptedException e) {
-      throw new VerifyError("lxc validation failed with message \\n['" + e.getMessage() + "']");
+      throw new VerifyError(
+          String.format("lxc validation failed with message \\n['%s']", e.getMessage()));
     }
   }
 
