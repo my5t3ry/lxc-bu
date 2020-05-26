@@ -34,16 +34,45 @@ public class BackupService {
   }
 
   public void execute() {
-    printService.print("exec");
-  }
-
-  private Date getScheduleDate(Backup backup) {
     final Date curDate = new Date();
     LocalDateTime localDateTime =
             curDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-    localDateTime = localDateTime.plusDays(backup.getScheduledInterval());
+    localDateTime = localDateTime.plusDays(20);
     Date result = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
-    return result;
+    final List<Backup> activeBackups = backupRepository.findAllWithScheduledBefore(result);
+    if (activeBackups.size() > 0) {
+      printService.printInfo("processing  ['" + activeBackups.size() + "'] scheduled snapshots");
+      activeBackups.forEach(
+              curBackup -> {
+                printService.printInfo("creating snapshot for ['" + curBackup.getContainer() + "']");
+                createSnapshot(curBackup);
+                printService.printInfo("processing scheduled snapshots");
+              });
+    } else {
+      printService.printInfo("nothing to process.");
+    }
+  }
+
+  private void createSnapshot(Backup curBackup) {
+    try {
+      lxcService.executeCmd("snapshot", curBackup.getContainer());
+      updateBackup(curBackup);
+    } catch (IOException | InterruptedException e) {
+      throw new IllegalStateException(
+              "something went wrong while creating snapshot for backup ['"
+                      + curBackup
+                      + "'] info with msg ['"
+                      + e.getMessage()
+                      + "']",
+              e);
+    }
+  }
+
+  private Date getScheduleDate(Backup backup) {
+    LocalDateTime localDateTime =
+            backup.getScheduled().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+    localDateTime = localDateTime.plusHours(backup.getScheduledInterval());
+    return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
   }
 
   public Backup addBackup(final String[] args) throws IOException, InterruptedException {
@@ -53,19 +82,28 @@ public class BackupService {
                     .scheduledInterval(BackupInterval.values.get(args[1]))
                     .keepSnapshots(Integer.parseInt(args[2]))
                     .build();
+    updateBackup(backup);
+    return backup;
+  }
+
+  private void updateBackup(Backup backup) throws IOException, InterruptedException {
     final List<Snapshot> existingSnapshots = getExistingSnapshots(backup);
     backup.setSnapshots(existingSnapshots);
     backup.setScheduled(getScheduleDate(backup));
+    printService.printInfo(
+            "next snapshot for ['"
+                    + backup.getContainer()
+                    + "'] scheduled @['"
+                    + backup.getScheduled()
+                    + "']");
     backupRepository.save(backup);
-    return backup;
   }
 
   private List<Snapshot> getExistingSnapshots(Backup backup)
           throws IOException, InterruptedException {
     final String lxcOutput = lxcService.executeCmd("list", backup.getContainer(), "--format=json");
-    final List<ContainerInfo> containerInfos =
-            om.readValue(lxcOutput, new TypeReference<>() {
-            });
+    final List<ContainerInfo> containerInfos = om.readValue(lxcOutput, new TypeReference<>() {
+    });
     if (containerInfos.size() != 1) {
       throw new VerifyError(
               "something went wrong while receiving container info with msg ['" + lxcOutput + "']");

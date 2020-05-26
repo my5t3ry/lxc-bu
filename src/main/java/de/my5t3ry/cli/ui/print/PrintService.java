@@ -4,6 +4,7 @@ import com.jakewharton.fliptables.FlipTable;
 import de.my5t3ry.cli.command.CommandInteface;
 import de.my5t3ry.cli.ui.ConsoleProgressBar;
 import de.my5t3ry.domain.backup.Backup;
+import de.my5t3ry.domain.backup.BackupInterval;
 import de.my5t3ry.terminal.TerminalService;
 import org.jline.utils.AttributedStringBuilder;
 import org.jline.utils.AttributedStyle;
@@ -139,7 +140,7 @@ public class PrintService {
 
   public void printTable(List<Backup> backups) {
     String[] headers = {
-            "id", "scheduled", "snaps", "cur/max",
+            "id", "interval", "scheduled", "snaps", "cur/max",
     };
     List<List<String>> dataList = new ArrayList<>();
     backups.forEach(
@@ -147,6 +148,7 @@ public class PrintService {
               dataList.add(
                       Arrays.asList(
                               curBackup.getId().toString(),
+                              BackupInterval.getKey(curBackup.getScheduledInterval()),
                               dateFormat.format(curBackup.getScheduled()),
                               curBackup.getSnapshotsAsString(),
                               String.format(

@@ -1,5 +1,6 @@
 package de.my5t3ry.domain.backup;
 
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -7,12 +8,26 @@ import java.util.stream.Stream;
 /** User: my5t3ry Date: 5/19/20 2:16 PM */
 public class BackupInterval {
   public static Map<String, Integer> values =
-      Stream.of(
-              new Object[][] {
-                {"DAILY", 1},
-                {"WEEKLY", 7},
-              })
-          .collect(Collectors.toMap(data -> (String) data[0], data -> (Integer) data[1]));
+          Stream.of(
+                  new Object[][]{
+                          {"HOURLY", 1},
+                          {"TWELVE_HOURLY", 24},
+                          {"DAILY", 24},
+                          {"TOW_DAILY", 48},
+                          {"WEEKLY", 168},
+                  })
+                  .collect(Collectors.toMap(data -> (String) data[0], data -> (Integer) data[1]));
+
+  public static String getKey(int value) {
+    final List<Map.Entry<String, Integer>> result =
+            BackupInterval.values.entrySet().stream()
+                    .filter(curEntry -> curEntry.getValue().equals(value))
+                    .collect(Collectors.toList());
+    if (result.size() != 1) {
+      throw new IllegalStateException("could not find BackupInterval key for ['" + value + "']");
+    }
+    return result.get(0).getKey();
+  }
 
   public static boolean isValide(String toUpperCase) {
     return values.containsKey(toUpperCase);

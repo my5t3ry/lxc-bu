@@ -46,8 +46,8 @@ public class CliController implements CommandLineRunner {
       backupService.execute();
     } else {
       startCli();
-      System.exit(SpringApplication.exit(context));
     }
+    System.exit(SpringApplication.exit(context));
   }
 
   private void validateLxc() {
