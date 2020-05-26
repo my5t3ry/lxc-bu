@@ -18,11 +18,12 @@ public class BackupSnapshotCommand extends AbstractCommand {
   private List<AbstractCommand> abstractBackupCommands;
 
   @Autowired private BackupSnapshotDeleteCommand backupSnapshotDeleteCommand;
+  @Autowired private BackupSnapshotRestoreCommand backupSnapshotRestoreCommand;
   @Autowired private Environment env;
 
   public void init() {
     setInfo(env.getProperty("command.snapshot"), "snapshot commands");
-    abstractBackupCommands = Arrays.asList(backupSnapshotDeleteCommand);
+    abstractBackupCommands = Arrays.asList(backupSnapshotDeleteCommand,backupSnapshotRestoreCommand);
     abstractBackupCommands.forEach(curCommand -> curCommand.init());
   }
 

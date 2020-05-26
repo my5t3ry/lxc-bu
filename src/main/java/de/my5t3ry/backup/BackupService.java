@@ -173,4 +173,21 @@ public class BackupService {
         .filter(curBackup -> curBackup.getContainer().equals(containerName))
         .collect(Collectors.toList());
   }
+
+  public void restoreSnapshot(Backup curBackup, Snapshot curSnapshot) {
+    try {
+      printService.printInfo(
+          String.format(
+              "restoring snapshot for backup ['%s'] snapshot ['%s']",
+              curBackup, curSnapshot.getName()));
+      lxcService.executeCmd("restore", curBackup.getContainer(), curSnapshot.getName());
+      updateBackup(curBackup);
+    } catch (IOException | InterruptedException e) {
+      throw new IllegalStateException(
+          String.format(
+              "something went wrong while restoring snapshot for backup ['%s'] snapshot ['%s'] info with msg ['%s']",
+              curBackup, curSnapshot.getName(), e.getMessage()),
+          e);
+    }
+  }
 }
