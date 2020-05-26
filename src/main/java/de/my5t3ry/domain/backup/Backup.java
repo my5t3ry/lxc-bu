@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /** User: my5t3ry Date: 5/19/20 6:17 AM */
@@ -25,8 +26,10 @@ public class Backup {
 
   private int keepSnaphots;
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.ALL)
   private List<Snapshot> snapshots = new ArrayList<>();
+
+  private Date scheduled;
 
   public Backup() {
   }
@@ -38,9 +41,9 @@ public class Backup {
             + container
             + '\''
             + ", interval="
-        + backupInterval
-        + ", keepSnaphots="
-        + keepSnaphots
-        + '}';
+            + backupInterval
+            + ", keepSnaphots="
+            + keepSnaphots
+            + '}';
   }
 }

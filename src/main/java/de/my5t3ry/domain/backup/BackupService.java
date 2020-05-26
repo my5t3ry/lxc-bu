@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,6 +26,7 @@ public class BackupService {
   private PrintService printService;
   @Autowired
   private LxcService lxcService;
+
   private final ObjectMapper om = new ObjectMapper();
 
   public BackupService() {
@@ -34,6 +37,15 @@ public class BackupService {
     printService.print("exec");
   }
 
+  private Date getScheduleDate(Backup backup) {
+    final Date curDate = new Date();
+    LocalDateTime localDateTime =
+            curDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+    localDateTime = localDateTime.plusDays(backup.getBackupInterval());
+    Date result = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    return result;
+  }
+
   public Backup addBackup(final String[] args) throws IOException, InterruptedException {
     final Backup backup =
             Backup.builder()
@@ -42,7 +54,8 @@ public class BackupService {
                     .keepSnaphots(Integer.parseInt(args[2]))
                     .build();
     final List<Snapshot> existingSnapshots = getExistingSnapshots(backup);
-
+    backup.setSnapshots(existingSnapshots);
+    backup.setScheduled(getScheduleDate(backup));
     backupRepository.save(backup);
     return backup;
   }
@@ -50,10 +63,14 @@ public class BackupService {
   private List<Snapshot> getExistingSnapshots(Backup backup)
           throws IOException, InterruptedException {
     final String lxcOutput = lxcService.executeCmd("list", backup.getContainer(), "--format=json");
-    final List<ContainerInfo> test =
+    final List<ContainerInfo> containerInfos =
             om.readValue(lxcOutput, new TypeReference<List<ContainerInfo>>() {
             });
-    return new ArrayList<>();
+    if (containerInfos.size() != 1) {
+      throw new VerifyError(
+              "something went wrong while receiving container info with msg ['" + lxcOutput + "']");
+    }
+    return containerInfos.get(0).getSnapshots();
   }
 
   public List<Backup> findAll() {
