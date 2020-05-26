@@ -62,16 +62,17 @@ public class BackupService {
     }
   }
 
-  private void deleteSnapshot(Backup curBackup, Snapshot curSnapshot) {
+  public void deleteSnapshot(Backup curBackup, Snapshot curSnapshot) {
     try {
       printService.printInfo(
-          "deleting legacy snapshot for backup ['"
+          "deleting snapshot for backup ['"
               + curBackup
               + "'] snapshot ['"
               + curSnapshot.getName()
               + "']");
       lxcService.executeCmd(
           "delete", curBackup.getContainer().concat("/").concat(curSnapshot.getName()));
+      updateBackup(curBackup);
     } catch (IOException | InterruptedException e) {
       throw new IllegalStateException(
           "something went wrong while deleting snapshot for backup ['"
@@ -165,9 +166,10 @@ public class BackupService {
     backup.setContainer(arguments.get(1));
     backup.setScheduledInterval(BackupInterval.values.get(arguments.get(2)));
     backup.setKeepSnapshots(Integer.parseInt(arguments.get(3)));
-    backupRepository.save(backup);
-    printService.printInfo("edited backup ['" + backup.getContainer() + "'] ->");
-    printService.print(backup);
+    updateBackup(backup);
+    final Backup result = backupRepository.save(backup);
+    printService.printInfo("edited backup ['" + result.getContainer() + "'] ->");
+    printService.print(result);
   }
 
   public List<Backup> findByContainer(String containerName) {

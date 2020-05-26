@@ -12,29 +12,17 @@ import java.util.List;
 
 /** User: my5t3ry Date: 5/4/20 9:58 PM */
 @Component
-public class BackupCommand extends AbstractCommand {
+public class BackupSnapshotCommand extends AbstractCommand {
   @Autowired private PrintService printService;
 
   private List<AbstractCommand> abstractBackupCommands;
 
-  @Autowired private BackupdAddCommand backupdAddCommand;
-  @Autowired private BackupDeleteCommand deleteCommand;
-  @Autowired private BackupListCommand backupListCommand;
-  @Autowired private BackupdEditCommand backupdEditCommand;
-  @Autowired private BackupCreateCommand backupCreateCommand;
-  @Autowired private BackupSnapshotCommand backupSnapshotCommand;
+  @Autowired private BackupSnapshotDeleteCommand backupSnapshotDeleteCommand;
   @Autowired private Environment env;
 
   public void init() {
-    setInfo(env.getProperty("command.backup"), "backup commands");
-    abstractBackupCommands =
-        Arrays.asList(
-            backupdAddCommand,
-            backupListCommand,
-            backupCreateCommand,
-            backupSnapshotCommand,
-            deleteCommand,
-            backupdEditCommand);
+    setInfo(env.getProperty("command.snapshot"), "snapshot commands");
+    abstractBackupCommands = Arrays.asList(backupSnapshotDeleteCommand);
     abstractBackupCommands.forEach(curCommand -> curCommand.init());
   }
 
@@ -42,7 +30,7 @@ public class BackupCommand extends AbstractCommand {
   public void execute(String command) {
     final String nestedCommand = stripParentCommand(command);
     if (StringUtils.isBlank(nestedCommand)) {
-      printService.printCommands(abstractBackupCommands, "backup");
+      printService.printCommands(abstractBackupCommands, "snapshot");
       return;
     }
     for (AbstractCommand curCommand : abstractBackupCommands) {

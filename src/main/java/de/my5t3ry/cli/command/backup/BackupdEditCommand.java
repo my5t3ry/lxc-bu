@@ -41,7 +41,7 @@ public class BackupdEditCommand extends AbstractBackupCommand {
               + ")> <keep-snapshots(int)']");
     } else {
       if (isCommandValid(argumentList)) {
-        Backup backup = getBackupByArgument(argumentList);
+        Backup backup = getBackupByArgument(argumentList.get(0));
         backupService.editBackup(backup, argumentList);
         if (backup.getExistingSnaphots() > backup.getKeepSnapshots()) {
           printService.printWarning(
@@ -53,11 +53,10 @@ public class BackupdEditCommand extends AbstractBackupCommand {
     }
   }
 
-  @Override
   protected boolean isCommandValid(List<String> args) {
     try {
       if (!isIntervalArgumentValid(args.get(2))) return false;
-      final Backup backupByArgument = getBackupByArgument(args);
+      final Backup backupByArgument = getBackupByArgument(args.get(0));
       if (Objects.isNull(backupByArgument)) {
         printService.printError(
             "can not find backup for [" + args.get(0) + "] id or name required");

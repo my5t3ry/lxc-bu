@@ -55,7 +55,6 @@ public class BackupdAddCommand extends AbstractBackupCommand {
     }
   }
 
-  @Override
   protected boolean isCommandValid(List<String> args) {
     try {
       if (!isIntervalArgumentValid(args.get(1))) return false;

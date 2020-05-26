@@ -33,21 +33,23 @@ public abstract class AbstractBackupCommand extends AbstractCommand {
                 + "'] ");
     return false;
   }
- protected boolean isCommandValid(List<String> argumentList) {
-    Backup result = getBackupByArgument(argumentList);
+
+  protected boolean isBackupArgumentValid(String backupArgument) {
+    Backup result = getBackupByArgument(backupArgument);
     if (Objects.nonNull(result)) {
       return true;
     }
     return false;
   }
-  protected Backup getBackupByArgument(List<String> argumentList) {
-    List<Backup> result = getBackupService().findByContainer(argumentList.get(0));
+
+  protected Backup getBackupByArgument(String backupArgument) {
+    List<Backup> result = getBackupService().findByContainer(backupArgument);
     if (result.size() == 1) {
       return result.get(0);
     }
-    if (!StringUtils.isNumeric(argumentList.get(0))) {
+    if (!StringUtils.isNumeric(backupArgument)) {
       return null;
     }
-    return getBackupRepository().findById(Long.valueOf(argumentList.get(0))).orElse(null);
+    return getBackupRepository().findById(Long.valueOf(backupArgument)).orElse(null);
   }
 }

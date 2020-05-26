@@ -1,5 +1,6 @@
 package de.my5t3ry.cli.command.backup;
 
+import de.my5t3ry.backup.Backup;
 import de.my5t3ry.backup.BackupRepository;
 import de.my5t3ry.backup.BackupService;
 import de.my5t3ry.cli.ui.print.PrintService;
@@ -12,26 +13,43 @@ import java.util.List;
 
 /** User: my5t3ry Date: 5/4/20 9:58 PM */
 @Component
-public class BackupCreateCommand extends AbstractBackupCommand {
+public class BackupSnapshotDeleteCommand extends AbstractBackupCommand {
+  @Autowired private PrintService printService;
   @Autowired private BackupService backupService;
   @Autowired private BackupRepository backupRepository;
-  @Autowired private PrintService printService;
+
   @Autowired private Environment env;
 
   public void init() {
-    setInfo(env.getProperty("command.create"), "create snapshot");
+    setInfo(env.getProperty("command.delete"), "delete snapshot");
   }
 
   @Override
   public void execute(String command) {
     final List<String> argumentList = Arrays.asList(stripParentCommand(command).split(" "));
-    if (argumentList.size() != 1) {
-      printService.printInfo("wrong argument count. add command requires 1 argument: id||name");
-      printService.printInfo("['create/c id,name]");
+    if (argumentList.size() != 2) {
+      printService.printInfo(
+          "wrong argument count. add command requires 2 arguments: backup(id,name)] snapshot(id,name )");
+      printService.printInfo("['delete/d backup(id,name)] snapshot(id,name )");
     } else {
       if (isBackupArgumentValid(argumentList.get(0))) {
-        backupService.createBackup(getBackupByArgument(argumentList.get(0)));
-
+        final Backup backup = getBackupByArgument(argumentList.get(0));
+        if (backup.hasSnapshot(argumentList.get(1))) {
+          try {
+            backupService.deleteSnapshot(
+                backup, backup.getSnapShotFromArgument(argumentList.get(1)));
+            printService.printInfo("deleted backup ['" + argumentList.get(0) + "']");
+          } catch (VerifyError error) {
+            printService.printError(error.getMessage());
+          }
+        } else {
+          printService.printInfo(
+              " backup ['"
+                  + argumentList.get(0)
+                  + "'] has no snapshot  ['"
+                  + argumentList.get(1)
+                  + "']");
+        }
       } else {
         printService.printError(
             "can not find backup for [" + argumentList.get(0) + "] id or name required");

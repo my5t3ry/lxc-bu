@@ -34,6 +34,8 @@ import java.util.Properties;
   BackupDeleteCommand.class,
   BackupdEditCommand.class,
   BackupCreateCommand.class,
+  BackupSnapshotCommand.class,
+  BackupSnapshotDeleteCommand.class,
   ExecuteCommand.class,
   BackupListCommand.class,
   HelpCommand.class,
