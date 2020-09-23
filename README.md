@@ -1,6 +1,10 @@
 # lxc-bu
 
-lxc container snaphost scheduling cli tool. inspired by lxc command structure. work in progress. 
+lxc container snapshot/backup scheduling/managment cli tool. inspired by lxc command structure. work in progress. 
+
+## missing features
+- optional copy of snapshot to local machine
+- cli autocompletion
 
 graal jdk11 native-image aot compiled spring-boot-jpa , hibernate 5.4.12  and jline.
 
