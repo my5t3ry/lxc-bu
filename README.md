@@ -2,6 +2,9 @@
 
 lxc container snapshot/backup scheduling/managment cli tool. inspired by lxc command structure. work in progress. 
 
+to schedule snapshots add a cronjob:
+*/5 * * * * lxc-bu e >> /var/log/lxc-bu.log
+
 ## missing features
 - optional copy of snapshot to local machine
 - cli autocompletion
