@@ -14,3 +14,6 @@ lxc container snapshot/backup scheduling/managment cli tool. inspired by lxc com
 - jline.
 
 use graal 20+ & mvn 3.6.3 and run ./build.sh to build 
+
+## demo
+[![asciicast](https://asciinema.org/a/4gRokf7lQp1ZzrXjGCpKO2r2B.svg)](https://asciinema.org/a/4gRokf7lQp1ZzrXjGCpKO2r2B)
