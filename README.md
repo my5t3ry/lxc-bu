@@ -6,6 +6,11 @@ lxc container snapshot/backup scheduling/managment cli tool. inspired by lxc com
 - optional copy of snapshot to local machine
 - cli autocompletion
 
-graal jdk11 native-image aot compiled spring-boot-jpa , hibernate 5.4.12  and jline.
+
+## tech
+- lxc
+- graal jdk11 native-image aot
+- spring-boot(-jpa) with hibernate 5.4.12
+- jline.
 
 use graal 20+ & mvn 3.6.3 and run ./build.sh to build 
